@@ -1,0 +1,47 @@
+<section id="home" class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
+    <div class="pointer-events-none absolute -top-24 right-0 h-[480px] w-[480px] rounded-full bg-accent/10 blur-3xl"></div>
+    <div class="relative mx-auto max-w-7xl px-6 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div>
+            <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
+                <span class="w-7 h-px bg-accent"></span> รับเหมาก่อสร้าง · นนทบุรี &amp; กรุงเทพฯ
+            </span>
+            <h1 class="mt-5 text-[clamp(2.2rem,4.2vw,3.6rem)] font-bold leading-[1.3] tracking-tight text-navy-900">
+                สร้างทุกโครงสร้าง ด้วย<span class="bg-gradient-to-t from-hivis/60 from-[28%] to-transparent to-[28%]">มาตรฐานมืออาชีพ</span>
+            </h1>
+            <p class="mt-5 text-lg leading-relaxed text-ink2 max-w-xl">
+                รับเหมา <b class="text-navy-900 font-semibold">กำแพงกันดิน · รั้วบ้าน · ถนน · ลานคอนกรีต</b> และงานปรับพื้นที่ — ทีมช่างมืออาชีพ ราคาตรงไปตรงมา ส่งมอบตรงเวลา รับประกันงาน 2 ปี
+            </p>
+            <div class="mt-8 flex flex-wrap gap-3">
+                <a href="#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">ขอใบเสนอราคาฟรี <i class="bi bi-arrow-right"></i></a>
+                <a href="#projects" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">ดูผลงานก่อสร้าง</a>
+            </div>
+            <div class="mt-9 flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-ink2">
+                <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ประสบการณ์ 18 ปี</span>
+                <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> รับประกันงาน 2 ปี</span>
+                <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ใบอนุญาตถูกต้อง</span>
+                <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ทีมงาน 35 คน</span>
+            </div>
+        </div>
+
+        <div class="relative">
+            <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
+                <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80&auto=format&fit=crop"
+                     alt="ทีมช่างของธีรพงษ์การช่าง" class="h-full w-full object-cover">
+                <div class="absolute inset-x-5 bottom-5 flex items-center gap-4 rounded-xl bg-white/95 backdrop-blur p-4 shadow-xl">
+                    <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><i class="bi bi-patch-check-fill"></i></span>
+                    <div>
+                        <div class="font-bold text-navy-900 text-[15px]">ใบรับรองมาตรฐาน วศ.</div>
+                        <div class="text-[13px] text-muted">มอก. 109-2552 · รับเหมาก่อสร้าง ระดับ ค</div>
+                    </div>
+                </div>
+            </div>
+            <div class="absolute -left-4 top-8 hidden sm:flex items-center gap-3 rounded-xl bg-white p-3 pr-4 shadow-xl ring-1 ring-line">
+                <span class="grid place-items-center w-10 h-10 rounded-lg bg-hivis/20 text-accent text-lg"><i class="bi bi-buildings-fill"></i></span>
+                <div>
+                    <div class="font-mono font-bold text-navy-900 leading-none tabular-nums">420+</div>
+                    <div class="text-[12px] text-muted mt-0.5">โครงการ</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

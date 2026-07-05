@@ -1,0 +1,183 @@
+// Mobile menu
+const menuBtn    = document.getElementById('menuBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+mobileMenu?.addEventListener('click', e => { if (e.target.tagName === 'A') mobileMenu.classList.add('hidden'); });
+
+// Project filter
+document.getElementById('filters')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-filter]');
+    if (!btn) return;
+    const filter = btn.dataset.filter;
+
+    document.querySelectorAll('[data-filter]').forEach(b => {
+        const on = b === btn;
+        b.classList.toggle('bg-navy-900', on);
+        b.classList.toggle('text-white', on);
+        b.classList.toggle('border-navy-900', on);
+        b.classList.toggle('text-ink2', !on);
+        b.classList.toggle('border-line', !on);
+    });
+
+    document.querySelectorAll('[data-cat]').forEach(card => {
+        card.classList.toggle('hidden', filter !== 'all' && card.dataset.cat !== filter);
+    });
+});
+
+// Testimonial tabs
+document.getElementById('testTabs')?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-tab]');
+    if (!btn) return;
+    const tab = btn.dataset.tab;
+
+    document.querySelectorAll('[data-tab]').forEach(b => {
+        const on = b === btn;
+        b.classList.toggle('bg-navy-900', on);
+        b.classList.toggle('text-white', on);
+        b.classList.toggle('border', !on);
+        b.classList.toggle('bg-white', !on);
+        b.classList.toggle('text-ink2', !on);
+        b.classList.toggle('border-line', !on);
+    });
+
+    document.querySelectorAll('[data-panel]').forEach(p => {
+        p.classList.toggle('hidden', p.dataset.panel !== tab);
+    });
+});
+
+// Copy discount reference code
+document.getElementById('copyRefBtn')?.addEventListener('click', async e => {
+    const btn = e.currentTarget;
+    try {
+        await navigator.clipboard.writeText(btn.dataset.copy);
+    } catch {
+        return;
+    }
+    const icon  = document.getElementById('copyRefIcon');
+    const label = document.getElementById('copyRefLabel');
+    icon.classList.replace('bi-clipboard', 'bi-clipboard-check-fill');
+    label.textContent = 'คัดลอกแล้ว';
+    setTimeout(() => {
+        icon.classList.replace('bi-clipboard-check-fill', 'bi-clipboard');
+        label.textContent = 'คัดลอก';
+    }, 2000);
+});
+
+// Quote form — dynamic E-Voucher + AJAX submit
+const quoteForm = document.getElementById('quoteForm');
+if (quoteForm) {
+    const voucherTiers = JSON.parse(quoteForm.dataset.voucherTiers || '[]');
+    const voucherDefault = JSON.parse(quoteForm.dataset.voucherDefault || '{}');
+    const tierMap = Object.fromEntries(voucherTiers.map(t => [t.budget, t]));
+
+    const budgetSelect = document.getElementById('budgetSelect');
+    const voucherAmount = document.getElementById('voucherAmount');
+    const voucherMessage = document.getElementById('voucherMessage');
+    const voucherTerms = document.getElementById('voucherTerms');
+    const requestedDiscount = document.getElementById('requestedDiscount');
+    const voucherCard = document.getElementById('voucherCard');
+    const quoteError = document.getElementById('quoteError');
+    const quoteErrorText = document.getElementById('quoteErrorText');
+    const quoteOK = document.getElementById('quoteOK');
+    const quoteSubmitBtn = document.getElementById('quoteSubmitBtn');
+
+    const setVoucherDefault = () => {
+        voucherAmount.textContent = voucherDefault.amount_label || 'สูงสุด 20,000 บาท';
+        voucherMessage.textContent = voucherDefault.message || '';
+        voucherTerms.textContent = '';
+        voucherTerms.classList.add('hidden');
+        requestedDiscount.value = '';
+        voucherCard?.classList.remove('ring-2', 'ring-hivis/50');
+    };
+
+    const setVoucherTier = (tier) => {
+        voucherAmount.textContent = `${tier.amount_formatted} บาท`;
+        voucherMessage.textContent = tier.message;
+        voucherTerms.textContent = tier.terms;
+        voucherTerms.classList.remove('hidden');
+        requestedDiscount.value = tier.amount;
+        voucherCard?.classList.add('ring-2', 'ring-hivis/50');
+    };
+
+    budgetSelect?.addEventListener('change', () => {
+        const tier = tierMap[budgetSelect.value];
+        if (tier) {
+            setVoucherTier(tier);
+        } else {
+            setVoucherDefault();
+        }
+    });
+
+    setVoucherDefault();
+
+    // Terms modal
+    const termsModal = document.getElementById('voucherTermsModal');
+    const openTermsModal = () => {
+        termsModal?.classList.remove('hidden');
+        termsModal?.setAttribute('aria-hidden', 'false');
+    };
+    const closeTermsModal = () => {
+        termsModal?.classList.add('hidden');
+        termsModal?.setAttribute('aria-hidden', 'true');
+    };
+
+    document.getElementById('voucherTermsBtn')?.addEventListener('click', openTermsModal);
+    document.getElementById('voucherTermsClose')?.addEventListener('click', closeTermsModal);
+    document.getElementById('voucherTermsCloseBtn')?.addEventListener('click', closeTermsModal);
+    document.getElementById('voucherTermsBackdrop')?.addEventListener('click', closeTermsModal);
+
+    quoteForm.addEventListener('submit', async e => {
+        e.preventDefault();
+        quoteError?.classList.add('hidden');
+        quoteOK?.classList.add('hidden');
+
+        if (!quoteForm.checkValidity()) {
+            quoteForm.reportValidity();
+            return;
+        }
+
+        if (!requestedDiscount.value) {
+            quoteErrorText.textContent = 'กรุณาเลือกช่วงงบประมาณเพื่อเช็คสิทธิ์ E-Voucher';
+            quoteError.classList.remove('hidden');
+            budgetSelect?.focus();
+            return;
+        }
+
+        quoteSubmitBtn.disabled = true;
+
+        try {
+            const response = await fetch(quoteForm.action, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'X-CSRF-TOKEN': quoteForm.querySelector('input[name="_token"]')?.value || '',
+                },
+                body: new FormData(quoteForm),
+            });
+
+            const data = await response.json().catch(() => ({}));
+
+            if (!response.ok) {
+                const message = data.message
+                    || Object.values(data.errors || {}).flat()[0]
+                    || 'เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง';
+                quoteErrorText.textContent = message;
+                quoteError.classList.remove('hidden');
+                return;
+            }
+
+            document.getElementById('quoteRef').textContent = data.reference || '';
+            quoteOK.classList.remove('hidden');
+            quoteForm.reset();
+            setVoucherDefault();
+            budgetSelect.selectedIndex = 0;
+
+            setTimeout(() => quoteOK.classList.add('hidden'), 8000);
+        } catch {
+            quoteErrorText.textContent = 'ไม่สามารถส่งข้อมูลได้ กรุณาตรวจสอบการเชื่อมต่อและลองใหม่';
+            quoteError.classList.remove('hidden');
+        } finally {
+            quoteSubmitBtn.disabled = false;
+        }
+    });
+}
