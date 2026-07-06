@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>บริการทั้งหมด — ธีรพงษ์การช่าง</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style type="text/tailwindcss">
+    @theme {
+      --color-navy-950: #04111d;
+      --color-navy-900: #071a2c;
+      --color-navy-800: #0a2540;
+      --color-navy-700: #0a3d62;
+      --color-accent:   #0a3d62;
+      --color-hivis:    #ffc83a;
+      --color-ink:      #0f1722;
+      --color-ink2:     #36475a;
+      --color-muted:    #6a7787;
+      --color-line:     #e3e7ee;
+      --color-surface:  #f6f8fb;
+      --font-sans: "IBM Plex Sans Thai", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    }
+  </style>
+</helmet>
+
+<!-- UTILITY BAR -->
+<div class="hidden md:block bg-navy-950 text-white/70 text-[13px]">
+  <div class="mx-auto max-w-7xl px-6 h-10 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <span><i class="bi bi-geo-alt-fill text-hivis mr-1"></i> บางใหญ่ นนทบุรี · รับงาน กทม. &amp; ปริมณฑล</span>
+      <span><i class="bi bi-clock-fill text-hivis mr-1"></i> จันทร์–เสาร์ 8:00–18:00 น.</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <a href="#" class="hover:text-white transition"><i class="bi bi-line text-hivis mr-1"></i> @theeraphong</a>
+      <a href="tel:0812345678" class="hover:text-white transition font-mono tabular-nums tracking-tight"><i class="bi bi-telephone-fill text-hivis mr-1"></i> 081-234-5678</a>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-line">
+  <nav class="mx-auto max-w-7xl px-6 h-[68px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-3 shrink-0">
+      <span class="relative grid place-items-center w-10 h-10 rounded-lg bg-navy-900 text-white font-mono font-bold text-sm">TP
+        <span class="absolute w-1.5 h-1.5 rounded-[2px] bg-hivis translate-x-3 translate-y-3"></span>
+      </span>
+      <span class="font-bold text-navy-900 tracking-tight text-[17px] whitespace-nowrap">ธีรพงษ์การช่าง</span>
+    </a>
+    <div class="hidden lg:flex items-center gap-1 text-[15px] font-medium text-ink2">
+      <a href="index.html" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">หน้าแรก</a>
+      <a href="#" class="px-3.5 py-2 rounded-lg text-navy-900 bg-surface font-semibold">บริการ</a>
+      <a href="index.html#projects" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ผลงาน</a>
+      <a href="index.html#process" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ขั้นตอน</a>
+      <a href="index.html#faq" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">คำถาม</a>
+    </div>
+    <div class="flex items-center gap-2">
+      <a href="index.html#contact" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา</a>
+      <button id="menuBtn" class="lg:hidden grid place-items-center w-10 h-10 rounded-lg border border-line text-navy-900"><i class="bi bi-list text-2xl"></i></button>
+    </div>
+  </nav>
+  <div id="mobileMenu" class="lg:hidden hidden border-t border-line bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-3 flex flex-col text-[15px] font-medium text-ink2">
+      <a href="index.html" class="py-2.5 border-b border-line/70">หน้าแรก</a>
+      <a href="#" class="py-2.5 border-b border-line/70 text-navy-900 font-semibold">บริการ</a>
+      <a href="index.html#projects" class="py-2.5 border-b border-line/70">ผลงาน</a>
+      <a href="index.html#process" class="py-2.5 border-b border-line/70">ขั้นตอน</a>
+      <a href="index.html#contact" class="py-2.5">ขอใบเสนอราคา</a>
+    </div>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="relative overflow-hidden bg-navy-900 text-white">
+  <div class="pointer-events-none absolute -top-32 right-0 h-[500px] w-[500px] rounded-full bg-accent/40 blur-3xl opacity-50"></div>
+  <div class="relative mx-auto max-w-7xl px-6 py-16 lg:py-20">
+    <nav class="flex items-center gap-2 text-[13px] text-white/50 mb-8">
+      <a href="index.html" class="hover:text-white transition">หน้าแรก</a>
+      <i class="bi bi-chevron-right text-[10px]"></i>
+      <span class="text-white/80">บริการทั้งหมด</span>
+    </nav>
+    <div class="max-w-3xl">
+      <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase">
+        <span class="w-7 h-px bg-hivis"></span> บริการของเรา
+      </span>
+      <h1 class="mt-4 text-[clamp(2rem,4vw,3.2rem)] font-bold leading-[1.3] tracking-tight">งานก่อสร้างนอกตัวบ้าน<br/>ครบจบในที่เดียว</h1>
+      <p class="mt-4 text-lg text-white/65 leading-relaxed max-w-2xl">ทีมช่างเฉพาะทาง 35 คน รับงานตั้งแต่โปรเจกต์เล็ก 5 ตร.ม. ถึงโครงการขนาดใหญ่ — ในเขตกรุงเทพฯ และปริมณฑล พร้อมรับประกันงาน 2 ปี</p>
+    </div>
+    <div class="mt-10 flex flex-wrap gap-3">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/20 px-4 py-2 text-[14px]"><i class="bi bi-clock text-hivis"></i> สำรวจหน้างานฟรี ภายใน 3 วัน</span>
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/20 px-4 py-2 text-[14px]"><i class="bi bi-shield-check text-hivis"></i> รับประกันงาน 2 ปีเต็ม</span>
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/20 px-4 py-2 text-[14px]"><i class="bi bi-file-earmark-text text-hivis"></i> BOQ ละเอียดทุกรายการ</span>
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/10 ring-1 ring-white/20 px-4 py-2 text-[14px]"><i class="bi bi-award text-hivis"></i> ใบอนุญาตก่อสร้าง ระดับ ค</span>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK JUMP -->
+<div class="border-b border-line bg-white sticky top-[68px] z-40">
+  <div class="mx-auto max-w-7xl px-6">
+    <div class="flex overflow-x-auto gap-1 py-2.5">
+      <a href="#wall"  class="shrink-0 flex items-center gap-2 rounded-lg px-3.5 py-2 text-[14px] font-medium text-ink2 hover:text-navy-900 hover:bg-surface transition whitespace-nowrap"><i class="bi bi-bricks text-accent"></i> กำแพงกันดิน</a>
+      <a href="#fence" class="shrink-0 flex items-center gap-2 rounded-lg px-3.5 py-2 text-[14px] font-medium text-ink2 hover:text-navy-900 hover:bg-surface transition whitespace-nowrap"><i class="bi bi-grid-3x3 text-accent"></i> รั้วบ้าน</a>
+      <a href="#road"  class="shrink-0 flex items-center gap-2 rounded-lg px-3.5 py-2 text-[14px] font-medium text-ink2 hover:text-navy-900 hover:bg-surface transition whitespace-nowrap"><i class="bi bi-signpost-split text-accent"></i> ถนน &amp; ทางเข้า</a>
+      <a href="#slab"  class="shrink-0 flex items-center gap-2 rounded-lg px-3.5 py-2 text-[14px] font-medium text-ink2 hover:text-navy-900 hover:bg-surface transition whitespace-nowrap"><i class="bi bi-square text-accent"></i> ลานคอนกรีต</a>
+      <a href="#drain" class="shrink-0 flex items-center gap-2 rounded-lg px-3.5 py-2 text-[14px] font-medium text-ink2 hover:text-navy-900 hover:bg-surface transition whitespace-nowrap"><i class="bi bi-water text-accent"></i> ระบายน้ำ</a>
+      <a href="#land"  class="shrink-0 flex items-center gap-2 rounded-lg px-3.5 py-2 text-[14px] font-medium text-ink2 hover:text-navy-900 hover:bg-surface transition whitespace-nowrap"><i class="bi bi-bounding-box text-accent"></i> ปรับพื้นที่</a>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<main class="mx-auto max-w-7xl px-6 py-16 lg:py-24 space-y-24">
+
+  <!-- 01 กำแพงกันดิน -->
+  <section id="wall" class="scroll-mt-36 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div class="lg:col-span-7 order-2 lg:order-1">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการ 01</span>
+      <h2 class="mt-3 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900">กำแพงกันดิน</h2>
+      <p class="mt-3 text-[17px] text-ink2 leading-relaxed">กำแพงคอนกรีตเสริมเหล็กสำหรับกันดินพัง กั้นน้ำ และปรับระดับพื้นที่ คำนวณโครงสร้างโดยวิศวกรโยธา พร้อมใบ กว. รับรองทุกโครงการ</p>
+      <div class="mt-7 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ราคาเริ่มต้น</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">2,800 <span class="text-base font-sans font-medium text-ink2">บาท/ตร.ม.</span></div>
+        </div>
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ระยะเวลางาน</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">14–30 <span class="text-base font-sans font-medium text-ink2">วันทำการ</span></div>
+        </div>
+      </div>
+      <div class="mt-7 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>สำรวจและออกแบบโครงสร้าง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>คำนวณโดยวิศวกรโยธา</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>เข็มเจาะ หรือเข็มตอก</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>เทคอนกรีตเสริมเหล็ก</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ระบบระบายน้ำหลังกำแพง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ใบรับรองวิศวกร (กว.)</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ทำความสะอาดหน้างาน</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รับประกันโครงสร้าง 2 ปี</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <i class="bi bi-arrow-right"></i></a>
+        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
+      </div>
+    </div>
+    <div class="lg:col-span-5 order-1 lg:order-2">
+      <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
+        <img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop" alt="กำแพงกันดิน" class="h-full w-full object-cover" />
+        <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg"><i class="bi bi-bricks"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="border-t border-line"></div>
+
+  <!-- 02 รั้วบ้าน -->
+  <section id="fence" class="scroll-mt-36 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div class="lg:col-span-5">
+      <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80&auto=format&fit=crop" alt="รั้วบ้าน" class="h-full w-full object-cover" />
+        <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg"><i class="bi bi-grid-3x3"></i></div>
+      </div>
+    </div>
+    <div class="lg:col-span-7">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการ 02</span>
+      <h2 class="mt-3 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900">รั้วบ้าน</h2>
+      <p class="mt-3 text-[17px] text-ink2 leading-relaxed">รั้วสำเร็จรูป รั้วก่ออิฐฉาบปูน รั้วโมเดิร์น รั้วเหล็กดัด พร้อมประตูและระบบรีโมทอัตโนมัติ ทาสีและเก็บงานเรียบร้อยก่อนส่งมอบ</p>
+      <div class="mt-7 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ราคาเริ่มต้น</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">1,500 <span class="text-base font-sans font-medium text-ink2">บาท/ตร.ม.</span></div>
+        </div>
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ระยะเวลางาน</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">7–21 <span class="text-base font-sans font-medium text-ink2">วันทำการ</span></div>
+        </div>
+      </div>
+      <div class="mt-7 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รั้วก่ออิฐมอญ / บล็อกปูน</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รั้วสำเร็จรูป Precast</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รั้วโมเดิร์น ลายทาง / ช่องอากาศ</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รั้วเหล็กดัด / เหล็กโปร่ง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ประตูบานเลื่อน / บานสวิง + รีโมท</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ทาสีภายนอก + สีกันซึม</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>งานลวดหนาม / ลวดตาข่าย</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รับประกันงาน 2 ปี</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <i class="bi bi-arrow-right"></i></a>
+        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="border-t border-line"></div>
+
+  <!-- 03 ถนน & ทางเข้า -->
+  <section id="road" class="scroll-mt-36 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div class="lg:col-span-7 order-2 lg:order-1">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการ 03</span>
+      <h2 class="mt-3 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900">ถนน &amp; ทางเข้าบ้าน</h2>
+      <p class="mt-3 text-[17px] text-ink2 leading-relaxed">ถนนคอนกรีตเสริมเหล็ก ถนนแอสฟัลต์ และ Stamped Concrete สำหรับทางเข้าบ้าน พื้นผิวทนทาน รองรับน้ำหนักยานพาหนะหนัก</p>
+      <div class="mt-7 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ราคาเริ่มต้น</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">650 <span class="text-base font-sans font-medium text-ink2">บาท/ตร.ม.</span></div>
+        </div>
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ระยะเวลางาน</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">5–15 <span class="text-base font-sans font-medium text-ink2">วันทำการ</span></div>
+        </div>
+      </div>
+      <div class="mt-7 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ปรับระดับและบดอัดพื้นทาง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>วางลูกรัง / หินคลุกรองพื้น</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>เหล็กเสริมตาข่าย WM</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>เทคอนกรีต 240 ksc. ขึ้นไป</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ตัดรอยต่อ (Joint) ป้องกันแตกร้าว</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>Stamped / Exposed Aggregate</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ราวขอบถนน / กันชน</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รับประกันการแตกร้าว 2 ปี</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <i class="bi bi-arrow-right"></i></a>
+        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
+      </div>
+    </div>
+    <div class="lg:col-span-5 order-1 lg:order-2">
+      <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
+        <img src="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?w=900&q=80&auto=format&fit=crop" alt="ถนนคอนกรีต" class="h-full w-full object-cover" />
+        <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg"><i class="bi bi-signpost-split"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="border-t border-line"></div>
+
+  <!-- 04 ลานคอนกรีต -->
+  <section id="slab" class="scroll-mt-36 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div class="lg:col-span-5">
+      <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
+        <img src="https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=900&q=80&auto=format&fit=crop" alt="ลานคอนกรีต" class="h-full w-full object-cover" />
+        <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg"><i class="bi bi-square"></i></div>
+      </div>
+    </div>
+    <div class="lg:col-span-7">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการ 04</span>
+      <h2 class="mt-3 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900">ลานคอนกรีต &amp; ลานจอดรถ</h2>
+      <p class="mt-3 text-[17px] text-ink2 leading-relaxed">ลานคอนกรีตขัดมัน ขัดเงา Polished Concrete หรือ Epoxy Coating พื้นที่ทนทาน รับน้ำหนักได้ ไม่แตกร้าวง่าย เหมาะสำหรับลานจอดรถ โกดัง และพื้นที่อุตสาหกรรม</p>
+      <div class="mt-7 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ราคาเริ่มต้น</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">550 <span class="text-base font-sans font-medium text-ink2">บาท/ตร.ม.</span></div>
+        </div>
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ระยะเวลางาน</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">3–10 <span class="text-base font-sans font-medium text-ink2">วันทำการ</span></div>
+        </div>
+      </div>
+      <div class="mt-7 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ลานคอนกรีตขัดมัน (Steel Trowel)</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>Polished Concrete ขัดเงากระจก</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>Exposed Aggregate โชว์หินกรวด</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>Epoxy Coating เคลือบพื้น</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ตัดรอยต่อป้องกันร้าว</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ลาดเอียงระบายน้ำ</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ขอบกันรถ (Wheel Stop)</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รับประกันพื้นผิว 2 ปี</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <i class="bi bi-arrow-right"></i></a>
+        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
+      </div>
+    </div>
+  </section>
+
+  <div class="border-t border-line"></div>
+
+  <!-- 05 ระบบระบายน้ำ -->
+  <section id="drain" class="scroll-mt-36 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div class="lg:col-span-7 order-2 lg:order-1">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการ 05</span>
+      <h2 class="mt-3 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900">ระบบระบายน้ำ</h2>
+      <p class="mt-3 text-[17px] text-ink2 leading-relaxed">วางท่อระบายน้ำ บ่อพัก บ่อดักไขมัน Sump Pit และระบบสูบน้ำ ออกแบบโดยวิศวกร แก้ปัญหาน้ำท่วมขังในรอบบ้านอย่างถาวร</p>
+      <div class="mt-7 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ราคาเริ่มต้น</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">1,200 <span class="text-base font-sans font-medium text-ink2">บาท/เมตร</span></div>
+        </div>
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ระยะเวลางาน</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">3–12 <span class="text-base font-sans font-medium text-ink2">วันทำการ</span></div>
+        </div>
+      </div>
+      <div class="mt-7 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>สำรวจและออกแบบเส้นทางน้ำ</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ขุดร่องวางท่อ PVC / คอนกรีต</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>บ่อพัก (Manhole) ตามระยะ</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>บ่อดักไขมัน Grease Trap</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>Sump Pit + ปั๊มน้ำ</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ท่อรางสำเร็จรูป ACO</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ฝังกลบและบดอัดคืน</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ทดสอบการไหลน้ำก่อนส่งมอบ</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <i class="bi bi-arrow-right"></i></a>
+        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
+      </div>
+    </div>
+    <div class="lg:col-span-5 order-1 lg:order-2">
+      <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
+        <img src="https://images.unsplash.com/photo-1581094288338-2314dddb7ece?w=900&q=80&auto=format&fit=crop" alt="ระบบระบายน้ำ" class="h-full w-full object-cover" />
+        <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg"><i class="bi bi-water"></i></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="border-t border-line"></div>
+
+  <!-- 06 ปรับพื้นที่ -->
+  <section id="land" class="scroll-mt-36 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+    <div class="lg:col-span-5">
+      <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
+        <img src="https://images.unsplash.com/photo-1590725140246-20acdee442be?w=900&q=80&auto=format&fit=crop" alt="ถมที่ดิน" class="h-full w-full object-cover" />
+        <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg"><i class="bi bi-bounding-box"></i></div>
+      </div>
+    </div>
+    <div class="lg:col-span-7">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการ 06</span>
+      <h2 class="mt-3 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900">ปรับพื้นที่ &amp; ถมดิน</h2>
+      <p class="mt-3 text-[17px] text-ink2 leading-relaxed">ถมดิน บดอัดตามมาตรฐานวิศวกรรม ปรับระดับพื้นที่ และดูดทรายเติมพื้นที่ต่ำ พร้อมรถแบคโฮ รถบด และรถดัมพ์หน้างาน คิดราคาตามคิวจริงไม่โกง</p>
+      <div class="mt-7 grid sm:grid-cols-2 gap-3">
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ราคาเริ่มต้น</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">220 <span class="text-base font-sans font-medium text-ink2">บาท/คิว</span></div>
+        </div>
+        <div class="rounded-xl bg-surface p-5">
+          <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ระยะเวลางาน</div>
+          <div class="font-mono text-2xl font-bold text-navy-900">2–7 <span class="text-base font-sans font-medium text-ink2">วันทำการ</span></div>
+        </div>
+      </div>
+      <div class="mt-7 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>สำรวจระดับและออกแบบการถม</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ถมดิน / ถมทราย / ถมลูกรัง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>บดอัดทุก 30 ซม. ตามมาตรฐาน</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>รถแบคโฮ รถบด รถดัมพ์</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ดูดทราย (Sand Pump) พื้นที่แคบ</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ปรับระดับพื้นและวัดเกรด</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>นำดินหรือวัสดุเก่าออกทิ้ง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>ใบรับรองปริมาณดินถมจริง</span>
+      </div>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <i class="bi bi-arrow-right"></i></a>
+        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- COMPARE TABLE -->
+<section class="bg-surface border-y border-line">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:py-20">
+    <div class="max-w-2xl mb-10">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> เปรียบเทียบบริการ</span>
+      <h2 class="mt-3 text-3xl font-bold tracking-tight text-navy-900">ราคาและระยะเวลาโดยสังเขป</h2>
+    </div>
+    <div class="overflow-x-auto rounded-2xl ring-1 ring-line">
+      <table class="w-full min-w-[640px] bg-white text-[15px]">
+        <thead>
+          <tr class="border-b border-line bg-surface text-navy-900 font-semibold">
+            <th class="text-left px-6 py-4">บริการ</th>
+            <th class="text-center px-6 py-4">ราคาเริ่มต้น</th>
+            <th class="text-center px-6 py-4">หน่วย</th>
+            <th class="text-center px-6 py-4">ระยะงาน</th>
+            <th class="text-center px-6 py-4">รับประกัน</th>
+            <th class="text-center px-6 py-4">ใบ กว.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-line hover:bg-accent/5 transition">
+            <td class="px-6 py-4 font-semibold text-navy-900">กำแพงกันดิน</td>
+            <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">2,800</td>
+            <td class="px-6 py-4 text-center text-muted text-[14px]">บาท/ตร.ม.</td>
+            <td class="px-6 py-4 text-center text-ink2">14–30 วัน</td>
+            <td class="px-6 py-4 text-center text-green-700 font-medium text-[14px]"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>2 ปี</td>
+            <td class="px-6 py-4 text-center"><i class="bi bi-check-circle-fill text-accent text-lg"></i></td>
+          </tr>
+          <tr class="border-b border-line bg-surface/50 hover:bg-accent/5 transition">
+            <td class="px-6 py-4 font-semibold text-navy-900">รั้วบ้าน</td>
+            <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">1,500</td>
+            <td class="px-6 py-4 text-center text-muted text-[14px]">บาท/ตร.ม.</td>
+            <td class="px-6 py-4 text-center text-ink2">7–21 วัน</td>
+            <td class="px-6 py-4 text-center text-green-700 font-medium text-[14px]"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>2 ปี</td>
+            <td class="px-6 py-4 text-center text-muted">—</td>
+          </tr>
+          <tr class="border-b border-line hover:bg-accent/5 transition">
+            <td class="px-6 py-4 font-semibold text-navy-900">ถนน &amp; ทางเข้า</td>
+            <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">650</td>
+            <td class="px-6 py-4 text-center text-muted text-[14px]">บาท/ตร.ม.</td>
+            <td class="px-6 py-4 text-center text-ink2">5–15 วัน</td>
+            <td class="px-6 py-4 text-center text-green-700 font-medium text-[14px]"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>2 ปี</td>
+            <td class="px-6 py-4 text-center text-muted">—</td>
+          </tr>
+          <tr class="border-b border-line bg-surface/50 hover:bg-accent/5 transition">
+            <td class="px-6 py-4 font-semibold text-navy-900">ลานคอนกรีต</td>
+            <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">550</td>
+            <td class="px-6 py-4 text-center text-muted text-[14px]">บาท/ตร.ม.</td>
+            <td class="px-6 py-4 text-center text-ink2">3–10 วัน</td>
+            <td class="px-6 py-4 text-center text-green-700 font-medium text-[14px]"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>2 ปี</td>
+            <td class="px-6 py-4 text-center text-muted">—</td>
+          </tr>
+          <tr class="border-b border-line hover:bg-accent/5 transition">
+            <td class="px-6 py-4 font-semibold text-navy-900">ระบบระบายน้ำ</td>
+            <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">1,200</td>
+            <td class="px-6 py-4 text-center text-muted text-[14px]">บาท/เมตร</td>
+            <td class="px-6 py-4 text-center text-ink2">3–12 วัน</td>
+            <td class="px-6 py-4 text-center text-green-700 font-medium text-[14px]"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>2 ปี</td>
+            <td class="px-6 py-4 text-center text-muted">—</td>
+          </tr>
+          <tr class="hover:bg-accent/5 transition">
+            <td class="px-6 py-4 font-semibold text-navy-900">ปรับพื้นที่ &amp; ถมดิน</td>
+            <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">220</td>
+            <td class="px-6 py-4 text-center text-muted text-[14px]">บาท/คิว</td>
+            <td class="px-6 py-4 text-center text-ink2">2–7 วัน</td>
+            <td class="px-6 py-4 text-center text-muted">—</td>
+            <td class="px-6 py-4 text-center text-muted">—</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-[13px] text-muted">* ราคาข้างต้นเป็นราคาเริ่มต้น ราคาจริงขึ้นอยู่กับขนาดงาน วัสดุ และสภาพหน้างาน · รับสำรวจและเสนอราคาฟรี</p>
+  </div>
+</section>
+
+<!-- CTA BAND -->
+<section class="bg-navy-900 text-white">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:py-20 flex flex-col lg:flex-row items-center justify-between gap-8">
+    <div>
+      <h2 class="text-3xl lg:text-4xl font-bold tracking-tight">พร้อมเริ่มโครงการแล้วใช่ไหม?</h2>
+      <p class="mt-3 text-lg text-white/60">สำรวจหน้างานฟรี — ไม่มีค่าใช้จ่าย ไม่มีข้อผูกมัด ทีมงานติดต่อกลับภายใน 24 ชั่วโมง</p>
+    </div>
+    <div class="flex flex-wrap gap-3 shrink-0">
+      <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-hivis px-7 py-4 font-semibold text-navy-900 hover:bg-yellow-300 transition shadow-lg">ขอใบเสนอราคาฟรี <i class="bi bi-arrow-right"></i></a>
+      <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl ring-1 ring-white/30 px-7 py-4 font-semibold text-white hover:bg-white/10 transition"><i class="bi bi-telephone-fill"></i> 081-234-5678</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="bg-navy-950 text-white/60">
+  <div class="mx-auto max-w-7xl px-6 pt-16 pb-10 grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-5">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="grid place-items-center w-10 h-10 rounded-lg bg-white text-navy-900 font-mono font-bold text-sm">TP</span>
+        <span class="font-bold text-white text-[17px]">ธีรพงษ์การช่าง</span>
+      </div>
+      <p class="max-w-sm text-[15px] leading-relaxed">รับเหมาก่อสร้างครบวงจร — กำแพงกันดิน รั้ว ถนน ลานคอนกรีต และงานปรับพื้นที่ ในเขตกรุงเทพฯ และปริมณฑล</p>
+      <div class="mt-5 flex gap-2.5">
+        <a href="#" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-facebook"></i> Facebook</a>
+        <a href="#" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-line"></i> @theeraphong</a>
+      </div>
+    </div>
+    <div class="md:col-span-2">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">บริการ</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><a href="#wall" class="hover:text-white transition">กำแพงกันดิน</a></li>
+        <li><a href="#fence" class="hover:text-white transition">รั้วบ้าน</a></li>
+        <li><a href="#road" class="hover:text-white transition">ถนน &amp; ทางเข้า</a></li>
+        <li><a href="#slab" class="hover:text-white transition">ลานคอนกรีต</a></li>
+        <li><a href="#drain" class="hover:text-white transition">ระบายน้ำ</a></li>
+        <li><a href="#land" class="hover:text-white transition">ปรับพื้นที่</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-2">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">บริษัท</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><a href="index.html#projects" class="hover:text-white transition">ผลงานก่อสร้าง</a></li>
+        <li><a href="index.html#process" class="hover:text-white transition">ขั้นตอนทำงาน</a></li>
+        <li><a href="index.html#faq" class="hover:text-white transition">คำถามที่พบบ่อย</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-3">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">ติดต่อ</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><i class="bi bi-telephone-fill text-hivis mr-2"></i><span class="font-mono tabular-nums">081-234-5678</span></li>
+        <li><i class="bi bi-envelope-fill text-hivis mr-2"></i>work@theeraphong.co.th</li>
+        <li><i class="bi bi-geo-alt-fill text-hivis mr-2"></i>88/15 ถ.กาญจนาภิเษก บางใหญ่ นนทบุรี 11140</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6 py-5 flex flex-wrap justify-between gap-2 text-[14px]">
+      <div>© 2026 ห้างหุ้นส่วนจำกัด ธีรพงษ์การช่าง · เลขผู้เสียภาษี 0125555012345</div>
+      <div class="flex gap-5"><a href="#" class="hover:text-white transition">นโยบายความเป็นส่วนตัว</a><a href="#" class="hover:text-white transition">เงื่อนไขการให้บริการ</a></div>
+    </div>
+  </div>
+</footer>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const mm = document.getElementById('mobileMenu');
+    document.getElementById('menuBtn').addEventListener('click', () => mm.classList.toggle('hidden'));
+    mm.addEventListener('click', e => { if (e.target.tagName === 'A') mm.classList.add('hidden'); });
+  }
+}
+
+</script>
+</body>
+</html>

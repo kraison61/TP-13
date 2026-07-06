@@ -57,10 +57,6 @@ $steps = [
 @extends('layouts.frontend')
 
 @section('content')
-{{-- ============ UTILITY BAR ============ --}}
-<x-frontend.utililty-bar />
-{{-- ============ NAV ============ --}}
-<x-frontend.nav />
 
 {{-- ============ HERO ============ --}}
 <x-frontend.hero />
@@ -86,9 +82,5 @@ $steps = [
 {{-- ============ FAQ ============ --}}
 <x-frontend.faq :faqs="$faqs" />
 
-{{-- ============ CONTACT ============ --}}
-<x-frontend.contact />
 
-{{-- ============ FOOTER ============ --}}
-<x-frontend.footer :services="$services" />
 @endsection

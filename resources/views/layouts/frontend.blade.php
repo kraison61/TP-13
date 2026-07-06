@@ -15,7 +15,18 @@
 
 <body class="font-sans text-ink bg-white antialiased [text-wrap:pretty]">
 
+{{-- ============ UTILITY BAR ============ --}}
+    <x-frontend.utililty-bar />
+
+    {{-- ============ NAV ============ --}}
+    <x-frontend.nav />
 @yield('content')
+
+{{-- ============ CONTACT ============ --}}
+<x-frontend.contact />
+
+{{-- ============ FOOTER ============ --}}
+<x-frontend.footer />
 
 </body>
 </html>

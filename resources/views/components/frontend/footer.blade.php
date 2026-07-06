@@ -1,4 +1,6 @@
-@props(['services'])
+<?php
+$services = config('frontend.services');
+?>
 <footer class="bg-navy-950 text-white/60">
     <div class="mx-auto max-w-7xl px-6 pt-16 pb-10 grid md:grid-cols-12 gap-10">
         <div class="md:col-span-5">
