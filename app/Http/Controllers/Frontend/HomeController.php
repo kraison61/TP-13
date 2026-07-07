@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\Portfolio;
+use App\Models\Service;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
@@ -12,7 +14,19 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //
+        $services = Service::with('activePrice')
+            ->where('is_active', true)
+            ->orderBy('id')
+            ->get();
+
+        $portfolios = Portfolio::with('service')
+            ->whereHas('service', fn ($q) => $q->where('is_active', true))
+            ->latest()
+            ->get();
+
+        $filterServices = $portfolios->pluck('service')->unique('id')->sortBy('title')->values();
+
+        return view('Frontend.index', compact('services', 'portfolios', 'filterServices'));
     }
 
     /**

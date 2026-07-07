@@ -9,14 +9,18 @@
 
     <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         @foreach($services as $s)
-        <a href="{{ route('services', ['service' => $s['slug']]) }}"
+        <a href="{{ route('services', ['service' => $s->slug]) }}#{{ $s->slug }}"
            class="group flex flex-col rounded-2xl border border-line bg-white p-7 hover:border-navy-900 hover:-translate-y-1 hover:shadow-2xl hover:shadow-navy-900/10 transition">
-            <span class="grid place-items-center w-14 h-14 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi {{ $s['icon'] }}"></i></span>
-            <h3 class="text-xl font-bold text-navy-900">{{ $s['name'] }}</h3>
-            <p class="mt-2 text-[15px] text-ink2 leading-relaxed flex-1">{{ $s['desc'] }}</p>
+            <span class="grid place-items-center w-14 h-14 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi {{ $s->icon_name }}"></i></span>
+            <h3 class="text-xl font-bold text-navy-900">{{ $s->title }}</h3>
+            <p class="mt-2 text-[15px] text-ink2 leading-relaxed flex-1">{{ $s->description }}</p>
             <div class="mt-5 pt-4 border-t border-dashed border-line flex gap-5 text-[13px] text-muted">
-                <span>เริ่มต้น <b class="text-navy-900 font-semibold">{{ $s['price'] }}</b></span>
-                <span>ระยะงาน <b class="text-navy-900 font-semibold">{{ $s['dur'] }}</b></span>
+                @if ($s->activePrice)
+                <span>เริ่มต้น <b class="text-navy-900 font-semibold">{{ number_format((float) $s->activePrice->price) }}.-/{{ $s->activePrice->unit }}</b></span>
+                @endif
+                @if ($s->dur)
+                <span>ระยะงาน <b class="text-navy-900 font-semibold">{{ $s->dur }}</b></span>
+                @endif
             </div>
             <span class="mt-4 inline-flex items-center gap-1.5 text-accent font-semibold text-[15px]">ดูรายละเอียดบริการ <i class="bi bi-arrow-right group-hover:translate-x-1 transition"></i></span>
         </a>
