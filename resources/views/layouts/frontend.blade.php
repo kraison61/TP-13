@@ -22,11 +22,15 @@
     <x-frontend.nav />
 @yield('content')
 
+{{-- ============ FINANCE ============ --}}
+<x-frontend.finance />
+
 {{-- ============ CONTACT ============ --}}
 <x-frontend.contact />
 
 {{-- ============ FOOTER ============ --}}
 <x-frontend.footer />
 
+@stack('scripts')
 </body>
 </html>

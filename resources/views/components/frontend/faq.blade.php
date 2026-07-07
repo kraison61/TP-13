@@ -8,9 +8,9 @@
             <a href="#contact" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอคำปรึกษาฟรี <i class="bi bi-arrow-right"></i></a>
         </div>
 
-        <div class="lg:col-span-7 space-y-3">
+        <div id="faqItems" class="lg:col-span-7 space-y-3">
             @foreach($faqs as $i => $faq)
-            <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden" {{ $i === 0 ? 'open' : '' }}>
+            <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden" name="faq" {{ $i === 0 ? 'open' : '' }}>
                 <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
                     {{ $faq['q'] }}
                     <i class="bi bi-plus-lg text-accent transition group-open:rotate-45"></i>

@@ -45,6 +45,14 @@ document.getElementById('testTabs')?.addEventListener('click', e => {
     });
 });
 
+// FAQ accordion — one item open at a time
+document.getElementById('faqItems')?.addEventListener('toggle', e => {
+    if (e.target.tagName !== 'DETAILS' || !e.target.open) return;
+    e.currentTarget.querySelectorAll('details[open]').forEach(d => {
+        if (d !== e.target) d.open = false;
+    });
+});
+
 // Copy discount reference code
 document.getElementById('copyRefBtn')?.addEventListener('click', async e => {
     const btn = e.currentTarget;

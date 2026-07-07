@@ -42,7 +42,7 @@ class ServiceController extends Controller
         //         'image' => 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&q=80&auto=format&fit=crop',
         //         'icon' => 'bi-grid-3x3',
         //     ],
-        //     // คุณสามารถคัดลอกข้อมูล ถนน, ลานคอนกรีต, ระบายน้ำ มาเพิ่มเป็นก้อน Array แบบด้านบนได้เลยครับ
+            // คุณสามารถคัดลอกข้อมูล ถนน, ลานคอนกรีต, ระบายน้ำ มาเพิ่มเป็นก้อน Array แบบด้านบนได้เลยครับ
         // ];
 
         // ส่งตัวแปร $services ไปให้ไฟล์ View ที่ชื่อว่า resources/views/services/index.blade.php
