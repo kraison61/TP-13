@@ -1,3 +1,17 @@
+// Scroll to top
+const toTopBtn = document.getElementById('toTopBtn');
+
+window.addEventListener('scroll', () => {
+    const show = window.scrollY > 400;
+    toTopBtn?.classList.toggle('opacity-0', !show);
+    toTopBtn?.classList.toggle('pointer-events-none', !show);
+    toTopBtn?.classList.toggle('translate-y-2', !show);
+}, { passive: true });
+
+toTopBtn?.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
 // Mobile menu
 const menuBtn    = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');

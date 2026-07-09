@@ -1,0 +1,652 @@
+<!doctype html>
+<html lang="th" class="scroll-smooth">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>ธีรพงษ์การช่าง — รับเหมาก่อสร้างครบวงจร</title>
+
+<!-- Tailwind 4 (browser build) -->
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+
+<!-- Brand tokens only — no hand-written CSS rules -->
+<style type="text/tailwindcss">
+  @theme {
+    --color-navy-950: #04111d;
+    --color-navy-900: #071a2c;
+    --color-navy-800: #0a2540;
+    --color-navy-700: #0a3d62;
+    --color-accent:   #0a3d62;
+    --color-hivis:    #ffc83a;
+    --color-ink:      #0f1722;
+    --color-ink2:     #36475a;
+    --color-muted:    #6a7787;
+    --color-line:     #e3e7ee;
+    --color-surface:  #f6f8fb;
+    --font-sans: "IBM Plex Sans Thai", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    --font-mono: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  }
+</style>
+</head>
+
+<body class="font-sans text-ink bg-white antialiased [text-wrap:pretty]">
+
+<!-- ============ UTILITY BAR ============ -->
+<div class="hidden md:block bg-navy-950 text-white/70 text-[13px]">
+  <div class="mx-auto max-w-7xl px-6 h-10 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <span><i class="bi bi-geo-alt-fill text-hivis mr-1"></i> บางใหญ่ นนทบุรี · รับงาน กทม. &amp; ปริมณฑล</span>
+      <span><i class="bi bi-clock-fill text-hivis mr-1"></i> จันทร์–เสาร์ 8:00–18:00 น.</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <a href="#" class="hover:text-white transition"><i class="bi bi-line text-hivis mr-1"></i> @theeraphong</a>
+      <a href="tel:0812345678" class="hover:text-white transition font-mono tabular-nums tracking-tight"><i class="bi bi-telephone-fill text-hivis mr-1"></i> 081-234-5678</a>
+    </div>
+  </div>
+</div>
+
+<!-- ============ NAV ============ -->
+<header id="nav" class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-line">
+  <nav class="mx-auto max-w-7xl px-6 h-[68px] flex items-center justify-between gap-4">
+    <a href="#home" class="flex items-center gap-3 shrink-0">
+      <span class="relative grid place-items-center w-10 h-10 rounded-lg bg-navy-900 text-white font-mono font-bold text-sm">TP
+        <span class="absolute w-1.5 h-1.5 rounded-[2px] bg-hivis translate-x-3 translate-y-3"></span>
+      </span>
+      <span class="font-bold text-navy-900 tracking-tight text-[17px] whitespace-nowrap">ธีรพงษ์การช่าง</span>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-1 text-[15px] font-medium text-ink2">
+      <a href="#home" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">หน้าแรก</a>
+      <a href="service.html?service=wall" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บริการ</a>
+      <a href="#projects" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ผลงาน</a>
+      <a href="#process" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ขั้นตอน</a>
+      <a href="blog.html" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บทความ</a>
+      <a href="portal.html" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">พอร์ทัลลูกค้า <i class="bi bi-arrow-up-right text-xs"></i></a>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a href="#contact" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา</a>
+      <button id="menuBtn" class="lg:hidden grid place-items-center w-10 h-10 rounded-lg border border-line text-navy-900" aria-label="เมนู"><i class="bi bi-list text-2xl"></i></button>
+    </div>
+  </nav>
+
+  <!-- mobile menu -->
+  <div id="mobileMenu" class="lg:hidden hidden border-t border-line bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-3 flex flex-col text-[15px] font-medium text-ink2">
+      <a href="#home" class="py-2.5 border-b border-line/70">หน้าแรก</a>
+      <a href="service.html?service=wall" class="py-2.5 border-b border-line/70">บริการ</a>
+      <a href="#projects" class="py-2.5 border-b border-line/70">ผลงาน</a>
+      <a href="#process" class="py-2.5 border-b border-line/70">ขั้นตอน</a>
+      <a href="blog.html" class="py-2.5 border-b border-line/70">บทความ</a>
+      <a href="portal.html" class="py-2.5">พอร์ทัลลูกค้า</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="home" class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
+  <div class="pointer-events-none absolute -top-24 right-0 h-[480px] w-[480px] rounded-full bg-accent/10 blur-3xl"></div>
+  <div class="relative mx-auto max-w-7xl px-6 py-16 lg:py-24 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div>
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
+        <span class="w-7 h-px bg-accent"></span> รับเหมาก่อสร้าง · นนทบุรี &amp; กรุงเทพฯ
+      </span>
+      <h1 class="mt-5 text-[clamp(2.2rem,4.2vw,3.6rem)] font-bold leading-[1.3] tracking-tight text-navy-900">
+        สร้างทุกโครงสร้าง ด้วย<span class="bg-gradient-to-t from-hivis/60 from-[28%] to-transparent to-[28%]">มาตรฐานมืออาชีพ</span>
+      </h1>
+      <p class="mt-5 text-lg leading-relaxed text-ink2 max-w-xl">
+        รับเหมา <b class="text-navy-900 font-semibold">กำแพงกันดิน · รั้วบ้าน · ถนน · ลานคอนกรีต</b> และงานปรับพื้นที่ — ทีมช่างมืออาชีพ ราคาตรงไปตรงมา ส่งมอบตรงเวลา รับประกันงาน 2 ปี
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">ขอใบเสนอราคาฟรี <i class="bi bi-arrow-right"></i></a>
+        <a href="#projects" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">ดูผลงานก่อสร้าง</a>
+      </div>
+      <div class="mt-9 flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ประสบการณ์ 18 ปี</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> รับประกันงาน 2 ปี</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ใบอนุญาตถูกต้อง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ทีมงาน 35 คน</span>
+      </div>
+    </div>
+
+    <div class="relative">
+      <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
+        <img src="https://images.unsplash.com/photo-1503387762-592deb58ef4e?w=1200&q=80&auto=format&fit=crop" alt="ทีมช่างของธีรพงษ์การช่าง" class="h-full w-full object-cover" />
+        <div class="absolute inset-x-5 bottom-5 flex items-center gap-4 rounded-xl bg-white/95 backdrop-blur p-4 shadow-xl">
+          <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><i class="bi bi-patch-check-fill"></i></span>
+          <div>
+            <div class="font-bold text-navy-900 text-[15px]">ใบรับรองมาตรฐาน วศ.</div>
+            <div class="text-[13px] text-muted">มอก. 109-2552 · รับเหมาก่อสร้าง ระดับ ค</div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute -left-4 top-8 hidden sm:flex items-center gap-3 rounded-xl bg-white p-3 pr-4 shadow-xl ring-1 ring-line">
+        <span class="grid place-items-center w-10 h-10 rounded-lg bg-hivis/20 text-accent text-lg"><i class="bi bi-buildings-fill"></i></span>
+        <div><div class="font-mono font-bold text-navy-900 leading-none tabular-nums">420+</div><div class="text-[12px] text-muted mt-0.5">โครงการ</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRUST STRIP ============ -->
+<div class="border-y border-line bg-white">
+  <div class="mx-auto max-w-7xl px-6 py-7 flex flex-wrap items-center justify-between gap-4">
+    <span class="text-xs font-semibold uppercase tracking-[0.12em] text-muted">ได้รับความไว้วางใจจาก</span>
+    <div class="flex flex-wrap gap-2.5">
+      <span class="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-[15px] text-ink2"><i class="bi bi-shield-check text-accent"></i> มอก. 109</span>
+      <span class="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-[15px] text-ink2"><i class="bi bi-award-fill text-accent"></i> ใบอนุญาตชั้น ค</span>
+      <span class="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-[15px] text-ink2"><i class="bi bi-people-fill text-accent"></i> สมาชิก ส.อ.ท.</span>
+      <span class="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-[15px] text-ink2"><i class="bi bi-cone-striped text-accent"></i> จป. วิชาชีพ</span>
+      <span class="inline-flex items-center gap-2 rounded-full border border-line px-3.5 py-2 text-[15px] text-ink2"><i class="bi bi-bank2 text-accent"></i> ขึ้นทะเบียนภาครัฐ</span>
+    </div>
+  </div>
+</div>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+  <div class="max-w-2xl">
+    <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการของเรา</span>
+    <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">งานก่อสร้างที่บ้านคุณต้องการ ครบจบในที่เดียว</h2>
+    <p class="mt-4 text-lg text-ink2 leading-relaxed">ทีมงานเฉพาะทางสำหรับงานก่อสร้างนอกตัวบ้าน รับงานตั้งแต่ 5 ตร.ม. ถึงโครงการขนาดใหญ่ ในกรุงเทพฯ และปริมณฑล</p>
+  </div>
+
+  <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="svcGrid">
+    <!-- cards injected -->
+  </div>
+</section>
+
+<!-- ============ PRICING TABLE ============ -->
+<section id="pricing" class="bg-surface">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+    <div class="max-w-2xl">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> ตารางราคา</span>
+      <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ราคาเริ่มต้น โปร่งใส เทียบได้ทุกบริการ</h2>
+      <p class="mt-4 text-lg text-ink2 leading-relaxed">ราคาเริ่มต้นต่อหน่วยสำหรับเทียบเบื้องต้น — ราคาจริงประเมินตามหน้างานฟรี ไม่มีค่าใช้จ่าย ไม่มีค่าแอบแฝง</p>
+    </div>
+
+    <div class="mt-10 overflow-x-auto rounded-2xl border border-line bg-white">
+      <table class="w-full min-w-[640px] text-left">
+        <thead>
+          <tr class="bg-navy-900 text-white text-[14px]">
+            <th class="px-6 py-4 font-semibold">บริการ</th>
+            <th class="px-6 py-4 font-semibold whitespace-nowrap">ราคาเริ่มต้น</th>
+            <th class="px-6 py-4 font-semibold whitespace-nowrap">ระยะเวลางาน</th>
+            <th class="px-6 py-4 font-semibold text-right">รายละเอียด</th>
+          </tr>
+        </thead>
+        <tbody id="priceTableBody" class="divide-y divide-line text-[15px]"><!-- injected --></tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-[13px] text-muted">* ราคายังไม่รวมงานพิเศษเฉพาะหน้างาน เช่น ระบบฐานรากพิเศษ การรื้อถอน หรือวัสดุเกรดสูงตามที่ลูกค้าเลือก</p>
+  </div>
+</section>
+
+<!-- ============ FINANCING CAROUSEL (3 finance partners) ============ -->
+<section class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+  <div class="flex items-end justify-between gap-4 mb-6">
+    <div>
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.16em] text-xs uppercase"><span class="w-6 h-px bg-accent"></span> สินเชื่อเพื่อการก่อสร้าง</span>
+      <h2 class="mt-3 text-2xl lg:text-3xl font-bold tracking-tight text-navy-900 leading-tight">ทุนไม่พร้อม? เริ่มก่อน ผ่อนทีหลัง — เลือกพันธมิตรที่ใช่</h2>
+    </div>
+    <div class="hidden sm:flex gap-2 shrink-0">
+      <button id="finPrev" aria-label="สไลด์ก่อนหน้า" class="grid place-items-center w-11 h-11 rounded-full border border-line text-navy-900 hover:bg-navy-900 hover:text-white hover:border-navy-900 transition"><i class="bi bi-arrow-left"></i></button>
+      <button id="finNext" aria-label="สไลด์ถัดไป" class="grid place-items-center w-11 h-11 rounded-full border border-line text-navy-900 hover:bg-navy-900 hover:text-white hover:border-navy-900 transition"><i class="bi bi-arrow-right"></i></button>
+    </div>
+  </div>
+
+  <div id="finViewport" class="relative overflow-hidden rounded-2xl">
+    <div id="finTrack" class="flex transition-transform duration-500 ease-out"><!-- slides injected --></div>
+  </div>
+
+  <div id="finDots" class="mt-5 flex justify-center gap-2"><!-- dots injected --></div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="bg-navy-900 text-white">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+    <div class="grid lg:grid-cols-12 gap-8 items-end mb-14">
+      <div class="lg:col-span-7">
+        <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-hivis"></span> ตัวเลขที่ภูมิใจ</span>
+        <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight leading-tight">18 ปี กับงานก่อสร้าง<br/>ที่ส่งมอบจริง ไม่ทิ้งงาน</h2>
+      </div>
+      <p class="lg:col-span-5 text-lg text-white/60 leading-relaxed">เรารับงานทุกสัญญาด้วยมาตรฐานเดียวกัน — ไม่ว่ารั้วบ้านขนาดเล็ก หรือกำแพงกันดินยาว 200 เมตร</p>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-5xl font-bold tracking-tight tabular-nums">18<span class="text-2xl text-hivis ml-1">ปี</span></div>
+        <div class="mt-2 text-white/55">ประสบการณ์ในวงการก่อสร้าง</div>
+      </div>
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-5xl font-bold tracking-tight tabular-nums">420<span class="text-2xl text-hivis ml-1">+</span></div>
+        <div class="mt-2 text-white/55">โครงการที่ส่งมอบเรียบร้อย</div>
+      </div>
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-5xl font-bold tracking-tight tabular-nums">35</div>
+        <div class="mt-2 text-white/55">ทีมช่างประจำและวิศวกร</div>
+      </div>
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-5xl font-bold tracking-tight tabular-nums">98<span class="text-2xl text-hivis ml-1">%</span></div>
+        <div class="mt-2 text-white/55">ลูกค้าแนะนำต่อเพื่อนและครอบครัว</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects" class="bg-surface">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+    <div class="max-w-2xl">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> ผลงานที่ผ่านมา</span>
+      <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ผลงานก่อสร้างจริง — ลูกค้าจริง พื้นที่จริง</h2>
+      <p class="mt-4 text-lg text-ink2">เลือกหมวดเพื่อกรองผลงานตามประเภทงาน</p>
+    </div>
+
+    <div class="mt-8 flex flex-wrap gap-2.5" id="filters">
+      <button data-filter="all" class="filter-btn rounded-full border border-navy-900 bg-navy-900 px-4 py-2.5 text-[15px] font-medium text-white transition">ทั้งหมด</button>
+      <button data-filter="wall" class="filter-btn rounded-full border border-line bg-transparent px-4 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 hover:text-navy-900 transition">กำแพงกันดิน</button>
+      <button data-filter="fence" class="filter-btn rounded-full border border-line bg-transparent px-4 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 hover:text-navy-900 transition">รั้วบ้าน</button>
+      <button data-filter="road" class="filter-btn rounded-full border border-line bg-transparent px-4 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 hover:text-navy-900 transition">ถนน &amp; ทางเข้า</button>
+      <button data-filter="slab" class="filter-btn rounded-full border border-line bg-transparent px-4 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 hover:text-navy-900 transition">ลานคอนกรีต</button>
+      <button data-filter="drain" class="filter-btn rounded-full border border-line bg-transparent px-4 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 hover:text-navy-900 transition">ระบายน้ำ</button>
+    </div>
+
+    <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-5" id="projectGrid">
+      <!-- injected -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section id="process" class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+  <div class="grid lg:grid-cols-12 gap-8 items-end mb-14">
+    <div class="lg:col-span-7">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> ขั้นตอนการทำงาน</span>
+      <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">โปร่งใส ตรวจสอบได้ ทุกขั้นตอน</h2>
+    </div>
+    <p class="lg:col-span-5 text-lg text-ink2 leading-relaxed">ลูกค้าทราบงบประมาณ ระยะเวลา และทีมงานก่อนเริ่มงานจริงเสมอ — ไม่มีค่าใช้จ่ายแอบแฝง</p>
+  </div>
+
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-navy-900 text-white text-xl mb-5"><i class="bi bi-chat-left-text"></i></span>
+      <div class="font-mono text-xs font-bold tracking-[0.15em] text-accent">STEP 01</div>
+      <h3 class="mt-2 text-lg font-bold text-navy-900">ปรึกษา &amp; สำรวจหน้างาน</h3>
+      <p class="mt-1.5 text-[15px] text-ink2 leading-relaxed">นัดเข้าวัดหน้างานฟรีภายใน 3 วัน พร้อมคำแนะนำจากวิศวกร</p>
+    </div>
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-navy-900 text-white text-xl mb-5"><i class="bi bi-rulers"></i></span>
+      <div class="font-mono text-xs font-bold tracking-[0.15em] text-accent">STEP 02</div>
+      <h3 class="mt-2 text-lg font-bold text-navy-900">ออกแบบ &amp; เสนอราคา</h3>
+      <p class="mt-1.5 text-[15px] text-ink2 leading-relaxed">ส่งแบบโครงสร้างพร้อม BOQ ละเอียดทุกรายการใน 5–7 วันทำการ</p>
+    </div>
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-navy-900 text-white text-xl mb-5"><i class="bi bi-cone-striped"></i></span>
+      <div class="font-mono text-xs font-bold tracking-[0.15em] text-accent">STEP 03</div>
+      <h3 class="mt-2 text-lg font-bold text-navy-900">ก่อสร้างจริง</h3>
+      <p class="mt-1.5 text-[15px] text-ink2 leading-relaxed">เริ่มงานพร้อมรายงานความคืบหน้ารายสัปดาห์ + รูปถ่ายในพอร์ทัล</p>
+    </div>
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-navy-900 text-white text-xl mb-5"><i class="bi bi-shield-check"></i></span>
+      <div class="font-mono text-xs font-bold tracking-[0.15em] text-accent">STEP 04</div>
+      <h3 class="mt-2 text-lg font-bold text-navy-900">ส่งมอบ &amp; รับประกัน</h3>
+      <p class="mt-1.5 text-[15px] text-ink2 leading-relaxed">ตรวจรับงานพร้อมเจ้าของบ้าน รับประกันงานก่อสร้าง 2 ปีเต็ม</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="bg-surface">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+    <div class="text-center max-w-2xl mx-auto">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> เสียงจากลูกค้าจริง</span>
+      <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ลูกค้ากว่า 400 บ้านพูดเป็นเสียงเดียวกัน</h2>
+    </div>
+
+    <div class="mt-8 flex justify-center gap-2" id="testTabs">
+      <button data-tab="0" class="tab-btn rounded-full bg-navy-900 px-5 py-2.5 text-[15px] font-medium text-white transition">บ้านพักอาศัย</button>
+      <button data-tab="1" class="tab-btn rounded-full bg-white border border-line px-5 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 transition">โครงการหมู่บ้าน</button>
+      <button data-tab="2" class="tab-btn rounded-full bg-white border border-line px-5 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 transition">เจ้าของที่ดิน</button>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-3 gap-5" id="testGrid"><!-- injected --></div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section id="faq" class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+  <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+    <div class="lg:col-span-5">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> คำถามที่พบบ่อย</span>
+      <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ก่อนตัดสินใจ คุณอาจอยากรู้</h2>
+      <p class="mt-4 text-lg text-ink2 leading-relaxed">หากไม่พบคำตอบที่ต้องการ โทร <a href="tel:0812345678" class="font-mono tabular-nums text-accent font-semibold">081-234-5678</a> ทีมงานพร้อมตอบทุกวันจันทร์–เสาร์ 8:00–18:00</p>
+      <a href="#contact" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอคำปรึกษาฟรี <i class="bi bi-arrow-right"></i></a>
+    </div>
+
+    <div class="lg:col-span-7 space-y-3" id="faqList"><!-- injected as <details> --></div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="bg-navy-900 text-white">
+  <div class="mx-auto max-w-7xl px-6 py-20 lg:py-28 grid lg:grid-cols-12 gap-12">
+    <div class="lg:col-span-5">
+      <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-hivis"></span> ขอใบเสนอราคา</span>
+      <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight leading-tight">เริ่มต้นโครงการของคุณวันนี้</h2>
+      <p class="mt-4 text-lg text-white/60 leading-relaxed">กรอกข้อมูลคร่าวๆ ทีมงานจะติดต่อกลับภายใน 24 ชั่วโมง (วันทำการ) เพื่อนัดสำรวจหน้างานฟรี</p>
+
+      <ul class="mt-8 space-y-4 text-white/85">
+        <li class="flex gap-3.5"><i class="bi bi-telephone-fill text-hivis text-xl"></i><div><div class="text-[13px] text-white/50">โทรเลย</div><div class="font-mono tabular-nums text-xl font-semibold">081-234-5678</div></div></li>
+        <li class="flex gap-3.5"><i class="bi bi-envelope-fill text-hivis text-xl"></i><div><div class="text-[13px] text-white/50">อีเมล</div><div class="font-medium">work@theeraphong.co.th</div></div></li>
+        <li class="flex gap-3.5"><i class="bi bi-geo-alt-fill text-hivis text-xl"></i><div><div class="text-[13px] text-white/50">สำนักงาน</div><div class="font-medium">88/15 ถ.กาญจนาภิเษก บางใหญ่ นนทบุรี 11140</div></div></li>
+        <li class="flex gap-3.5"><i class="bi bi-clock-fill text-hivis text-xl"></i><div><div class="text-[13px] text-white/50">เวลาทำการ</div><div class="font-medium">จันทร์–เสาร์ 8:00–18:00 น.</div></div></li>
+      </ul>
+    </div>
+
+    <div class="lg:col-span-7">
+      <form id="quoteForm" class="rounded-2xl bg-white p-7 lg:p-8 text-ink shadow-2xl shadow-navy-950/40 grid sm:grid-cols-2 gap-5">
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-navy-900 mb-1.5">ชื่อ–นามสกุล <span class="text-red-500">*</span></label>
+          <input name="name" required placeholder="กรุณากรอกชื่อ-นามสกุล" class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition" />
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-navy-900 mb-1.5">เบอร์โทรศัพท์ <span class="text-red-500">*</span></label>
+          <input name="phone" required pattern="[0-9\-\s]{9,}" placeholder="08X-XXX-XXXX" class="w-full rounded-xl border border-line px-4 py-3 font-mono tabular-nums outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition" />
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-navy-900 mb-1.5">ประเภทงาน <span class="text-red-500">*</span></label>
+          <select name="service" required class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition bg-white">
+            <option value="">เลือกประเภทงาน...</option>
+            <option>กำแพงกันดิน</option><option>รั้วบ้าน</option><option>ถนน &amp; ทางเข้าบ้าน</option>
+            <option>ลานคอนกรีต / ลานจอดรถ</option><option>ระบบระบายน้ำ</option><option>ปรับพื้นที่ / ถมดิน</option><option>งานอื่นๆ / รวมหลายงาน</option>
+          </select>
+        </div>
+        <div class="sm:col-span-1">
+          <label class="block text-sm font-medium text-navy-900 mb-1.5">งบประมาณคร่าวๆ</label>
+          <select name="budget" class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition bg-white">
+            <option>ต่ำกว่า 100,000 บาท</option><option>100,000 – 500,000 บาท</option><option selected>500,000 – 1,000,000 บาท</option><option>1,000,000 – 3,000,000 บาท</option><option>มากกว่า 3,000,000 บาท</option>
+          </select>
+        </div>
+        <div class="sm:col-span-2">
+          <label class="block text-sm font-medium text-navy-900 mb-1.5">รายละเอียดงาน</label>
+          <textarea name="detail" rows="4" placeholder="เช่น ขนาดพื้นที่, ความสูง, ระยะเวลาที่ต้องการ ฯลฯ" class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition"></textarea>
+        </div>
+        <label class="sm:col-span-2 flex items-center gap-2.5 text-sm text-ink2">
+          <input type="checkbox" required class="size-4 rounded border-line text-accent focus:ring-accent/30" />
+          ยอมรับ <a href="#" class="text-accent font-medium">นโยบายความเป็นส่วนตัว</a>
+        </label>
+        <div class="sm:col-span-2 flex flex-wrap items-center gap-4">
+          <button type="submit" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ส่งคำขอเสนอราคา <i class="bi bi-arrow-right"></i></button>
+          <span class="text-sm text-muted">ทีมงานติดต่อกลับภายใน 24 ชั่วโมง</span>
+        </div>
+        <div id="quoteOK" class="sm:col-span-2 hidden rounded-xl bg-green-50 border border-green-200 text-green-700 px-4 py-3 text-[15px]">
+          <i class="bi bi-check-circle-fill"></i> ส่งคำขอเรียบร้อย! ทีมงานจะติดต่อกลับเร็วที่สุด ขอบคุณที่ไว้วางใจครับ
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-navy-950 text-white/60">
+  <div class="mx-auto max-w-7xl px-6 pt-16 pb-10 grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-5">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="grid place-items-center w-10 h-10 rounded-lg bg-white text-navy-900 font-mono font-bold text-sm">TP</span>
+        <span class="font-bold text-white text-[17px]">ธีรพงษ์การช่าง</span>
+      </div>
+      <p class="max-w-sm text-[15px] leading-relaxed">รับเหมาก่อสร้างครบวงจร — กำแพงกันดิน รั้ว ถนน ลานคอนกรีต และงานปรับพื้นที่ ในเขตกรุงเทพฯ และปริมณฑล</p>
+      <div class="mt-5 flex gap-2.5">
+        <a href="#" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-facebook"></i> Facebook</a>
+        <a href="#" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-line"></i> @theeraphong</a>
+      </div>
+    </div>
+    <div class="md:col-span-2">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">บริการ</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><a href="service.html?service=wall" class="hover:text-white transition">กำแพงกันดิน</a></li>
+        <li><a href="service.html?service=fence" class="hover:text-white transition">รั้วบ้าน</a></li>
+        <li><a href="service.html?service=road" class="hover:text-white transition">ถนน &amp; ทางเข้า</a></li>
+        <li><a href="service.html?service=slab" class="hover:text-white transition">ลานคอนกรีต</a></li>
+        <li><a href="service.html?service=drain" class="hover:text-white transition">ระบายน้ำ</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-2">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">บริษัท</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><a href="#projects" class="hover:text-white transition">ผลงานก่อสร้าง</a></li>
+        <li><a href="#process" class="hover:text-white transition">ขั้นตอนทำงาน</a></li>
+        <li><a href="blog.html" class="hover:text-white transition">บทความ</a></li>
+        <li><a href="portal.html" class="hover:text-white transition">พอร์ทัลลูกค้า</a></li>
+        <li><a href="#faq" class="hover:text-white transition">คำถามที่พบบ่อย</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-3">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">ติดต่อ</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><i class="bi bi-telephone-fill text-hivis mr-2"></i><span class="font-mono tabular-nums">081-234-5678</span></li>
+        <li><i class="bi bi-envelope-fill text-hivis mr-2"></i>work@theeraphong.co.th</li>
+        <li><i class="bi bi-geo-alt-fill text-hivis mr-2"></i>88/15 ถ.กาญจนาภิเษก บางใหญ่ นนทบุรี 11140</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6 py-5 flex flex-wrap justify-between gap-2 text-[14px]">
+      <div>© 2026 ห้างหุ้นส่วนจำกัด ธีรพงษ์การช่าง · เลขผู้เสียภาษี 0125555012345</div>
+      <div class="flex gap-5"><a href="#" class="hover:text-white transition">นโยบายความเป็นส่วนตัว</a><a href="#" class="hover:text-white transition">เงื่อนไขการให้บริการ</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Data ---------- */
+const SERVICES = [
+  { slug:'wall', icon:'bi-bricks', name:'กำแพงกันดิน', desc:'กำแพงคอนกรีตเสริมเหล็ก เข็มเจาะ เข็มตอก คำนวณโครงสร้างโดยวิศวกร พร้อมใบ กว.', price:'2,800.-/ตร.ม.', dur:'14–30 วัน' },
+  { slug:'fence', icon:'bi-grid-3x3', name:'รั้วบ้าน', desc:'รั้วสำเร็จรูป รั้วก่ออิฐ รั้วโมเดิร์น พร้อมประตูรีโมท ทาสีและเก็บงานเรียบร้อย', price:'1,500.-/ตร.ม.', dur:'7–21 วัน' },
+  { slug:'road', icon:'bi-signpost-split', name:'ถนน & ทางเข้าบ้าน', desc:'ถนนคอนกรีตเสริมเหล็ก ถนนแอสฟัลต์ และ Stamped Concrete สำหรับทางเข้าบ้านสวยๆ', price:'650.-/ตร.ม.', dur:'5–15 วัน' },
+  { slug:'slab', icon:'bi-square', name:'ลานคอนกรีต & ลานจอดรถ', desc:'ลานคอนกรีตขัดมัน ขัดเงา หรือ Polished Concrete ทนทาน ไม่แตกร้าวง่าย', price:'550.-/ตร.ม.', dur:'3–10 วัน' },
+  { slug:'drain', icon:'bi-water', name:'ระบบระบายน้ำ', desc:'วางท่อระบายน้ำ บ่อพัก บ่อดักไขมัน Sump pit ป้องกันน้ำท่วมในรอบบ้าน', price:'1,200.-/เมตร', dur:'3–12 วัน' },
+  { slug:'land', icon:'bi-bounding-box', name:'ปรับพื้นที่ & ถมดิน', desc:'ถมดิน บดอัด ปรับระดับ พร้อมรถแบคโฮ รถบด หน้างาน คิดราคาตามคิวจริง', price:'220.-/คิว', dur:'2–7 วัน' },
+];
+
+const PROJECTS = [
+  { cat:'wall', img:'1590725140246-20acdee442be', tag:'กำแพงกันดิน', title:'กำแพงกันดิน บางบัวทอง', meta:'ยาว 64 ม. · เข็มเจาะ Ø35 ซม. · 28 วัน' },
+  { cat:'fence', img:'1558618666-fcd25c85cd64', tag:'รั้วบ้าน', title:'รั้วโมเดิร์น พร้อมประตูรีโมท', meta:'ยาว 38 ม. · ราชพฤกษ์ · 18 วัน' },
+  { cat:'road', img:'1518709268805-4e9042af9f23', tag:'ถนน & ทางเข้า', title:'ทางเข้าหมู่บ้านคอนกรีต', meta:'850 ตร.ม. · ปทุมธานี · 14 วัน' },
+  { cat:'slab', img:'1604719312566-8912e9227c6a', tag:'ลานคอนกรีต', title:'ลานจอดรถคอนกรีตขัดมัน', meta:'120 ตร.ม. · นนทบุรี · 7 วัน' },
+  { cat:'wall', img:'1517089596392-fb9a9033e05b', tag:'กำแพงกันดิน', title:'กำแพงคันสระ บางใหญ่', meta:'ยาว 120 ม. · สูง 2.4 ม. · 45 วัน' },
+  { cat:'drain', img:'1581094288338-2314dddb7ece', tag:'ระบายน้ำ', title:'วางท่อระบายรอบบ้าน', meta:'ยาว 86 ม. · Ø60 ซม. · 10 วัน' },
+  { cat:'fence', img:'1486718448742-163732cd1544', tag:'รั้วบ้าน', title:'รั้วก่ออิฐ ทาวน์โฮม 6 หลัง', meta:'ยาว 156 ม. · นวนคร · 24 วัน' },
+  { cat:'slab', img:'1581235720704-06d3acfcb36f', tag:'ลานคอนกรีต', title:'ลานคอนกรีตโรงเก็บของ', meta:'240 ตร.ม. · ลาดกระบัง · 9 วัน' },
+];
+
+const TESTI = [
+  [
+    ['ก','คุณกชกร เลิศมงคล','รั้วบ้านโมเดิร์น · ราชพฤกษ์','ทีมงานเป็นมืออาชีพมาก สื่อสารตรงไปตรงมา ราคาที่เสนอตรงตามที่จ่ายจริง รั้วโมเดิร์นที่ทำให้สวยมากค่ะ'],
+    ['ส','คุณสมชาย ภักดี','กำแพงกันดิน · บางใหญ่','กำแพงกันดินสูง 2.5 ม. ทำเสร็จก่อนกำหนด 3 วัน วิศวกรเข้ามาตรวจหน้างานทุกสัปดาห์ ราคายุติธรรมครับ'],
+    ['ป','คุณปรียา วงศ์เจริญ','ลานจอดรถ · นนทบุรี','ลานคอนกรีตขัดมันสวยตามแบบ ใช้จอดรถมา 2 ปี ไม่มีร้าวเลย คุ้มมาก แนะนำต่อให้เพื่อนบ้านแล้วค่ะ'],
+  ],
+  [
+    ['ธ','คุณธีระ — Site Manager','หมู่บ้านนวธารา · นวนคร','รั้วโครงการ 156 ม. ทำใน 24 วัน ไม่มีดราม่ากับลูกบ้าน เก็บงานเรียบร้อย ทำสัญญารอบสอง 2 โครงการแล้วครับ'],
+    ['ว','คุณวีระชัย สุขใจ','โครงการบ้านเดี่ยว · ปทุมธานี','งานถนนคอนกรีต 850 ตร.ม. ส่งมอบทันก่อนเปิดโครงการ เอกสารครบ ใบ กว. เซ็นถูกต้อง ทำงานง่ายมาก'],
+  ],
+  [
+    ['ม','คุณมานพ ใจดี','ถมที่ดิน 4 ไร่ · บางบัวทอง','ถมที่ 4 ไร่ บดอัดดีมาก ราคาคิดตามคิวจริงไม่โกง ขึ้นบ้านได้สบายๆ ไม่ทรุด ผ่านมา 3 ปียังแน่นเหมือนเดิม'],
+    ['อ','คุณอุไรวรรณ ทองดี','ระบบระบายน้ำ · ลาดกระบัง','วางท่อระบายน้ำรอบที่ดิน 86 เมตร แก้ปัญหาน้ำท่วมขังที่เป็นมานาน ทีมงานชี้แจงทุกขั้นตอน ราคาเป็นธรรม'],
+  ],
+];
+
+const FAQ = [
+  ['ค่าใช้จ่ายในการสำรวจหน้างานเท่าไหร่?','การสำรวจหน้างานและประเมินราคาเบื้องต้น <b class="text-navy-900">ไม่มีค่าใช้จ่ายใดๆ</b> — ทีมงานจะนัดเข้าวัดหน้างานภายใน 3 วันทำการ พร้อมส่งใบเสนอราคาภายใน 5–7 วันหลังสำรวจ'],
+  ['รับประกันงานก่อสร้างกี่ปี?','รับประกันงานก่อสร้าง <b class="text-navy-900">2 ปีเต็ม</b> ครอบคลุมโครงสร้าง การแตกร้าวผิดปกติ และความเสียหายจากการก่อสร้าง หากเกิดปัญหาแจ้งผ่านพอร์ทัลลูกค้าได้ 24 ชม.'],
+  ['ชำระเงินเป็นงวดอย่างไร?','งวด 1 — มัดจำ 25% เพื่อสั่งวัสดุ · งวด 2–4 ตามความคืบหน้าจริง · งวดสุดท้าย 10% หลังตรวจรับงานครบถ้วน — ทุกงวดมีเอกสารเซ็นรับและใบเสร็จกำกับภาษีถูกต้อง'],
+  ['รับงานพื้นที่ไหนบ้าง?','รับงานในเขต <b class="text-navy-900">กรุงเทพฯ และปริมณฑล</b> (นนทบุรี ปทุมธานี สมุทรปราการ สมุทรสาคร นครปฐม) สำหรับโครงการขนาดใหญ่นอกพื้นที่ พิจารณาเป็นกรณีไป'],
+  ['ใช้วัสดุยี่ห้ออะไร? เลือกได้ไหม?','ใช้วัสดุมาตรฐาน มอก. เป็นหลัก เช่น ปูน SCG / TPI, เหล็ก TATA / SYS — ลูกค้าเลือกระบุยี่ห้อเองได้ในขั้นตอนทำสัญญา โดยปรับราคาตามใบเสนอราคาวัสดุที่เลือก'],
+  ['ติดตามความคืบหน้าได้อย่างไร?','ลูกค้าทุกท่านได้รับ <b class="text-navy-900">บัญชีพอร์ทัลลูกค้า</b> ดูภาพหน้างานรายวัน รายงาน Daily Report ตารางการเบิกงวด และส่งข้อความหาทีมงานได้ตลอดเวลา'],
+];
+
+const img = (id, w=900) => `https://images.unsplash.com/photo-${id}?w=${w}&q=80&auto=format&fit=crop`;
+
+/* ---------- Services ---------- */
+document.getElementById('svcGrid').innerHTML = SERVICES.map(s => `
+  <a href="service.html?service=${s.slug}" class="group flex flex-col rounded-2xl border border-line bg-white p-7 hover:border-navy-900 hover:-translate-y-1 hover:shadow-2xl hover:shadow-navy-900/10 transition">
+    <span class="grid place-items-center w-14 h-14 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi ${s.icon}"></i></span>
+    <h3 class="text-xl font-bold text-navy-900">${s.name}</h3>
+    <p class="mt-2 text-[15px] text-ink2 leading-relaxed flex-1">${s.desc}</p>
+    <div class="mt-5 pt-4 border-t border-dashed border-line flex gap-5 text-[13px] text-muted">
+      <span>เริ่มต้น <b class="text-navy-900 font-semibold">${s.price}</b></span>
+      <span>ระยะงาน <b class="text-navy-900 font-semibold">${s.dur}</b></span>
+    </div>
+    <span class="mt-4 inline-flex items-center gap-1.5 text-accent font-semibold text-[15px]">ดูรายละเอียดบริการ <i class="bi bi-arrow-right group-hover:translate-x-1 transition"></i></span>
+  </a>`).join('');
+
+/* ---------- Pricing table (compare all services) ---------- */
+document.getElementById('priceTableBody').innerHTML = SERVICES.map(s => `
+  <tr class="hover:bg-surface transition">
+    <td class="px-6 py-4">
+      <div class="flex items-center gap-3">
+        <span class="grid place-items-center w-9 h-9 rounded-lg bg-accent/8 text-accent shrink-0"><i class="bi ${s.icon}"></i></span>
+        <span class="font-semibold text-navy-900">${s.name}</span>
+      </div>
+    </td>
+    <td class="px-6 py-4 font-mono font-semibold text-navy-900 tabular-nums whitespace-nowrap">${s.price}</td>
+    <td class="px-6 py-4 text-ink2 whitespace-nowrap">${s.dur}</td>
+    <td class="px-6 py-4 text-right">
+      <a href="service.html?service=${s.slug}" class="inline-flex items-center gap-1.5 text-accent font-semibold text-[14px] hover:gap-2.5 transition-all whitespace-nowrap">ดูบริการ <i class="bi bi-arrow-right"></i></a>
+    </td>
+  </tr>`).join('');
+
+/* ---------- Projects + filter ---------- */
+const projectGrid = document.getElementById('projectGrid');
+function renderProjects(filter='all'){
+  projectGrid.innerHTML = PROJECTS.filter(p => filter==='all' || p.cat===filter).map(p => `
+    <a href="#" class="group relative block aspect-4/3 overflow-hidden rounded-2xl ring-1 ring-line">
+      <img src="${img(p.img)}" alt="${p.title}" class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500" />
+      <div class="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/15 to-transparent"></div>
+      <div class="absolute inset-0 p-5 flex flex-col justify-end text-white">
+        <span class="self-start rounded-full bg-white/20 backdrop-blur px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide">${p.tag}</span>
+        <h3 class="mt-2.5 text-lg font-bold">${p.title}</h3>
+        <p class="text-[13px] text-white/75">${p.meta}</p>
+      </div>
+    </a>`).join('');
+}
+renderProjects();
+document.getElementById('filters').addEventListener('click', e => {
+  const b = e.target.closest('.filter-btn'); if(!b) return;
+  document.querySelectorAll('.filter-btn').forEach(x => {
+    x.className = 'filter-btn rounded-full border border-line bg-transparent px-4 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 hover:text-navy-900 transition';
+  });
+  b.className = 'filter-btn rounded-full border border-navy-900 bg-navy-900 px-4 py-2.5 text-[15px] font-medium text-white transition';
+  renderProjects(b.dataset.filter);
+});
+
+/* ---------- Testimonials ---------- */
+const testGrid = document.getElementById('testGrid');
+function renderTesti(i=0){
+  testGrid.innerHTML = TESTI[i].map(t => `
+    <figure class="rounded-2xl bg-white ring-1 ring-line p-7 flex flex-col">
+      <div class="text-hivis text-[15px] mb-4">${'<i class="bi bi-star-fill"></i>'.repeat(5)}</div>
+      <blockquote class="text-ink leading-relaxed flex-1">${t[3]}</blockquote>
+      <figcaption class="mt-5 flex items-center gap-3">
+        <span class="grid place-items-center w-10 h-10 rounded-full bg-surface text-navy-900 font-bold">${t[0]}</span>
+        <span><span class="block font-semibold text-navy-900 text-[15px]">${t[1]}</span><span class="block text-[13px] text-muted">${t[2]}</span></span>
+      </figcaption>
+    </figure>`).join('');
+}
+renderTesti();
+document.getElementById('testTabs').addEventListener('click', e => {
+  const b = e.target.closest('.tab-btn'); if(!b) return;
+  document.querySelectorAll('.tab-btn').forEach(x => {
+    x.className = 'tab-btn rounded-full bg-white border border-line px-5 py-2.5 text-[15px] font-medium text-ink2 hover:border-navy-900 transition';
+  });
+  b.className = 'tab-btn rounded-full bg-navy-900 px-5 py-2.5 text-[15px] font-medium text-white transition';
+  renderTesti(+b.dataset.tab);
+});
+
+/* ---------- FAQ (native details) ---------- */
+document.getElementById('faqList').innerHTML = FAQ.map(([q,a], i) => `
+  <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden" ${i===0?'open':''}>
+    <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
+      ${q}
+      <i class="bi bi-plus-lg text-accent transition group-open:rotate-45"></i>
+    </summary>
+    <p class="pb-5 -mt-1 text-[15px] text-ink2 leading-relaxed">${a}</p>
+  </details>`).join('');
+
+/* ---------- Financing carousel (3 finance partners — edit FINANCE below) ---------- */
+const FINANCE = [
+  { icon:'bi-bank2',          name:'พันธมิตรสินเชื่อ 1 (แก้ชื่อบริษัทได้)', highlight:'ผ่อน 0% นานสูงสุด 10 เดือน',         desc:'เริ่มงานได้ทันที ผ่อนชำระเป็นงวดสบาย ๆ ไม่มีดอกเบี้ยในช่วงโปรโมชัน เหมาะกับงานรั้ว ลาน และต่อเติมขนาดเล็ก–กลาง' },
+  { icon:'bi-houses-fill',    name:'พันธมิตรสินเชื่อ 2 (แก้ชื่อบริษัทได้)', highlight:'วงเงินสูงสุด 3,000,000 บาท',         desc:'สินเชื่อเพื่อการก่อสร้างและต่อเติมบ้าน อนุมัติไว เอกสารไม่ยุ่งยาก เหมาะกับงานโครงสร้างขนาดใหญ่ เช่น กำแพงกันดิน' },
+  { icon:'bi-graph-up-arrow', name:'พันธมิตรสินเชื่อ 3 (แก้ชื่อบริษัทได้)', highlight:'ดอกเบี้ยพิเศษสำหรับเจ้าของกิจการ',  desc:'สินเชื่อ SME สำหรับผู้ประกอบการและโครงการหมู่บ้าน ผ่อนได้ยาวสูงสุด 60 เดือน วางแผนกระแสเงินสดได้สบาย' },
+];
+(function(){
+  const track = document.getElementById('finTrack');
+  if(!track) return;
+  const dotsWrap = document.getElementById('finDots');
+  const vp = document.getElementById('finViewport');
+  let i = 0, timer;
+
+  track.innerHTML = FINANCE.map(f => `
+    <div class="shrink-0 basis-full min-w-0">
+      <div class="relative overflow-hidden rounded-2xl bg-navy-900 text-white">
+        <div class="pointer-events-none absolute -right-16 -top-16 h-64 w-64 rounded-full bg-hivis/15 blur-2xl"></div>
+        <div class="pointer-events-none absolute -left-10 -bottom-20 h-56 w-56 rounded-full bg-accent/30 blur-2xl"></div>
+        <div class="relative p-8 lg:p-10 flex flex-col lg:flex-row lg:items-center gap-7">
+          <span class="grid place-items-center w-16 h-16 rounded-2xl bg-hivis text-navy-900 text-3xl shrink-0"><i class="bi ${f.icon}"></i></span>
+          <div class="flex-1">
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <span class="font-bold text-xl">${f.name}</span>
+              <span class="rounded-full bg-hivis/20 text-hivis text-[12px] font-semibold px-2.5 py-1">${f.highlight}</span>
+            </div>
+            <p class="mt-2.5 text-white/70 leading-relaxed max-w-2xl">${f.desc}</p>
+            <p class="mt-2 text-[12px] text-white/40">ดอกเบี้ยและเงื่อนไขการอนุมัติเป็นไปตามที่ผู้ให้สินเชื่อกำหนด · อยู่ระหว่างการพิจารณาคุณสมบัติผู้กู้</p>
+          </div>
+          <div class="flex flex-col gap-2.5 shrink-0">
+            <a href="#contact" class="inline-flex items-center justify-center gap-2 rounded-xl bg-hivis px-6 py-3.5 font-semibold text-navy-900 hover:bg-white transition whitespace-nowrap">ปรึกษาแผนผ่อน <i class="bi bi-arrow-right"></i></a>
+            <a href="tel:0812345678" class="inline-flex items-center justify-center gap-2 rounded-xl border border-white/25 px-6 py-3 font-semibold text-white hover:bg-white/10 transition whitespace-nowrap"><i class="bi bi-telephone-fill text-hivis"></i> โทรสอบถาม</a>
+          </div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  dotsWrap.innerHTML = FINANCE.map((_,idx)=>`<button data-i="${idx}" aria-label="ไปสไลด์ ${idx+1}" class="fin-dot h-2.5 rounded-full transition-all"></button>`).join('');
+  const dots = [...dotsWrap.children];
+
+  function go(n){
+    i = (n + FINANCE.length) % FINANCE.length;
+    track.style.transform = `translateX(-${i*100}%)`;
+    dots.forEach((d,idx)=> d.className = 'fin-dot h-2.5 rounded-full transition-all ' + (idx===i ? 'w-7 bg-accent' : 'w-2.5 bg-line hover:bg-muted'));
+  }
+  function play(){ clearInterval(timer); timer = setInterval(()=>go(i+1), 5500); }
+
+  document.getElementById('finNext').addEventListener('click', ()=>{ go(i+1); play(); });
+  document.getElementById('finPrev').addEventListener('click', ()=>{ go(i-1); play(); });
+  dotsWrap.addEventListener('click', e=>{ const b=e.target.closest('.fin-dot'); if(b){ go(+b.dataset.i); play(); } });
+  vp.addEventListener('mouseenter', ()=>clearInterval(timer));
+  vp.addEventListener('mouseleave', play);
+
+  let x0=null;
+  vp.addEventListener('touchstart', e=>{ x0=e.touches[0].clientX; }, {passive:true});
+  vp.addEventListener('touchend', e=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>40) go(i + (dx<0?1:-1)); x0=null; play(); }, {passive:true});
+
+  go(0); play();
+})();
+
+/* ---------- Mobile menu ---------- */
+const mm = document.getElementById('mobileMenu');
+document.getElementById('menuBtn').addEventListener('click', () => mm.classList.toggle('hidden'));
+mm.addEventListener('click', e => { if(e.target.tagName==='A') mm.classList.add('hidden'); });
+
+/* ---------- Form ---------- */
+document.getElementById('quoteForm').addEventListener('submit', e => {
+  e.preventDefault();
+  if(!e.target.checkValidity()){ e.target.reportValidity(); return; }
+  document.getElementById('quoteOK').classList.remove('hidden');
+  e.target.reset();
+  setTimeout(() => document.getElementById('quoteOK').classList.add('hidden'), 6000);
+});
+</script>
+</body>
+</html>

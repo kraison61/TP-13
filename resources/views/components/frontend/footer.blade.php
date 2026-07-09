@@ -18,7 +18,7 @@ $services = config('frontend.services');
             <h3 class="text-white font-semibold mb-3.5 text-[15px]">บริการ</h3>
             <ul class="space-y-2.5 text-[15px]">
                 @foreach($services as $s)
-                <li><a href="{{ route('services', ['service' => $s['slug']]) }}" class="hover:text-white transition">{{ $s['name'] }}</a></li>
+                <li><a href="{{ route('frontend.services.index', ['service' => $s['slug']]) }}" class="hover:text-white transition">{{ $s['name'] }}</a></li>
                 @endforeach
             </ul>
         </div>

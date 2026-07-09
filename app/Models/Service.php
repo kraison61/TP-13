@@ -68,6 +68,13 @@ class Service extends Model
         return $this->hasMany(Faq::class);
     }
 
+    public function scopes(): HasMany
+    {
+        return $this->hasMany(ServiceScope::class)
+            ->where('is_active', true)
+            ->orderBy('sort_order');
+    }
+
     public function blogs(): HasMany
     {
         return $this->hasMany(Blog::class);

@@ -29,7 +29,15 @@
                         <div class="rounded-xl bg-surface p-5">
                             <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ราคาเริ่มต้น</div>
                             <div class="font-mono text-2xl font-bold text-navy-900">
-                                {{ $service->prices->first()->price }} <span class="text-base font-sans font-medium text-ink2">/ {{ $service->prices->first()->unit }}</span>
+                                @if ($service->activePrice)
+                                    {{ number_format((float) $service->activePrice->price, 0) }}
+                                    <span class="text-base font-sans font-medium text-ink2">/ {{ $service->activePrice->unit }}</span>
+                                @elseif ($service->prices->first())
+                                    {{ number_format((float) $service->prices->first()->price, 0) }}
+                                    <span class="text-base font-sans font-medium text-ink2">/ {{ $service->prices->first()->unit }}</span>
+                                @else
+                                    <span class="text-base font-sans font-medium text-ink2">สอบถาม</span>
+                                @endif
                             </div>
                         </div>
                         <div class="rounded-xl bg-surface p-5">
@@ -40,17 +48,19 @@
                         </div>
                     </div>
 
-                    @if (!empty($service->features))
-                        <div class="mt-7 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
-                            @foreach ($service->features as $feature)
-                                <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>{{ $feature }}</span>
+                    @if ($service->scopes->isNotEmpty())
+                        <h3 class="mt-7 text-lg font-bold text-navy-900">ขอบเขตและประเภทงาน</h3>
+                        <div class="mt-4 grid sm:grid-cols-2 gap-y-3 gap-x-6 text-[15px] text-ink2">
+                            @foreach ($service->scopes as $scope)
+                                <span><i class="bi bi-check-circle-fill text-accent mr-2"></i>{{ $scope->name }}</span>
                             @endforeach
                         </div>
                     @endif
 
                     <div class="mt-8 flex flex-wrap gap-3">
                         <a href="/#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <i class="bi bi-arrow-right"></i></a>
-                        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
+                        <a href="{{ route('frontend.services.show', $service->slug) }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">ดูรายละเอียดงานบริการ <i class="bi bi-arrow-right"></i></a>
+                        <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-line px-6 py-3.5 font-semibold text-navy-900 hover:border-navy-900 transition"><i class="bi bi-telephone"></i> โทรปรึกษาฟรี</a>
                     </div>
                 </div>
             </section>

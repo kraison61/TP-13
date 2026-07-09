@@ -31,6 +31,8 @@
 {{-- ============ FOOTER ============ --}}
 <x-frontend.footer />
 
+<x-frontend.to-top />
+
 @stack('scripts')
 </body>
 </html>

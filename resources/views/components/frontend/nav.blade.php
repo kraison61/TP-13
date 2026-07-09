@@ -9,7 +9,7 @@
 
         <div class="hidden lg:flex items-center gap-1 text-[15px] font-medium text-ink2">
             <a href="#home"     class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">หน้าแรก</a>
-            <a href="{{ route('services') }}" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บริการ</a>
+            <a href="{{ route('frontend.services.index') }}" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บริการ</a>
             <a href="#projects" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ผลงาน</a>
             <a href="#process"  class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ขั้นตอน</a>
             <a href="{{ route('blog.index') }}"   class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บทความ</a>
@@ -28,7 +28,7 @@
     <div id="mobileMenu" class="lg:hidden hidden border-t border-line bg-white">
         <div class="mx-auto max-w-7xl px-6 py-3 flex flex-col text-[15px] font-medium text-ink2">
             <a href="#home"                   class="py-2.5 border-b border-line/70">หน้าแรก</a>
-            <a href="{{ route('services') }}" class="py-2.5 border-b border-line/70">บริการ</a>
+            <a href="{{ route('frontend.services.index') }}" class="py-2.5 border-b border-line/70">บริการ</a>
             <a href="#projects"               class="py-2.5 border-b border-line/70">ผลงาน</a>
             <a href="#process"                class="py-2.5 border-b border-line/70">ขั้นตอน</a>
             <a href="{{ route('blog.index') }}" class="py-2.5 border-b border-line/70">บทความ</a>

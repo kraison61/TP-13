@@ -18,3 +18,9 @@ Route::post('/quote', [QuoteController::class, 'store'])->name('quote.store');
 Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy');
 
 Route::get('/terms', [TermsController::class, 'index'])->name('terms');
+
+Route::prefix('services')->name('frontend.services.')->group(function () {
+    Route::get('/', [ServiceController::class, 'index'])->name('index');
+    Route::get('/calculate', [ServiceController::class, 'soilCalculate'])->name('calculate');
+    Route::get('/{slug}', [ServiceController::class, 'show'])->name('show');
+});
