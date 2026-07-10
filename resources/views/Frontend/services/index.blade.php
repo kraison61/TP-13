@@ -10,8 +10,11 @@
 
                 <div class="lg:col-span-5 {{ $loop->odd ? 'order-1 lg:order-2' : 'order-1' }}">
                     <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
-                        <img src="{{ Storage::disk('s3')->url($service->img_1) }}?width=450&format=webp&fit=cover" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover" />
-                        <!-- <img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover" /> -->
+                        @if ($service->img_1)
+                            <img src="{{ Storage::disk('s3')->url($service->img_1) }}?width=450&format=webp&fit=cover" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover" />
+                        @else
+                            <img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover" />
+                        @endif
                         <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg">
                             <i class="bi {{ $service->icon_name }}"></i>
                         </div>
@@ -23,7 +26,7 @@
                         <span class="w-7 h-px bg-accent"></span> บริการ {{ str_pad($loop->iteration, 2, '0', STR_PAD_LEFT) }}
                     </span>
                     <h2 class="mt-3 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900">{{ $service->title }}</h2>
-                    <p class="mt-3 text-[17px] text-ink2 leading-relaxed">{{ $service->description }}</p>
+                    <p class="mt-3 text-[17px] text-ink2 leading-relaxed">{!! $service->description !!}</p>
 
                     <div class="mt-7 grid sm:grid-cols-2 gap-3">
                         <div class="rounded-xl bg-surface p-5">
@@ -71,5 +74,5 @@
         @endforeach
 
     </main>
-    <x-frontend.service.compare-table />
+    <x-frontend.service.compare-table :columns="$compareColumns" />
 @endsection

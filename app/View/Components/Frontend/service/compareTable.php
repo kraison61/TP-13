@@ -3,46 +3,36 @@
 namespace App\View\Components\frontend\service;
 
 use App\Models\Service;
-
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\Component;
 
 class compareTable extends Component
 {
-    public $services;
+    public Collection $services;
 
-    private const WARRANTY_SLUGS = [
-        'retaining-wall', 'fence', 'dam', 'footing', 'pour-concrete', 'pipe', 'pile',
-    ];
+    public array $columns;
 
-    private const ENGINEER_CERT_SLUGS = [
-        'retaining-wall', 'dam', 'footing', 'pile',
-    ];
-
-    public function __construct()
+    public function __construct(?Collection $services = null, ?array $columns = null)
     {
-        
-$this->services = Service::query()
-->with('activePrice')
-->where('is_active', true)
-->whereHas('activePrice')
-->orderBy('id')
-->get()
-->map(fn (Service $service) => (object) [
-    'title' => $service->title,
-    'slug' => $service->slug,
-    'dur' => $service->dur,
-    'price' => $service->activePrice->price,
-    'unit' => $service->activePrice->unit,
-    'has_warranty' => in_array($service->slug, self::WARRANTY_SLUGS),
-    'has_engineer_cert' => in_array($service->slug, self::ENGINEER_CERT_SLUGS),
-]);
+        $this->services = $services ?? $this->queryServices();
+        $this->columns = $columns ?? config('frontend.service_compare.columns', []);
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
+    private function queryServices(): Collection
+    {
+        return Service::query()
+            ->with([
+                'lowestPrice',
+                'scopes' => fn ($q) => $q->whereIn('group', ['warranty', 'cert']),
+            ])
+            ->where('is_active', true)
+            ->whereHas('lowestPrice')
+            ->orderBy('id')
+            ->get();
+    }
+
     public function render(): View|Closure|string
     {
         return view('components.frontend.service.compare-table');

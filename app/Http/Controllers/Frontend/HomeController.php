@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
-use App\Models\Portfolio;
+use App\Models\Blog;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -19,14 +19,20 @@ class HomeController extends Controller
             ->orderBy('id')
             ->get();
 
-        $portfolios = Portfolio::with('service')
+        $blogs = Blog::with('service')
+            ->whereNotNull('service_id')
             ->whereHas('service', fn ($q) => $q->where('is_active', true))
             ->latest()
             ->get();
 
-        $filterServices = $portfolios->pluck('service')->unique('id')->sortBy('title')->values();
+        $filterServices = Service::query()
+            ->where('is_active', true)
+            ->whereHas('blogs', fn ($q) => $q->whereNotNull('service_id'))
+            ->withCount(['blogs' => fn ($q) => $q->whereNotNull('service_id')])
+            ->orderBy('title')
+            ->get();
 
-        return view('Frontend.index', compact('services', 'portfolios', 'filterServices'));
+        return view('Frontend.index', compact('services', 'blogs', 'filterServices'));
     }
 
     /**

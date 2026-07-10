@@ -2,14 +2,18 @@
 
 namespace App\View\Components\Frontend;
 
+use App\Models\Service;
 use Closure;
 use Illuminate\Contracts\View\View;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
 
 class contact extends Component
 {
     public string $reference;
+
+    public Collection $services;
 
     public function __construct()
     {
@@ -21,11 +25,13 @@ class contact extends Component
         }
 
         $this->reference = $reference;
+
+        $this->services = Service::query()
+            ->where('is_active', true)
+            ->orderBy('title')
+            ->get(['id', 'title']);
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
         return view('components.frontend.contact');

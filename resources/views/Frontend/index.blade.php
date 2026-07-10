@@ -50,7 +50,7 @@ $steps = [
 <x-frontend.stats />
 
 {{-- ============ PROJECTS ============ --}}
-<x-frontend.projects :portfolios="$portfolios" :filterServices="$filterServices" />
+<x-frontend.projects :blogs="$blogs" :filterServices="$filterServices" />
 
 {{-- ============ PROCESS ============ --}}
 <x-frontend.process :steps="$steps" />

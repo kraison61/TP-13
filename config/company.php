@@ -9,6 +9,9 @@ return [
     'tax_id' => '0125568011574',
     'facebook' => 'https://www.facebook.com/theerapongservices',
     'line' => 'https://line.me/ti/p/h9SHumuTEB',
+    'line_official' => 'https://lin.ee/4x9cNDf',
+    'line_official_qr' => 'https://qr-official.line.me/766xymqr',
+    'line_official_name' => '@theeraphong',
     'open_hours' => 'จันทร์–เสาร์ 8:00–18:00 น.',
     'map' => 'https://maps.app.goo.gl/7gjzPML3buArQeLf8'
 ];

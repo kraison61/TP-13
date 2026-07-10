@@ -131,13 +131,9 @@
                     <select name="service" required
                             class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition bg-white">
                         <option value="">เลือกประเภทงาน...</option>
-                        <option>กำแพงกันดิน</option>
-                        <option>รั้วบ้าน</option>
-                        <option>ถนน &amp; ทางเข้าบ้าน</option>
-                        <option>ลานคอนกรีต / ลานจอดรถ</option>
-                        <option>ระบบระบายน้ำ</option>
-                        <option>ปรับพื้นที่ / ถมดิน</option>
-                        <option>งานอื่นๆ / รวมหลายงาน</option>
+                        @foreach ($services as $service)
+                            <option value="{{ $service->title }}">{{ $service->title }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="sm:col-span-1">

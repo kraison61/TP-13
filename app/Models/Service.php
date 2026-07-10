@@ -25,6 +25,8 @@ class Service extends Model
         'is_active',
         'icon_name',
         'dur',
+        'img_1',
+        'img_2',
     ];
 
     protected function casts(): array
@@ -50,6 +52,23 @@ class Service extends Model
     {
         return $this->hasOne(ServicePrice::class)
             ->where('is_active', true)
+            ->orderBy('sort_order');
+    }
+
+    public function lowestPrice(): HasOne
+    {
+        return $this->hasOne(ServicePrice::class)
+            ->where('is_active', true)
+            ->whereNotNull('price')
+            ->orderBy('price')
+            ->orderBy('sort_order');
+    }
+
+    public function activePrices(): HasMany
+    {
+        return $this->hasMany(ServicePrice::class)
+            ->where('is_active', true)
+            ->orderBy('price')
             ->orderBy('sort_order');
     }
 
@@ -83,5 +102,31 @@ class Service extends Model
     public function images(): MorphMany
     {
         return $this->morphMany(ImageUpload::class, 'imageable');
+    }
+
+    public function getRenderedContentAttribute(): string
+    {
+        return $this->renderHtmlField($this->content);
+    }
+
+    public function getRenderedDescriptionAttribute(): string
+    {
+        return $this->renderHtmlField($this->description);
+    }
+
+    public function getPlainDescriptionAttribute(): string
+    {
+        return trim(strip_tags((string) $this->description));
+    }
+
+    private function renderHtmlField(?string $html): string
+    {
+        if (! $html) {
+            return '';
+        }
+
+        $decoded = html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+
+        return (string) preg_replace('/<!--[\s\S]*?-->/', '', $decoded);
     }
 }

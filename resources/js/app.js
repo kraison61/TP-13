@@ -18,25 +18,55 @@ const mobileMenu = document.getElementById('mobileMenu');
 menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
 mobileMenu?.addEventListener('click', e => { if (e.target.tagName === 'A') mobileMenu.classList.add('hidden'); });
 
-// Project filter
-document.getElementById('filters')?.addEventListener('click', e => {
+// Project / portfolio filter
+const projectFilters = document.getElementById('project-filters');
+const projectGrid = document.getElementById('project-grid');
+const projectSearch = document.getElementById('project-search');
+const projectEmpty = document.getElementById('project-empty');
+
+let activeProjectFilter = 'all';
+
+const setProjectFilterButtonState = (activeBtn) => {
+    projectFilters?.querySelectorAll('[data-filter]').forEach(btn => {
+        const on = btn === activeBtn;
+        btn.classList.toggle('bg-navy-900', on);
+        btn.classList.toggle('text-white', on);
+        btn.classList.toggle('border-navy-900', on);
+        btn.classList.toggle('text-ink2', !on);
+        btn.classList.toggle('border-line', !on);
+        btn.classList.toggle('bg-transparent', !on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+};
+
+const applyProjectFilters = () => {
+    const query = (projectSearch?.value || '').trim().toLowerCase();
+    let visible = 0;
+
+    projectGrid?.querySelectorAll('[data-project-card]').forEach(card => {
+        const matchesCategory = activeProjectFilter === 'all' || card.dataset.cat === activeProjectFilter;
+        const matchesSearch = !query
+            || (card.dataset.title || '').toLowerCase().includes(query)
+            || (card.dataset.serviceTitle || '').toLowerCase().includes(query);
+        const show = matchesCategory && matchesSearch;
+
+        card.classList.toggle('hidden', !show);
+        if (show) visible++;
+    });
+
+    projectEmpty?.classList.toggle('hidden', visible > 0);
+};
+
+projectFilters?.addEventListener('click', e => {
     const btn = e.target.closest('[data-filter]');
     if (!btn) return;
-    const filter = btn.dataset.filter;
 
-    document.querySelectorAll('[data-filter]').forEach(b => {
-        const on = b === btn;
-        b.classList.toggle('bg-navy-900', on);
-        b.classList.toggle('text-white', on);
-        b.classList.toggle('border-navy-900', on);
-        b.classList.toggle('text-ink2', !on);
-        b.classList.toggle('border-line', !on);
-    });
-
-    document.querySelectorAll('[data-cat]').forEach(card => {
-        card.classList.toggle('hidden', filter !== 'all' && card.dataset.cat !== filter);
-    });
+    activeProjectFilter = btn.dataset.filter;
+    setProjectFilterButtonState(btn);
+    applyProjectFilters();
 });
+
+projectSearch?.addEventListener('input', applyProjectFilters);
 
 // Testimonial tabs
 document.getElementById('testTabs')?.addEventListener('click', e => {

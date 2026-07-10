@@ -34,5 +34,10 @@ return [
             'channel' => env('SLACK_BOT_USER_DEFAULT_CHANNEL'),
         ],
     ],
+    'line' => [
+        'access_token' => env('LINE_CHANNEL_ACCESS_TOKEN'),
+        'user_id' => env('LINE_USER_ID'),
+        'ca_bundle' => env('LINE_CA_BUNDLE', base_path('certificates/cacert.pem')),
+    ],
 
 ];

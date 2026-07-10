@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ServicePrice extends Model
 {
     protected $fillable = [
-        'service_id', 'name', 'price', 'unit',
+        'service_id', 'sku', 'name', 'description', 'price', 'max_price', 'unit',
         'price_type', 'sort_order', 'is_active',
     ];
 
@@ -17,6 +17,7 @@ class ServicePrice extends Model
     {
         return [
             'price' => 'decimal:2',
+            'max_price' => 'decimal:2',
             'is_active' => 'boolean',
         ];
     }

@@ -18,3 +18,77 @@
     --font-sans: "IBM Plex Sans Thai", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Rich HTML content from CMS (Bootstrap markup in DB) */
+.service-content {
+    @apply max-w-none;
+
+    :is(h1, h2, h3, h4, h5, h6) {
+        @apply font-bold text-navy-900 tracking-tight;
+    }
+
+    h2 { @apply mt-10 mb-4 text-2xl lg:text-3xl first:mt-0; }
+    h3 { @apply mt-8 mb-3 text-xl lg:text-2xl; }
+    h4 { @apply mt-6 mb-2 text-lg font-semibold; }
+
+    p { @apply mb-4 leading-relaxed; }
+
+    :is(ul, ol) {
+        @apply mb-4 pl-6 space-y-2;
+    }
+
+    ul { @apply list-disc; }
+    ol { @apply list-decimal; }
+
+    a {
+        @apply text-accent font-medium hover:underline;
+    }
+
+    strong { @apply font-semibold text-navy-900; }
+
+    .table-responsive {
+        @apply overflow-x-auto rounded-xl ring-1 ring-line my-6;
+    }
+
+    table,
+    :is(.table, table.table-bordered, table.table-hover) {
+        @apply w-full min-w-[480px] border-collapse bg-white text-[15px];
+    }
+
+    :is(thead, tbody, tr, th, td) {
+        @apply border border-line align-top;
+    }
+
+    th {
+        @apply bg-surface px-4 py-3 text-left font-semibold text-navy-900;
+    }
+
+    td {
+        @apply px-4 py-3 text-ink2;
+    }
+
+    tr.active,
+    tbody tr:hover {
+        @apply bg-surface/60;
+    }
+
+    :is(.btn, a.btn) {
+        @apply inline-flex items-center justify-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition;
+    }
+
+    :is(.btn-primary, a.btn-primary) {
+        @apply bg-accent text-white hover:bg-navy-900;
+    }
+
+    :is(.btn-default, .btn-sm, a.btn-default) {
+        @apply border border-line bg-white text-navy-900 hover:border-navy-900;
+    }
+
+    img {
+        @apply max-w-full h-auto rounded-xl my-4;
+    }
+
+    section {
+        @apply mb-8;
+    }
+}

@@ -8,12 +8,13 @@
       <table class="w-full min-w-[640px] bg-white text-[15px]">
         <thead>
           <tr class="border-b border-line bg-surface text-navy-900 font-semibold">
-            <th class="text-left px-6 py-4">บริการ</th>
-            <th class="text-center px-6 py-4">ราคาเริ่มต้น</th>
-            <th class="text-center px-6 py-4">หน่วย</th>
-            <th class="text-center px-6 py-4">ระยะงาน</th>
-            <th class="text-center px-6 py-4">รับประกัน</th>
-            <th class="text-center px-6 py-4">ใบ กว.</th>
+            @foreach ($columns as $column)
+              <th @class([
+                'px-6 py-4',
+                'text-left' => ($column['align'] ?? 'center') === 'left',
+                'text-center' => ($column['align'] ?? 'center') !== 'left',
+              ])>{{ $column['label'] }}</th>
+            @endforeach
           </tr>
         </thead>
         <tbody>
@@ -23,18 +24,30 @@
               'bg-surface/50' => $loop->even,
             ])>
               <td class="px-6 py-4 font-semibold text-navy-900">{{ $service->title }}</td>
-              <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">{{ number_format($service->price, 0) }}</td>
-              <td class="px-6 py-4 text-center text-muted text-[14px]">บาท/{{ $service->unit }}</td>
-              <td class="px-6 py-4 text-center text-ink2">{{ $service->dur }}</td>
+              <td class="px-6 py-4 text-center font-mono font-bold text-navy-900 tabular-nums">
+                @if ($service->lowestPrice?->price !== null)
+                  {{ number_format((float) $service->lowestPrice->price, 0) }}
+                @else
+                  <span class="text-muted font-sans font-medium">สอบถาม</span>
+                @endif
+              </td>
+              <td class="px-6 py-4 text-center text-muted text-[14px]">
+                @if ($service->lowestPrice?->unit)
+                  บาท/{{ $service->lowestPrice->unit }}
+                @else
+                  —
+                @endif
+              </td>
+              <td class="px-6 py-4 text-center text-ink2">{{ $service->dur ?: '—' }}</td>
               <td class="px-6 py-4 text-center text-[14px]">
-                @if ($service->has_warranty)
-                  <span class="text-green-700 font-medium"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>2 ปี</span>
+                @if ($warranty = $service->scopes->firstWhere('group', 'warranty'))
+                  <span class="text-green-700 font-medium"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>{{ $warranty->name }}</span>
                 @else
                   <span class="text-muted">—</span>
                 @endif
               </td>
               <td class="px-6 py-4 text-center">
-                @if ($service->has_engineer_cert)
+                @if ($service->scopes->contains('group', 'cert'))
                   <i class="bi bi-check-circle-fill text-accent text-lg"></i>
                 @else
                   <span class="text-muted">—</span>
@@ -43,7 +56,7 @@
             </tr>
           @empty
             <tr>
-              <td colspan="6" class="px-6 py-8 text-center text-muted">ยังไม่มีข้อมูลราคา</td>
+              <td colspan="{{ count($columns) }}" class="px-6 py-8 text-center text-muted">ยังไม่มีข้อมูลราคา</td>
             </tr>
           @endforelse
         </tbody>
