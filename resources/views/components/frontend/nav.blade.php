@@ -12,7 +12,7 @@
         <div class="hidden lg:flex items-center gap-1 text-[15px] font-medium text-ink2">
             <a href="{{ route('home') }}"     class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">หน้าแรก</a>
             <a href="{{ route('frontend.services.index') }}" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บริการ</a>
-            <a href="#projects" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ผลงาน</a>
+            <a href="{{ route('blog.index') }}" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ผลงาน</a>
             <a href="#process"  class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ขั้นตอน</a>
             <a href="{{ route('blog.index') }}"   class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บทความ</a>
             <a href="{{ route('portal') }}"       class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">พอร์ทัลลูกค้า <i class="bi bi-arrow-up-right text-xs"></i></a>
