@@ -15,15 +15,6 @@ $testimonials = [
     ],
 ];
 
-$faqs = [
-    ['q'=>'ค่าใช้จ่ายในการสำรวจหน้างานเท่าไหร่?',    'a'=>'การสำรวจหน้างานและประเมินราคาเบื้องต้น <strong class="text-navy-900">ไม่มีค่าใช้จ่ายใดๆ</strong> — ทีมงานจะนัดเข้าวัดหน้างานภายใน 3 วันทำการ พร้อมส่งใบเสนอราคาภายใน 5–7 วันหลังสำรวจ'],
-    ['q'=>'รับประกันงานก่อสร้างกี่ปี?',               'a'=>'รับประกันงานก่อสร้าง <strong class="text-navy-900">2 ปีเต็ม</strong> ครอบคลุมโครงสร้าง การแตกร้าวผิดปกติ และความเสียหายจากการก่อสร้าง หากเกิดปัญหาแจ้งผ่านพอร์ทัลลูกค้าได้ 24 ชม.'],
-    ['q'=>'ชำระเงินเป็นงวดอย่างไร?',                  'a'=>'งวด 1 — มัดจำ 25% เพื่อสั่งวัสดุ · งวด 2–4 ตามความคืบหน้าจริง · งวดสุดท้าย 10% หลังตรวจรับงานครบถ้วน — ทุกงวดมีเอกสารเซ็นรับและใบเสร็จกำกับภาษีถูกต้อง'],
-    ['q'=>'รับงานพื้นที่ไหนบ้าง?',                    'a'=>'รับงานในเขต <strong class="text-navy-900">กรุงเทพฯ และปริมณฑล</strong> (นนทบุรี ปทุมธานี สมุทรปราการ สมุทรสาคร นครปฐม) สำหรับโครงการขนาดใหญ่นอกพื้นที่ พิจารณาเป็นกรณีไป'],
-    ['q'=>'ใช้วัสดุยี่ห้ออะไร? เลือกได้ไหม?',         'a'=>'ใช้วัสดุมาตรฐาน มอก. เป็นหลัก เช่น ปูน SCG / TPI, เหล็ก TATA / SYS — ลูกค้าเลือกระบุยี่ห้อเองได้ในขั้นตอนทำสัญญา โดยปรับราคาตามใบเสนอราคาวัสดุที่เลือก'],
-    ['q'=>'ติดตามความคืบหน้าได้อย่างไร?',             'a'=>'ลูกค้าทุกท่านได้รับ <strong class="text-navy-900">บัญชีพอร์ทัลลูกค้า</strong> ดูภาพหน้างานรายวัน รายงาน Daily Report ตารางการเบิกงวด และส่งข้อความหาทีมงานได้ตลอดเวลา'],
-];
-
 $testiTabs    = ['บ้านพักอาศัย','โครงการหมู่บ้าน','เจ้าของที่ดิน'];
 $steps = [
     ['icon'=>'bi-chat-left-text','label'=>'STEP 01','title'=>'ปรึกษา & สำรวจหน้างาน','desc'=>'นัดเข้าวัดหน้างานฟรีภายใน 3 วัน พร้อมคำแนะนำจากวิศวกร'],
@@ -50,7 +41,23 @@ $steps = [
 <x-frontend.stats />
 
 {{-- ============ PROJECTS ============ --}}
-<x-frontend.projects :blogs="$blogs" :filterServices="$filterServices" />
+<x-frontend.projects
+    :blogs="$projectBlogs"
+    :total-projects="$allProjectBlogs->count()"
+    :filter-services="$filterServices"
+/>
+
+@if (! empty($mainSchemaLd['@graph']))
+<script type="application/ld+json">
+{!! json_encode($mainSchemaLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+</script>
+@endif
+
+@if (! empty($projectSchemaLd['itemListElement']))
+<script type="application/ld+json">
+{!! json_encode($projectSchemaLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+</script>
+@endif
 
 {{-- ============ PROCESS ============ --}}
 <x-frontend.process :steps="$steps" />
@@ -59,7 +66,7 @@ $steps = [
 <x-frontend.testimonials :testimonials="$testimonials" :testiTabs="$testiTabs" />
 
 {{-- ============ FAQ ============ --}}
-<x-frontend.faq :faqs="$faqs" />
+<x-frontend.faq :faqs="$faqItems" />
 
 
 @endsection

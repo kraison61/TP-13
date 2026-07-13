@@ -1,5 +1,5 @@
 <section class="bg-surface border-y border-line">
-  <div class="mx-auto max-w-7xl px-6 py-16 lg:py-20">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-20">
     <div class="max-w-2xl mb-10">
       <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> เปรียบเทียบบริการ</span>
       <h2 class="mt-3 text-3xl font-bold tracking-tight text-navy-900">ราคาและระยะเวลาโดยสังเขป</h2>

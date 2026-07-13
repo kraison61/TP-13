@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Service;
 
 use App\Http\Controllers\Controller;
+use App\Support\ServicePageSchema;
 use Illuminate\Http\Request;
 
 class ServiceController extends Controller
@@ -76,11 +77,14 @@ class ServiceController extends Controller
             ['icon' => 'bi-shield-check', 'label' => 'STEP 04', 'title' => 'ส่งมอบ & รับประกัน', 'desc' => 'ตรวจรับงานพร้อมเจ้าของบ้าน รับประกันงานก่อสร้าง 2 ปีเต็ม'],
         ];
 
+        $serviceSchemaLd = ServicePageSchema::graph($service);
+
         return view('frontend.services.show', compact(
             'service',
             'otherServices',
             'portfolios',
             'steps',
+            'serviceSchemaLd',
         ));
     }
 

@@ -3,22 +3,23 @@
 @section('content')
 <x-frontend.service.hero />
 <x-frontend.service.quick-jump />
-    <main class="mx-auto max-w-7xl px-6 py-16 lg:py-24 space-y-24">
+    <main class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24 space-y-24">
 
         @foreach ($services as $service)
-            <section id="{{ $service->slug }}" class="scroll-mt-36 grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <section id="{{ $service->slug }}" class="grid lg:grid-cols-12 gap-10 lg:gap-16 items-start">
 
                 <div class="lg:col-span-5 {{ $loop->odd ? 'order-1 lg:order-2' : 'order-1' }}">
-                    <div class="relative aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
+                    <a href="{{ route('frontend.services.show', $service->slug) }}"
+                       class="group relative block aspect-4/5 rounded-2xl overflow-hidden shadow-2xl shadow-navy-900/20">
                         @if ($service->img_1)
-                            <img src="{{ Storage::disk('s3')->url($service->img_1) }}?width=450&format=webp&fit=cover" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover" />
+                            <img src="{{ Storage::disk('s3')->url($service->img_1) }}?width=450&format=webp&fit=cover" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                         @else
-                            <img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover" />
+                            <img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop" alt="{{ $service->title }}" loading="lazy" class="h-full w-full object-cover transition duration-500 group-hover:scale-105" />
                         @endif
-                        <div class="absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg">
+                        <div class="pointer-events-none absolute top-4 left-4 grid place-items-center w-14 h-14 rounded-xl bg-navy-900 text-white text-2xl shadow-lg">
                             <i class="bi {{ $service->icon_name }}"></i>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div class="lg:col-span-7 {{ $loop->odd ? 'order-2 lg:order-1' : 'order-2' }}">

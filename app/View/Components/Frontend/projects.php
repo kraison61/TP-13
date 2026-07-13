@@ -11,10 +11,11 @@ class projects extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
-    {
-        //
-    }
+    public function __construct(
+        public $blogs,
+        public $filterServices,
+        public $totalProjects = null,
+    ) {}
 
     /**
      * Get the view / contents that represent the component.

@@ -1,15 +1,15 @@
 @props(['testimonials', 'testiTabs'])
 <section class="bg-surface">
-    <div class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28">
         <div class="text-center max-w-2xl mx-auto">
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> เสียงจากลูกค้าจริง</span>
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ลูกค้ากว่า 400 บ้านพูดเป็นเสียงเดียวกัน</h2>
         </div>
 
-        <div class="mt-8 flex justify-center gap-2" id="testTabs">
+        <div class="mt-8 flex flex-wrap justify-center gap-2 px-1" id="testTabs">
             @foreach($testiTabs as $i => $label)
             <button data-tab="{{ $i }}"
-                class="rounded-full px-5 py-2.5 text-[15px] font-medium transition
+                class="rounded-full px-4 sm:px-5 py-2.5 text-[14px] sm:text-[15px] font-medium transition
                        {{ $i === 0 ? 'bg-navy-900 text-white' : 'bg-white border border-line text-ink2 hover:border-navy-900' }}">
                 {{ $label }}
             </button>

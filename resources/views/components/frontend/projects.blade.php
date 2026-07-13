@@ -1,12 +1,13 @@
-@props(['blogs', 'filterServices'])
+@props(['blogs', 'filterServices', 'totalProjects' => null])
 
 @php
     $fallbackImage = 'https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop';
     $allLabel = config('frontend.filter_labels.all', 'ทั้งหมด');
+    $totalProjects = $totalProjects ?? $blogs->count();
 @endphp
 
 <section id="projects" class="bg-surface">
-    <div class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28">
         <div class="max-w-2xl">
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> ผลงานที่ผ่านมา</span>
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ผลงานก่อสร้างจริง — ลูกค้าจริง พื้นที่จริง</h2>
@@ -14,11 +15,12 @@
         </div>
 
         <div class="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div class="flex flex-wrap gap-2.5" id="project-filters" role="tablist" aria-label="กรองผลงานตามบริการ">
+            <div class="overflow-x-auto -mx-4 px-4 sm:-mx-6 sm:px-6 sm:mx-0 sm:px-0 pb-1 sm:pb-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <div class="flex flex-nowrap sm:flex-wrap gap-2.5 w-max sm:w-auto" id="project-filters" role="tablist" aria-label="กรองผลงานตามบริการ">
                 <button type="button" data-filter="all" role="tab" aria-selected="true"
                     class="inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-[15px] font-medium transition border-navy-900 bg-navy-900 text-white">
                     {{ $allLabel }}
-                    <span class="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold tabular-nums">{{ $blogs->count() }}</span>
+                    <span class="rounded-full bg-white/20 px-2 py-0.5 text-[11px] font-semibold tabular-nums">{{ $totalProjects }}</span>
                 </button>
                 @foreach ($filterServices as $service)
                     <button type="button" data-filter="{{ $service->slug }}" data-filter-title="{{ $service->title }}" role="tab" aria-selected="false"
@@ -27,6 +29,7 @@
                         <span class="rounded-full bg-surface px-2 py-0.5 text-[11px] font-semibold text-muted tabular-nums">{{ $service->blogs_count }}</span>
                     </button>
                 @endforeach
+            </div>
             </div>
 
             <label class="relative w-full sm:max-w-xs">
@@ -73,5 +76,14 @@
                 ไม่พบผลงานในหมวดนี้
             </p>
         </div>
+
+        @if ($totalProjects > $blogs->count())
+            <div class="mt-10 text-center">
+                <a href="{{ route('blog.index') }}"
+                   class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">
+                    ดูผลงานทั้งหมด ({{ $totalProjects }}) <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+        @endif
     </div>
 </section>

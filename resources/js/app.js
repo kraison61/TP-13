@@ -13,10 +13,32 @@ toTopBtn?.addEventListener('click', () => {
 });
 
 // Mobile menu
-const menuBtn    = document.getElementById('menuBtn');
-const mobileMenu = document.getElementById('mobileMenu');
-menuBtn?.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
-mobileMenu?.addEventListener('click', e => { if (e.target.tagName === 'A') mobileMenu.classList.add('hidden'); });
+const menuBtn            = document.getElementById('menuBtn');
+const mobileMenu         = document.getElementById('mobileMenu');
+const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');
+
+const closeMobileMenu = () => {
+    mobileMenu?.classList.add('hidden');
+    mobileMenuBackdrop?.classList.add('hidden');
+    document.body.classList.remove('overflow-hidden');
+};
+
+const openMobileMenu = () => {
+    mobileMenu?.classList.remove('hidden');
+    mobileMenuBackdrop?.classList.remove('hidden');
+    document.body.classList.add('overflow-hidden');
+};
+
+menuBtn?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    mobileMenu?.classList.contains('hidden') ? openMobileMenu() : closeMobileMenu();
+});
+
+mobileMenuBackdrop?.addEventListener('click', closeMobileMenu);
+
+mobileMenu?.addEventListener('click', e => {
+    if (e.target.closest('a')) closeMobileMenu();
+});
 
 // Project / portfolio filter
 const projectFilters = document.getElementById('project-filters');
@@ -97,14 +119,17 @@ document.getElementById('faqItems')?.addEventListener('toggle', e => {
     });
 });
 
-// Copy discount reference code
+// Copy discount reference code + record once in database
 document.getElementById('copyRefBtn')?.addEventListener('click', async e => {
     const btn = e.currentTarget;
+    const code = btn.dataset.copy;
+
     try {
-        await navigator.clipboard.writeText(btn.dataset.copy);
+        await navigator.clipboard.writeText(code);
     } catch {
         return;
     }
+
     const icon  = document.getElementById('copyRefIcon');
     const label = document.getElementById('copyRefLabel');
     icon.classList.replace('bi-clipboard', 'bi-clipboard-check-fill');
@@ -113,6 +138,28 @@ document.getElementById('copyRefBtn')?.addEventListener('click', async e => {
         icon.classList.replace('bi-clipboard-check-fill', 'bi-clipboard');
         label.textContent = 'คัดลอก';
     }, 2000);
+
+    if (btn.dataset.recorded === '1' || !btn.dataset.saveUrl) return;
+
+    const quoteForm = document.getElementById('quoteForm');
+
+    try {
+        const response = await fetch(btn.dataset.saveUrl, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': quoteForm?.querySelector('input[name="_token"]')?.value || '',
+            },
+            body: JSON.stringify({ reference: code }),
+        });
+
+        if (response.ok) {
+            btn.dataset.recorded = '1';
+        }
+    } catch {
+        // copy succeeded; recording is best-effort
+    }
 });
 
 // Quote form — dynamic E-Voucher + AJAX submit

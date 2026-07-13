@@ -1,7 +1,15 @@
 @extends('layouts.frontend')
 
 @section('content')
-<main class="mx-auto max-w-7xl px-6 py-16 lg:py-24">
+<nav aria-label="breadcrumb" class="border-b border-line bg-surface">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-3.5 text-[14px] text-muted flex items-center gap-2 flex-wrap">
+        <a href="{{ route('home') }}" class="hover:text-navy-900 transition">หน้าแรก</a>
+        <i class="bi bi-chevron-right text-[11px]"></i>
+        <span class="text-navy-900 font-medium">บทความ</span>
+    </div>
+</nav>
+
+<main class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24">
     <div class="max-w-2xl mb-12">
         <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
             <span class="w-7 h-px bg-accent"></span> บทความ

@@ -1,0 +1,593 @@
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "GeneralContractor",
+      "@id": "https://www.theeraphong.com/#organization",
+      "name": "บริษัทธีรพงษ์เซอร์วิส จำกัด",
+      "alternateName": "ธีรพงษ์ เซอร์วิส",
+      "url": "https://www.theeraphong.com",
+      "logo": "https://www.theeraphong.com/logo.png",
+      "image": "https://www.theeraphong.com/images/services/1720377456635618.webp",
+      "description": "รับเหมาก่อสร้างกำแพงกันดิน รั้วก่อฉาบ รั้วสำเร็จรูป เทปูน ถมดิน และงานโยธาครบวงจร ให้บริการกรุงเทพมหานครและปริมณฑล",
+      "telephone": "+66-62-718-8847",
+      "email": "theeraphong.services@gmail.com",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "14 หมู่ 5",
+        "addressLocality": "ตำบลบางกร่าง อำเภอเมืองนนทบุรี",
+        "addressRegion": "นนทบุรี",
+        "postalCode": "11000",
+        "addressCountry": "TH"
+      },
+      "areaServed": [
+        {
+          "@type": "AdministrativeArea",
+          "name": "กรุงเทพมหานคร"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "นนทบุรี"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "ปทุมธานี"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "สมุทรปราการ"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "สมุทรสาคร"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "นครปฐม"
+        }
+      ],
+      "priceRange": "฿฿",
+      "openingHours": "Mo-Sa 08:00-18:00",
+      "sameAs": [
+        "https://line.me/ti/p/h9SHumuTEB"
+      ],
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.7",
+        "reviewCount": "913",
+        "bestRating": "5",
+        "worstRating": "1"
+      }
+    },
+    {
+      "@type": "Service",
+      "@id": "https://www.theeraphong.com/#services",
+      "serviceType": "รับเหมาก่อสร้างและงานโยธา",
+      "name": "บริการรับเหมาก่อสร้าง ธีรพงษ์เซอร์วิส",
+      "description": "รับเหมาก่อสร้างกำแพงกันดิน รั้วก่อฉาบ รั้วสำเร็จรูป เทปูน ถมดิน กดเสาเข็ม รื้อถอน และงานโยธาครบวงจร",
+      "provider": {
+        "@id": "https://www.theeraphong.com/#organization"
+      },
+      "areaServed": {
+        "@type": "AdministrativeArea",
+        "name": "กรุงเทพมหานครและปริมณฑล"
+      },
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "บริการรับเหมาก่อสร้างและงานโยธา",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ทุบ รื้อถอนบ้าน และอาคาร",
+              "url": "https://www.theeraphong.com/building-demolish",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.6",
+                "reviewCount": "24",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "กดเสาเข็ม",
+              "url": "https://www.theeraphong.com/pile",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.8",
+                "reviewCount": "64",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "แบคโฮให้เช่า",
+              "url": "https://www.theeraphong.com/excavator",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.1",
+                "reviewCount": "43",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ถมดิน",
+              "url": "https://www.theeraphong.com/landfill",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "89",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ขนเศษวัสดุก่อสร้าง",
+              "url": "https://www.theeraphong.com/shipment",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.4",
+                "reviewCount": "78",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "รื้อบ้านไม้",
+              "url": "https://www.theeraphong.com/demolish",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.2",
+                "reviewCount": "23",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "รื้อป่า ถางป่า",
+              "url": "https://www.theeraphong.com/clearforest",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "38",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ปรับพื้นที่",
+              "url": "https://www.theeraphong.com/landjustment",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.1",
+                "reviewCount": "17",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ติดตั้งถังบำบัดน้ำเสีย",
+              "url": "https://www.theeraphong.com/waste",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.5",
+                "reviewCount": "45",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "กำแพงกันดิน",
+              "url": "https://www.theeraphong.com/retaining-wall",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "112",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ขุดร่องสวน",
+              "url": "https://www.theeraphong.com/garden-plot",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.3",
+                "reviewCount": "23",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ฟุตติ้ง",
+              "url": "https://www.theeraphong.com/footing",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "59",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "ให้เช่ารถ 6 ล้อ",
+              "url": "https://www.theeraphong.com/truck",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.4",
+                "reviewCount": "67",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "วางท่อระบายน้ำ",
+              "url": "https://www.theeraphong.com/pipe",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "4.9",
+                "reviewCount": "34",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "เขื่อนกันดิน",
+              "url": "https://www.theeraphong.com/dam",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "112",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "เทคอนกรีต",
+              "url": "https://www.theeraphong.com/pour-concrete",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "54",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "รั้ว",
+              "url": "https://www.theeraphong.com/fence",
+              "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+              },
+              "areaServed": {
+                "@type": "AdministrativeArea",
+                "name": "กรุงเทพมหานครและปริมณฑล"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "31",
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "FAQPage",
+      "@id": "https://www.theeraphong.com/#faq",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "วิธี ถมดิน ให้แน่น มีวิธีการอย่างไร",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1. เตรียมพื้นที่ \nก่อนถม ห้ามถมทับหญ้าหรือขยะเด็ดขาด เพราะเมื่ออินทรีย์สารเหล่านี้เน่าเปื่อย จะเกิดช่องว่างใต้ดินทำให้ดินทรุดตัวเป็นหลุม\n2. เลือกชนิดดินให้เหมาะกับงาน\n- ดินถมทั่วไป/ดินซีแลนด์: ราคาถูก เหมาะกับการปรับระดับพื้นที่กว้างๆ\n- ดินดาน (Lateritic Soil): ตัวนี้คือพระเอกสำหรับการถมเพื่อสร้างอาคาร เพราะมีส่วนผสมของหินกรวดและดินเหนียว เมื่อบดอัดแล้วจะมีความหนาแน่นสูงมากและแข็งตัวเร็ว\n- ทรายถม: ใช้ในกรณีที่ต้องการการระบายน้ำดี แต่บดอัดให้แน่นยากกว่าดินดานหากไม่มีเครื่องมือเฉพาะทาง\n3. ถมแบบแบ่งชั้น\n- ความหนาต่อชั้น: ควรลงดินทีละชั้นหนาไม่เกิน 20-30 เซนติเมตร\n- การบดอัด: ใช้รถบด (Vibratory Roller) วิ่งทับให้แน่นในแต่ละชั้นก่อนจะลงชั้นถัดไป\n- การควบคุมความชื้น (Optimum Moisture Content): ดินที่แห้งเกินไปหรือแฉะเกินไปจะบดอัดไม่ขึ้น ดินต้องมีความชื้นพอเหมาะ (ลองกำดูแล้วจับตัวเป็นก้อนแต่ไม่แฉะติดมือ)\n4. ระยะเวลาการ \"เซ็ตตัว\"\n- ถ้าถมเพื่อสร้างบ้าน: ควรทิ้งไว้ให้ผ่านฤดูฝนอย่างน้อย 1 รอบ (ประมาณ 6 เดือน - 1 ปี)\n- ถ้าต้องสร้างทันที: ต้องใช้การตอกเสาเข็มปูพรมหรือเสาเข็มปูพรมแบบปูพื้น (Slab on Pile) เพื่อถ่ายน้ำหนักลงสู่ชั้นดินที่แข็งแรงกว่า\n5. การป้องกันดินไหล (Soil Retention)\nถ้าที่ดินคุณอยู่สูงกว่าเพื่อนบ้าน ต้องทำ \"กำแพงกันดิน\" ครับ มิฉะนั้นเวลาฝนตก ดินที่คุณถมไว้จะไหลไปบ้านคนอื่น หรือทำให้ขอบที่ดินเราทรุดตัวลง\n- ควรออกแบบให้มีช่องระบายน้ำ (Weep holes) เพื่อลดแรงดันน้ำหลังกำแพง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ถมดินแล้ว สร้างบ้านได้เลยไหม",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ควรทิ้งให้ผ่านฤดูฝนอย่างน้อย 1 รอบ (6-12 เดือน)"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "กำแพงกันดิน สูง 1.5 เมตร ราคาเท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ราคาเริ่มต้นที่ 5,500 บาท ขึ้นอยู่กับพื้นที่หน้างาน เพราะจะสัมพันธ์กันกับวัสดุ และอุปกรณ์ที่ใช้ในการก่อสร้าง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "กำแพงกันดิน สูง 2 เมตร ราคา ราคาเท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ราคาเริ่มต้นที่ 6,800 บาท ขึ้นอยู่กับพื้นที่หน้างาน เพราะจะสัมพันธ์กันกับวัสดุ และอุปกรณ์ที่ใช้ในการก่อสร้าง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "กำ แพง กันดิน สูง 4 เมตร ราคาเท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ราคาเริ่มต้นที่ 17,000 บาท ขึ้นอยู่กับพื้นที่หน้างาน เพราะจะสัมพันธ์กันกับวัสดุ และอุปกรณ์ที่ใช้ในการก่อสร้าง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "กำแพงกันดิน สูง 3 เมตร ราคาเท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ราคาเริ่มต้นที่ 11,000 บาท ขึ้นอยู่กับพื้นที่หน้างาน เพราะจะสัมพันธ์กันกับวัสดุ และอุปกรณ์ที่ใช้ในการก่อสร้าง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "กำ แพง กัน ดิน สูง 2.5 เมตร ราคา",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ราคาเริ่มต้นที่ 8,000 บาท ขึ้นอยู่กับพื้นที่หน้างาน เพราะจะสัมพันธ์กันกับวัสดุ และอุปกรณ์ที่ใช้ในการก่อสร้าง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "กำแพงกันดินก่อสร้างใช้เวลาเท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ระยะเวลาก่อสร้างขึ้นอยู่กับขนาดและความซับซ้อนของโครงการ โดยทั่วไปกำแพงกันดินขนาดกลางใช้เวลาประมาณ 2-4 สัปดาห์ ตั้งแต่กดเสาเข็มจนถึงบ่มคอนกรีตเสร็จสมบูรณ์ แต่ถ้าเป็นโครงการขนาดใหญ่ที่มีความลึกมาก อาจใช้เวลา 1-2 เดือน"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "เสาเข็ม I-Beam ขนาดไหนเหมาะกับกำแพงกันดิน",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ขนาดเสาเข็มที่ใช้ขึ้นอยู่กับความลึกของการขุดดินและแรงดันด้านข้าง โดยทั่วไป I-18 ถึง I-22 ใช้กับงานขนาดเล็กถึงกลาง ส่วน I-26 ใช้กับงานขนาดใหญ่ที่ต้องรับแรงดันดินสูง วิศวกรจะเป็นผู้คำนวณและกำหนดขนาดที่เหมาะสมจากข้อมูลดินและแบบก่อสร้าง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ค่าใช้จ่ายก่อสร้างกำแพงกันดินประมาณเท่าไหร่?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ค่าใช้จ่ายขึ้นอยู่กับหลายปัจจัย ได้แก่ ความยาวของกำแพง ความลึกขุดดิน สภาพดิน ขนาดเสาเข็มที่ใช้ และค่าขนส่งเครื่องจักร แนะนำให้ส่งแบบแปลนเพื่อประเมินราคาที่แม่นยำ เราให้บริการประเมินราคาฟรีหากอยู่ในพื้นที่เขตกรุงเทพฯ ปริมณฑลโดยไม่มีข้อผูกมัด"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "กำแพงกันดินต้องมีใบอนุญาตก่อสร้างไหม?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "ในกรณีที่เป็นงานก่อสร้างขนาดใหญ่หรืออยู่ในเขตที่กฎหมายกำหนด อาจต้องขอใบอนุญาตก่อสร้างจากหน่วยงานท้องถิ่น นอกจากนี้ยังต้องมีวิศวกรผู้ออกแบบและวิศวกรผู้ควบคุมงานที่มีใบอนุญาตประกอบวิชาชีพ (ใบ กว.) ตามกฎหมาย"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ต้องเตรียมอะไรก่อนเริ่มงานก่อสร้างกำแพงกันดิน?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "สิ่งที่ต้องเตรียม ได้แก่ แบบก่อสร้างและแบบวิศวกรรม, ผลเจาะสำรวจดิน (Soil Boring Report), ข้อมูลสาธารณูปโภคใต้ดิน, ใบอนุญาตก่อสร้าง (ถ้าจำเป็น) และการจัดเตรียมพื้นที่ทำงานให้เครื่องจักรเข้าถึงได้ ทีมงานของเราพร้อมให้คำปรึกษาตั้งแต่ขั้นตอนการวางแผน"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ทำไมต้องบ่มคอนกรีต? ข้ามขั้นตอนนี้ได้ไหม?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "การบ่มคอนกรีตเป็นขั้นตอนที่ขาดไม่ได้ เพราะช่วยให้ปฏิกิริยาไฮเดรชันในคอนกรีตดำเนินไปอย่างสมบูรณ์ ส่งผลให้คอนกรีตมีกำลังอัดตามที่ออกแบบไว้ หากข้ามขั้นตอนนี้ คอนกรีตอาจแตกร้าว แข็งแรงไม่เต็มที่ และส่งผลต่ออายุการใช้งานของโครงสร้างในระยะยาว"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "รั้วเมทัลชีท ราคาเมตรละ เท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "เริ่มต้นเมตรละ1,000 บาท ขึ้นอยู่กับสภาพพื้นที่หน้างาน และวัสดุอุปกรณ์ ที่ใช้ในการก่อสร้าง"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ทำรั้วบ้านราคาเท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "1. วัสดุที่ใช้นี่คือปัจจัยหลักที่มีผลมากที่สุด เช่น\nคอนกรีตสำเร็จรูป — ราคาปานกลาง ทนทาน นิยมมาก\nอิฐมอญ/บล็อก — ราคาสูงกว่า เพราะใช้แรงงานมาก\nเหล็กดัด/อลูมิเนียม — ราคาขึ้นอยู่กับดีไซน์และความหนา\nไม้ — ราคาแปรผันสูง บำรุงรักษามาก\nPVC/Vinyl — ราคาถูก แต่ทนแดดร้อนในไทยได้จำกัด\n2. ความสูงและความหนายิ่งสูงและหนา → ใช้วัสดุมากขึ้น → ราคาสูงขึ้นตามสัดส่วน\n3. ความยาวรอบพื้นที่ (เมตร)ราคามักคิดเป็น บาท/เมตร ดังนั้นพื้นที่ที่ดินใหญ่ = ต้นทุนรวมสูง\n4. ฐานรากและดินที่ตั้ง\nดินอ่อน/ดินเหนียว → ต้องเจาะเสาเข็มเพิ่ม → ราคาสูงขึ้น\nพื้นที่ลาดเอียงหรือมีระดับต่างกัน → งานซับซ้อนขึ้น\n5. ดีไซน์และความซับซ้อน\nรั้วเรียบ vs. มีลวดลาย/โค้ง/ฉลุ\nมีประตูรั้ว (บานเดี่ยว/คู่/สไลด์) → เพิ่มต้นทุนมาก\n6. ค่าแรงงานแต่\nละพื้นที่ในไทยมีค่าแรงต่างกัน (กทม. vs. ต่างจังหวัด)\nช่วงเทศกาลหรือแรงงานขาดแคลน → ค่าแรงสูงขึ้น\n7. ราคาวัสดุตลาด ณ ช่วงเวลานั้น\nราคาปูนซีเมนต์ เหล็ก และพลังงาน มีความผันผวนตามตลาดโลก\n8. การเดินระบบเพิ่มเติมติดกล้องวงจรปิด / ระบบไฟ / รั้วไฟฟ้า → เพิ่มต้นทุนทั้งวัสดุและแรงงาน"
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "ราคา รั้วบ้านแบบ ต่างๆ ราคาเท่าไหร่",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "รั้วก่อฉาบ(ลงเสาเข็ม) สูง 2 เมตร เริ่มต้น 4,000 บาท/เมตร\nรั้วเหล็ก  สูง 1.50 เมตร เริ่มต้น 1,700 บาท/เมตร\nรั้วเมทัลชีท เริ่มต้น 1,000 บาท/เมตร"
+          }
+        }
+      ]
+    }
+  ]
+}
+</script>

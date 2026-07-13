@@ -4,7 +4,7 @@
     $voucherTiers = $voucherConfig['tiers'];
 @endphp
 <section id="contact" class="bg-navy-900 text-white">
-    <div class="mx-auto max-w-7xl px-6 py-20 lg:py-28 grid lg:grid-cols-12 gap-12">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28 grid lg:grid-cols-12 gap-12">
         <div class="lg:col-span-5">
             <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-hivis"></span> ขอใบเสนอราคา</span>
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight leading-tight">จบปัญหาทิ้งงาน คุมงบได้เป๊ะ ไม่บานปลาย</h2>
@@ -72,11 +72,12 @@
                     <label class="block text-sm font-bold text-navy-900 mb-2">
                         รหัส E-Voucher ของคุณ <span class="font-medium text-ink2">(จากเว็บไซต์)</span>
                     </label>
-                    <div class="flex items-center justify-between gap-3 rounded-xl border border-hivis bg-white px-4 py-3.5 shadow-sm">
-                        <span class="font-mono tabular-nums text-xl sm:text-2xl font-bold text-navy-900 tracking-wide">{{ $reference }}</span>
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 rounded-xl border border-hivis bg-white px-4 py-3.5 shadow-sm">
+                        <span class="font-mono tabular-nums text-lg sm:text-xl lg:text-2xl font-bold text-navy-900 tracking-wide min-w-0 truncate">{{ $reference }}</span>
                         <button type="button"
                                 id="copyRefBtn"
                                 data-copy="{{ $reference }}"
+                                data-save-url="{{ route('voucher.copy') }}"
                                 class="inline-flex items-center gap-1.5 rounded-lg bg-hivis px-3.5 py-2 text-sm font-semibold text-navy-900 hover:bg-hivis/80 active:scale-95 transition shrink-0">
                             <i class="bi bi-clipboard" id="copyRefIcon"></i>
                             <span id="copyRefLabel">คัดลอก</span>

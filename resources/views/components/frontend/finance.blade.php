@@ -40,7 +40,7 @@ $partners = [
 @endphp
 
 <section id="finance" class="bg-surface font-sans antialiased [text-wrap:pretty]">
-  <div class="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 py-12 lg:py-16">
 
   <div class="mb-6">
     <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.16em] text-xs uppercase">

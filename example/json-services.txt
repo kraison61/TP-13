@@ -1,0 +1,241 @@
+<script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+            "@type": "GeneralContractor",
+            "@id": "https://www.theeraphong.com/#organization",
+            "name": "บริษัทธีรพงษ์เซอร์วิส จำกัด",
+            "url": "https://www.theeraphong.com",
+            "telephone": "+66-62-718-8847",
+            "image": "https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/about/194911_0.jpg",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/tp-logo.svg"
+            },
+            "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "14 หมู่ 5",
+                "addressLocality": "ตำบลบางกร่าง อำเภอเมืองนนทบุรี",
+                "addressRegion": "นนทบุรี",
+                "postalCode": "11000",
+                "addressCountry": "TH"
+            }
+        },
+        {
+            "@type": [
+                "Service",
+                "Product"
+            ],
+            "@id": "https://www.theeraphong.com/fence/#service",
+            "name": "รั้ว",
+            "serviceType": "รั้ว",
+            "description": "เช็คราคารั้วบ้านเมตรละ 2569 ทั้งรั้วอิฐบล็อก รั้วสำเร็จรูป และค่าแรงทำรั้วล่าสุด พร้อมเทคนิคเลือกรั้วให้คุ้มค่าที่สุด สอบถามใบเสนอราคาฟรี",
+            "url": "https://www.theeraphong.com/fence",
+            "image": "https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/services/service1777342974_1.webp",
+            "brand": {
+                "@type": "Brand",
+                "name": "ธีรพงษ์ เซอร์วิส"
+            },
+            "sku": "TP-SRV-17",
+            "provider": {
+                "@id": "https://www.theeraphong.com/#organization"
+            },
+            "category": "งานโครงสร้างและงานปูน",
+            "areaServed": [
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "กรุงเทพมหานคร"
+                },
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "นนทบุรี"
+                },
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "ปทุมธานี"
+                },
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "สมุทรปราการ"
+                },
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "สมุทรสาคร"
+                },
+                {
+                    "@type": "AdministrativeArea",
+                    "name": "นครปฐม"
+                }
+            ],
+            "offers": [
+                {
+                    "@type": "Offer",
+                    "name": "รั้ว — ราคาเริ่มต้น",
+                    "url": "https://www.theeraphong.com/fence",
+                    "priceCurrency": "THB",
+                    "availability": "https://schema.org/InStock",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "priceValidUntil": "2027-12-31",
+                    "priceSpecification": {
+                        "@type": "UnitPriceSpecification",
+                        "priceCurrency": "THB",
+                        "unitText": "ม.",
+                        "unitCode": "MTR",
+                        "minPrice": 1000
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "name": "รั้ว — รั้วทึบสูง 2 เมตร (อิฐบล็อก/อิฐมวลเบา)",
+                    "url": "https://www.theeraphong.com/fence",
+                    "priceCurrency": "THB",
+                    "availability": "https://schema.org/InStock",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "priceValidUntil": "2027-12-31",
+                    "sku": "FCMU-2",
+                    "priceSpecification": {
+                        "@type": "UnitPriceSpecification",
+                        "priceCurrency": "THB",
+                        "unitText": "เมตร",
+                        "unitCode": "MTR",
+                        "minPrice": 2500,
+                        "maxPrice": 4500
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "name": "รั้ว — บริการก่อสร้างรั้วเมทัลชีท",
+                    "url": "https://www.theeraphong.com/fence",
+                    "priceCurrency": "THB",
+                    "availability": "https://schema.org/InStock",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "priceValidUntil": "2027-12-31",
+                    "sku": "FMS-01",
+                    "priceSpecification": {
+                        "@type": "UnitPriceSpecification",
+                        "priceCurrency": "THB",
+                        "unitText": "เมตร",
+                        "unitCode": "MTR",
+                        "minPrice": 1000
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "name": "รั้ว — บริการก่อสร้างรั้วก่ออิฐ ฉาบเรียบ 1 ด้าน",
+                    "url": "https://www.theeraphong.com/fence",
+                    "priceCurrency": "THB",
+                    "availability": "https://schema.org/InStock",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "priceValidUntil": "2027-12-31",
+                    "sku": "FCMU-02-01",
+                    "priceSpecification": {
+                        "@type": "UnitPriceSpecification",
+                        "priceCurrency": "THB",
+                        "unitText": "เมตร",
+                        "unitCode": "MTR",
+                        "minPrice": 2200,
+                        "maxPrice": 3800
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "name": "รั้ว — รั้วสำเร็จรูปสูง 2 เมตร",
+                    "url": "https://www.theeraphong.com/fence",
+                    "priceCurrency": "THB",
+                    "availability": "https://schema.org/InStock",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "priceValidUntil": "2027-12-31",
+                    "sku": "FPC -02",
+                    "priceSpecification": {
+                        "@type": "UnitPriceSpecification",
+                        "priceCurrency": "THB",
+                        "unitText": "เมตร",
+                        "unitCode": "MTR",
+                        "minPrice": 2600,
+                        "maxPrice": 4200
+                    }
+                },
+                {
+                    "@type": "Offer",
+                    "name": "รั้ว — บริการก่อสร้างรั้วตาข่ายชุบกัลวาไนซ์",
+                    "url": "https://www.theeraphong.com/fence",
+                    "priceCurrency": "THB",
+                    "availability": "https://schema.org/InStock",
+                    "itemCondition": "https://schema.org/NewCondition",
+                    "priceValidUntil": "2027-12-31",
+                    "sku": "FGS-02",
+                    "priceSpecification": {
+                        "@type": "UnitPriceSpecification",
+                        "priceCurrency": "THB",
+                        "unitText": "เมตร",
+                        "unitCode": "MTR",
+                        "minPrice": 1300,
+                        "maxPrice": 2000
+                    }
+                }
+            ],
+            "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",
+                "reviewCount": "31",
+                "bestRating": "5",
+                "worstRating": "1"
+            }
+        },
+        {
+            "@type": "FAQPage",
+            "@id": "https://www.theeraphong.com/fence/#faq",
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": "รั้วเมทัลชีท ราคาเมตรละ เท่าไหร่",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "เริ่มต้นเมตรละ1,000 บาท ขึ้นอยู่กับสภาพพื้นที่หน้างาน และวัสดุอุปกรณ์ ที่ใช้ในการก่อสร้าง"
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "ทำรั้วบ้านราคาเท่าไหร่",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "1. วัสดุที่ใช้นี่คือปัจจัยหลักที่มีผลมากที่สุด เช่น\nคอนกรีตสำเร็จรูป — ราคาปานกลาง ทนทาน นิยมมาก\nอิฐมอญ/บล็อก — ราคาสูงกว่า เพราะใช้แรงงานมาก\nเหล็กดัด/อลูมิเนียม — ราคาขึ้นอยู่กับดีไซน์และความหนา\nไม้ — ราคาแปรผันสูง บำรุงรักษามาก\nPVC/Vinyl — ราคาถูก แต่ทนแดดร้อนในไทยได้จำกัด\n2. ความสูงและความหนายิ่งสูงและหนา → ใช้วัสดุมากขึ้น → ราคาสูงขึ้นตามสัดส่วน\n3. ความยาวรอบพื้นที่ (เมตร)ราคามักคิดเป็น บาท/เมตร ดังนั้นพื้นที่ที่ดินใหญ่ = ต้นทุนรวมสูง\n4. ฐานรากและดินที่ตั้ง\nดินอ่อน/ดินเหนียว → ต้องเจาะเสาเข็มเพิ่ม → ราคาสูงขึ้น\nพื้นที่ลาดเอียงหรือมีระดับต่างกัน → งานซับซ้อนขึ้น\n5. ดีไซน์และความซับซ้อน\nรั้วเรียบ vs. มีลวดลาย/โค้ง/ฉลุ\nมีประตูรั้ว (บานเดี่ยว/คู่/สไลด์) → เพิ่มต้นทุนมาก\n6. ค่าแรงงานแต่\nละพื้นที่ในไทยมีค่าแรงต่างกัน (กทม. vs. ต่างจังหวัด)\nช่วงเทศกาลหรือแรงงานขาดแคลน → ค่าแรงสูงขึ้น\n7. ราคาวัสดุตลาด ณ ช่วงเวลานั้น\nราคาปูนซีเมนต์ เหล็ก และพลังงาน มีความผันผวนตามตลาดโลก\n8. การเดินระบบเพิ่มเติมติดกล้องวงจรปิด / ระบบไฟ / รั้วไฟฟ้า → เพิ่มต้นทุนทั้งวัสดุและแรงงาน"
+                    }
+                },
+                {
+                    "@type": "Question",
+                    "name": "ราคา รั้วบ้านแบบ ต่างๆ ราคาเท่าไหร่",
+                    "acceptedAnswer": {
+                        "@type": "Answer",
+                        "text": "รั้วก่อฉาบ(ลงเสาเข็ม) สูง 2 เมตร เริ่มต้น 4,000 บาท/เมตร\nรั้วเหล็ก  สูง 1.50 เมตร เริ่มต้น 1,700 บาท/เมตร\nรั้วเมทัลชีท เริ่มต้น 1,000 บาท/เมตร"
+                    }
+                }
+            ]
+        },
+        {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "หน้าแรก",
+                    "item": "https://www.theeraphong.com"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "งานโครงสร้างและงานปูน",
+                    "item": "https://www.theeraphong.com/services"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "รั้ว",
+                    "item": "https://www.theeraphong.com/fence"
+                }
+            ]
+        }
+    ]
+}
+</script>

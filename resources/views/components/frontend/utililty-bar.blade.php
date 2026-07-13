@@ -1,4 +1,4 @@
-<div class="hidden md:block bg-navy-950 text-white/70 text-[13px]">
+<div class="hidden lg:block bg-navy-950 text-white/70 text-[13px]">
     <div class="mx-auto max-w-7xl px-6 h-10 flex items-center justify-between">
         <div class="flex items-center gap-6">
             <span><i class="bi bi-geo-alt-fill text-hivis mr-1"></i> กรุงเทพมหานคร, ปริมณฑล &amp; รับงานโครงการก่อสร้างทั่วประเทศ</span>

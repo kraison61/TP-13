@@ -4,7 +4,7 @@
 
 {{-- ============ BREADCRUMB ============ --}}
 <nav aria-label="breadcrumb" class="border-b border-line bg-surface">
-    <div class="mx-auto max-w-7xl px-6 py-3.5 text-[14px] text-muted flex items-center gap-2 flex-wrap">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-3.5 text-[14px] text-muted flex items-center gap-2 flex-wrap">
         <a href="{{ route('home') }}" class="hover:text-navy-900 transition">หน้าแรก</a>
         <i class="bi bi-chevron-right text-[11px]"></i>
         <a href="{{ route('frontend.services.index') }}" class="hover:text-navy-900 transition">บริการ</a>
@@ -16,7 +16,7 @@
 {{-- ============ SERVICE HERO ============ --}}
 <section class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
     <div class="pointer-events-none absolute -top-24 right-0 h-[480px] w-[480px] rounded-full bg-accent/10 blur-3xl"></div>
-    <div class="relative mx-auto max-w-7xl px-6 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <div class="relative mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-20 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div>
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
                 <span class="w-7 h-px bg-accent"></span>
@@ -86,7 +86,7 @@
 <x-frontend.trust />
 
 {{-- ============ OVERVIEW + SCOPE ============ --}}
-<section class="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+<section class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-24">
     <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
         <div class="lg:col-span-7">
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
@@ -120,7 +120,7 @@
         </div>
 
         <aside class="lg:col-span-5">
-            <div class="lg:sticky lg:top-[88px] rounded-2xl border border-line bg-surface p-7">
+            <div class="lg:sticky lg:top-[76px] rounded-2xl border border-line bg-surface p-7">
                 <div class="flex items-end justify-between gap-4">
                     <div>
                         <div class="text-[13px] text-muted">ราคาเริ่มต้น</div>
@@ -168,7 +168,7 @@
 
 {{-- ============ RELATED PROJECTS ============ --}}
 @if ($portfolios->isNotEmpty())
-    <section class="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+    <section class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-24">
         <div class="flex flex-wrap items-end justify-between gap-4 mb-10">
             <div class="max-w-2xl">
                 <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
@@ -209,7 +209,7 @@
 {{-- ============ SERVICE FAQ ============ --}}
 @if ($service->faqs->isNotEmpty())
     <section class="bg-surface">
-        <div class="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-24">
             <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
                 <div class="lg:col-span-5">
                     <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
@@ -242,7 +242,7 @@
 
 {{-- ============ OTHER SERVICES ============ --}}
 @if ($otherServices->isNotEmpty())
-    <section class="mx-auto max-w-7xl px-6 py-20 lg:py-24">
+    <section class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-24">
         <div class="max-w-2xl mb-10">
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase">
                 <span class="w-7 h-px bg-accent"></span> บริการอื่น ๆ
@@ -260,7 +260,7 @@
                     @if ($other->description)
                         <p class="mt-2 text-[15px] text-ink2 leading-relaxed flex-1">{{ $other->description }}</p>
                     @endif
-                    <div class="mt-5 pt-4 border-t border-dashed border-line flex gap-5 text-[13px] text-muted">
+                    <div class="mt-5 pt-4 border-t border-dashed border-line flex flex-wrap gap-x-5 gap-y-1 text-[13px] text-muted">
                         @if ($other->activePrice)
                             <span>เริ่มต้น <b class="text-navy-900 font-semibold">{{ number_format((float) $other->activePrice->price, 0) }} / {{ $other->activePrice->unit }}</b></span>
                         @endif
@@ -275,6 +275,12 @@
             @endforeach
         </div>
     </section>
+@endif
+
+@if (! empty($serviceSchemaLd['@graph']))
+<script type="application/ld+json">
+{!! json_encode($serviceSchemaLd, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) !!}
+</script>
 @endif
 
 @endsection

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ServiceController;
 use App\Http\Controllers\Frontend\HomeController;
@@ -16,6 +17,7 @@ Route::get('/services', [ServiceController::class, 'index'])->name('services');
 Route::get('/portal', [PortalController::class, 'index'])->name('portal');
 
 Route::post('/quote', [QuoteController::class, 'store'])->name('quote.store');
+Route::post('/voucher/copy', [VoucherController::class, 'storeCopy'])->name('voucher.copy');
 
 Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy');
 

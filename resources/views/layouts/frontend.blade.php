@@ -13,7 +13,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans text-ink bg-white antialiased [text-wrap:pretty]">
+<body class="font-sans text-ink bg-white antialiased [text-wrap:pretty] overflow-x-hidden">
 
 {{-- ============ UTILITY BAR ============ --}}
     <x-frontend.utililty-bar />

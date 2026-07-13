@@ -2,7 +2,7 @@
 $services = config('frontend.services');
 ?>
 <footer class="bg-navy-950 text-white/60">
-    <div class="mx-auto max-w-7xl px-6 pt-16 pb-10 grid md:grid-cols-12 gap-10">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-16 pb-10 grid md:grid-cols-12 gap-10">
         <div class="md:col-span-5">
             <div class="flex items-center gap-3 mb-4">
                 <span class="grid place-items-center w-10 h-10 rounded-lg bg-white text-navy-900 font-mono font-bold text-sm">TP</span>
@@ -62,7 +62,7 @@ $services = config('frontend.services');
         </div>
     </div>
     <div class="border-t border-white/10">
-        <div class="mx-auto max-w-7xl px-6 py-5 flex flex-wrap justify-between gap-2 text-[14px]">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 py-5 flex flex-wrap justify-between gap-2 text-[14px]">
             <div>© {{ date('Y') }} {{ config('company.name') }} · เลขผู้เสียภาษี {{ config('company.tax_id') }}</div>
             <div class="flex gap-5">
                 <a href="{{ route('privacy') }}"        class="hover:text-white transition">นโยบายความเป็นส่วนตัว</a>

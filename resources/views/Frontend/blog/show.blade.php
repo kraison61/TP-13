@@ -1,7 +1,17 @@
 @extends('layouts.frontend')
 
 @section('content')
-<article class="mx-auto max-w-4xl px-6 py-16 lg:py-24">
+<nav aria-label="breadcrumb" class="border-b border-line bg-surface">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-3.5 text-[14px] text-muted flex items-center gap-2 flex-wrap">
+        <a href="{{ route('home') }}" class="hover:text-navy-900 transition">หน้าแรก</a>
+        <i class="bi bi-chevron-right text-[11px]"></i>
+        <a href="{{ route('blog.index') }}" class="hover:text-navy-900 transition">บทความ</a>
+        <i class="bi bi-chevron-right text-[11px]"></i>
+        <span class="text-navy-900 font-medium">{{ $blog->title }}</span>
+    </div>
+</nav>
+
+<article class="mx-auto max-w-4xl px-4 sm:px-6 py-16 lg:py-24">
     @if ($blog->service)
         <a href="{{ route('frontend.services.show', $blog->service->slug) }}"
            class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase hover:text-navy-900 transition">
@@ -23,14 +33,14 @@
         </div>
     @endif
 
-    <div class="mt-10 prose prose-lg max-w-none text-ink2">
+    <div class="mt-10">
         {!! $blog->content !!}
     </div>
 </article>
 
 @if ($relatedBlogs->isNotEmpty())
     <section class="bg-surface border-t border-line">
-        <div class="mx-auto max-w-7xl px-6 py-16">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 py-16">
             <h2 class="text-2xl font-bold text-navy-900 mb-8">บทความที่เกี่ยวข้อง</h2>
             <div class="grid sm:grid-cols-3 gap-6">
                 @foreach ($relatedBlogs as $related)

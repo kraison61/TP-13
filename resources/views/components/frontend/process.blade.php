@@ -1,5 +1,5 @@
 @props(['steps'])
-<section id="process" class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+<section id="process" class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28">
     <div class="grid lg:grid-cols-12 gap-8 items-end mb-14">
         <div class="lg:col-span-7">
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> ขั้นตอนการทำงาน</span>

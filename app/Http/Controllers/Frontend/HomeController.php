@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\Blog;
+use App\Models\Faq;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
+use App\Support\MainPageSchema;
+use App\Support\ProjectSchema;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -19,11 +22,28 @@ class HomeController extends Controller
             ->orderBy('id')
             ->get();
 
-        $blogs = Blog::with('service')
+        $allProjectBlogs = Blog::with('service')
             ->whereNotNull('service_id')
             ->whereHas('service', fn ($q) => $q->where('is_active', true))
             ->latest()
             ->get();
+
+        $projectBlogs = $allProjectBlogs->take(config('frontend.projects.home_limit', 6));
+
+        $projectSchemaLd = ProjectSchema::itemList($allProjectBlogs);
+
+        $faqs = Faq::query()
+            ->where('is_active', true)
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get();
+
+        $faqItems = $faqs->map(fn (Faq $faq) => [
+            'q' => $faq->question,
+            'a' => nl2br(e($faq->answer)),
+        ])->all();
+
+        $mainSchemaLd = MainPageSchema::graph($services, $faqs);
 
         $filterServices = Service::query()
             ->where('is_active', true)
@@ -32,7 +52,15 @@ class HomeController extends Controller
             ->orderBy('title')
             ->get();
 
-        return view('Frontend.index', compact('services', 'blogs', 'filterServices'));
+        return view('Frontend.index', compact(
+            'services',
+            'allProjectBlogs',
+            'projectBlogs',
+            'projectSchemaLd',
+            'mainSchemaLd',
+            'faqItems',
+            'filterServices',
+        ));
     }
 
     /**
