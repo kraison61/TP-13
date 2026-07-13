@@ -5,10 +5,12 @@ use App\Http\Controllers\VoucherController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ServiceController;
 use App\Http\Controllers\Frontend\HomeController;
+use App\Http\Controllers\Frontend\ContactController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
+Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us');
 
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{slug}', [BlogController::class, 'show'])->name('blog.show');
