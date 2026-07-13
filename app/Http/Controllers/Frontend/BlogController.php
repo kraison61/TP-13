@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog;
+use App\Support\BlogPageSchema;
 
 class BlogController extends Controller
 {
@@ -19,7 +20,7 @@ class BlogController extends Controller
 
     public function show(string $slug)
     {
-        $blog = Blog::with('service')
+        $blog = Blog::with('service.category')
             ->where('slug', $slug)
             ->firstOrFail();
 
@@ -30,6 +31,8 @@ class BlogController extends Controller
             ->limit(3)
             ->get();
 
-        return view('frontend.blog.show', compact('blog', 'relatedBlogs'));
+        $blogSchemaLd = BlogPageSchema::graph($blog);
+
+        return view('frontend.blog.show', compact('blog', 'relatedBlogs', 'blogSchemaLd'));
     }
 }

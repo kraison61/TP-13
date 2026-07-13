@@ -53,4 +53,6 @@
         </div>
     </section>
 @endif
+
+@include('partials.blog-schema')
 @endsection
