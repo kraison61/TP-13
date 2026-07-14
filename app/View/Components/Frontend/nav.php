@@ -8,17 +8,25 @@ use Illuminate\View\Component;
 
 class nav extends Component
 {
-    /**
-     * Create a new component instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    /** @var list<array{label: string, href: string, icon?: string}> */
+    public array $items;
 
     /**
-     * Get the view / contents that represent the component.
+     * @param  list<array{label: string, url: string, type?: string, icon?: string}>|null  $items
      */
+    public function __construct(?array $items = null)
+    {
+        $this->items = collect($items ?? config('frontend.nav', []))
+            ->map(fn (array $item) => [
+                'label' => $item['label'],
+                'href' => ($item['type'] ?? 'route') === 'route'
+                    ? route($item['url'])
+                    : $item['url'],
+                'icon' => $item['icon'] ?? null,
+            ])
+            ->all();
+    }
+
     public function render(): View|Closure|string
     {
         return view('components.frontend.nav');

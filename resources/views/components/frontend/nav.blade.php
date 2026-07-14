@@ -10,12 +10,11 @@
         </a>
 
         <div class="hidden lg:flex items-center gap-1 text-[15px] font-medium text-ink2">
-            <a href="{{ route('home') }}"     class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">หน้าแรก</a>
-            <a href="{{ route('frontend.services.index') }}" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บริการ</a>
-            <a href="{{ route('blog.index') }}" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ผลงาน</a>
-            <a href="#process"  class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ขั้นตอน</a>
-            <a href="{{ route('blog.index') }}"   class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บทความ</a>
-            <a href="{{ route('portal') }}"       class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">พอร์ทัลลูกค้า <i class="bi bi-arrow-up-right text-xs"></i></a>
+            @foreach ($items as $item)
+            <a href="{{ $item['href'] }}" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">
+                {{ $item['label'] }}@if ($item['icon']) <i class="bi {{ $item['icon'] }} text-xs"></i>@endif
+            </a>
+            @endforeach
         </div>
 
         <div class="flex items-center gap-2">
@@ -30,12 +29,9 @@
     {{-- mobile menu --}}
     <div id="mobileMenu" class="lg:hidden hidden border-t border-line bg-white">
         <div class="mx-auto max-w-7xl px-4 sm:px-6 py-3 flex flex-col text-[15px] font-medium text-ink2">
-            <a href="{{ route('home') }}"                   class="py-2.5 border-b border-line/70">หน้าแรก</a>
-            <a href="{{ route('frontend.services.index') }}" class="py-2.5 border-b border-line/70">บริการ</a>
-            <a href="#projects"               class="py-2.5 border-b border-line/70">ผลงาน</a>
-            <a href="#process"                class="py-2.5 border-b border-line/70">ขั้นตอน</a>
-            <a href="{{ route('blog.index') }}" class="py-2.5 border-b border-line/70">บทความ</a>
-            <a href="{{ route('portal') }}"   class="py-2.5">พอร์ทัลลูกค้า</a>
+            @foreach ($items as $item)
+            <a href="{{ $item['href'] }}" @class(['py-2.5', 'border-b border-line/70' => ! $loop->last])>{{ $item['label'] }}</a>
+            @endforeach
         </div>
     </div>
 </header>
