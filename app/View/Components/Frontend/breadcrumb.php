@@ -12,6 +12,9 @@ class breadcrumb extends Component
     /** @var list<array{label: string, url: ?string, active: bool}> */
     public array $items;
 
+    /** @var list<string> */
+    public array $segments;
+
     /**
      * @param  list<array{label: string, url?: ?string, active?: bool}>|null  $items
      * @param  array<string, string>|null  $labels
@@ -23,8 +26,10 @@ class breadcrumb extends Component
         public ?string $current = null,
         public string $variant = 'light',
         public bool $bar = false,
+        public bool $embedded = false,
         public array $parents = [],
     ) {
+        $this->segments = request()->segments();
         $this->items = $items ?? $this->buildFromSegments($labels);
     }
 
@@ -34,7 +39,7 @@ class breadcrumb extends Component
      */
     private function buildFromSegments(?array $labels): array
     {
-        $segments = request()->segments();
+        $segments = $this->segments;
         $labelMap = array_merge(config('frontend.breadcrumbs.labels', []), $labels ?? []);
         $homeLabel = config('frontend.breadcrumbs.home_label', 'หน้าแรก');
 

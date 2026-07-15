@@ -6,6 +6,7 @@
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ลูกค้ากว่า 400 บ้านพูดเป็นเสียงเดียวกัน</h2>
         </div>
 
+        @if (count($testiTabs) > 1)
         <div class="mt-8 flex flex-wrap justify-center gap-2 px-1" id="testTabs">
             @foreach($testiTabs as $i => $label)
             <button data-tab="{{ $i }}"
@@ -15,13 +16,14 @@
             </button>
             @endforeach
         </div>
+        @endif
 
         @foreach($testimonials as $panelIdx => $panel)
-        <div data-panel="{{ $panelIdx }}" class="mt-10 grid md:grid-cols-3 gap-5 {{ $panelIdx !== 0 ? 'hidden' : '' }}">
+        <div data-panel="{{ $panelIdx }}" class="{{ count($testiTabs) > 1 ? 'mt-10' : 'mt-12' }} grid md:grid-cols-3 gap-5 {{ $panelIdx !== 0 ? 'hidden' : '' }}">
             @foreach($panel as $t)
             <figure class="rounded-2xl bg-white ring-1 ring-line p-7 flex flex-col">
                 <div class="text-hivis text-[15px] mb-4">
-                    @for($s = 0; $s < 5; $s++)<i class="bi bi-star-fill"></i>@endfor
+                    @for($s = 0; $s < ($t['rating'] ?? 5); $s++)<i class="bi bi-star-fill"></i>@endfor
                 </div>
                 <blockquote class="text-ink leading-relaxed flex-1">{{ $t['quote'] }}</blockquote>
                 <figcaption class="mt-5 flex items-center gap-3">

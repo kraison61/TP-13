@@ -1,9 +1,7 @@
 @extends('layouts.frontend')
 
 @section('content')
-{{-- ============ BREADCRUMB (HOME) ============ --}}
-<x-frontend.breadcrumb bar />
-<x-frontend.service.hero />
+<x-frontend.page-hero ...$hero />
     <main class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24 space-y-24">
 
         @foreach ($services as $service)

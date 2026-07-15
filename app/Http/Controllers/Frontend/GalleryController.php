@@ -41,6 +41,7 @@ class GalleryController extends Controller
             ],
         ];
 
-        return view('frontend.galleries.index', compact('categories', 'projects', 'hero'));
+        return view('frontend.galleries.index', compact('categories', 'projects', 'hero'))
+            ->with('hideLayoutBreadcrumb', true);
     }
 }

@@ -2,12 +2,6 @@
 
 @section('content')
 
-<x-frontend.breadcrumb
-    bar
-    :parents="[['label' => 'บริการทั้งหมด', 'url' => route('frontend.services.index')]]"
-    :current="$service->title"
-/>
-
 {{-- ============ SERVICE HERO ============ --}}
 <section class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
     <div class="pointer-events-none absolute -top-24 right-0 h-[480px] w-[480px] rounded-full bg-accent/10 blur-3xl"></div>

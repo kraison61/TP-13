@@ -27,6 +27,14 @@
 
     {{-- ============ NAV ============ --}}
     <x-frontend.nav />
+    {{-- ============ BREADCRUMB ============ --}}
+    @empty($hideLayoutBreadcrumb)
+        <x-frontend.breadcrumb
+            bar
+            :current="$breadcrumbCurrent ?? null"
+            :parents="$breadcrumbParents ?? []"
+        />
+    @endempty
 @yield('content')
 
 {{-- ============ FINANCE ============ --}}

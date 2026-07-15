@@ -2,6 +2,12 @@
 
 return [
     'name' => 'บริษัทธีรพงษ์เซอร์วิส จำกัด',
+    'founder_name' => 'นายธีรพงษ์ สารสุข',
+    'founder_title' => 'ผู้ก่อตั้ง',
+    'projects_completed' => '100+',
+    'experience_years' => '20+',
+    'experience_label' => 'ประสบการณ์การทำงานรวม',
+    'team_size' => '20+',
     'phone' => '0627188847',
     'phone_formatted' => '062-718-8847',
     'email' => 'theeraphong.services@gmail.com',

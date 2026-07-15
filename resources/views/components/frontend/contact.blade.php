@@ -36,12 +36,12 @@
     <li class="flex gap-3.5">
         <i class="bi bi-line text-hivis text-xl"></i>
         <div>
-            <div class="text-[13px] text-white/50">LINE</div>
-            <a href="{{ config('company.line') }}"
+            <div class="text-[13px] text-white/50">LINE Official</div>
+            <a href="{{ config('company.line_official') }}"
                target="_blank"
                rel="noopener noreferrer"
                class="font-medium hover:text-hivis transition">
-                {{ config('company.phone') }}
+                {{ config('company.line_official_name') }}
             </a>
         </div>
     </li>
@@ -111,10 +111,10 @@
                         </span>
                     </div>
 
-                    <a href="{{ config('company.line') }}" target="_blank" rel="noopener noreferrer"
+                    <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer"
                        class="mt-4 flex items-center justify-center gap-2.5 rounded-xl bg-[#06C755] px-6 py-4 text-lg font-bold text-white shadow-lg shadow-[#06C755]/30 hover:brightness-95 hover:-translate-y-0.5 active:scale-[0.99] transition">
                         <i class="bi bi-line text-2xl"></i>
-                        แอด LINE ยืนยันสิทธิ์ E-Voucher
+                        แอด LINE Official ยืนยันสิทธิ์ E-Voucher
                     </a>
                 </div>
                 <div class="sm:col-span-1">

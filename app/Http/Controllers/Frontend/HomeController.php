@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Blog;
 use App\Models\Faq;
+use App\Models\Review;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
 use App\Support\MainPageSchema;
@@ -52,6 +53,8 @@ class HomeController extends Controller
             ->orderBy('title')
             ->get();
 
+        [$testiTabs, $testimonials] = $this->buildTestimonials();
+
         return view('Frontend.index', compact(
             'services',
             'allProjectBlogs',
@@ -60,7 +63,67 @@ class HomeController extends Controller
             'mainSchemaLd',
             'faqItems',
             'filterServices',
+            'testiTabs',
+            'testimonials',
         ));
+    }
+
+    /**
+     * @return array{0: list<string>, 1: list<list<array{i: string, name: string, project: string, quote: string, rating: int}>>}
+     */
+    private function buildTestimonials(): array
+    {
+        $reviews = Review::query()
+            ->with(['service' => fn ($q) => $q
+                ->where('is_active', true)
+                ->select('id', 'title', 'service_category_id')
+                ->with('category:id,name')])
+            ->whereHas('service', fn ($q) => $q->where('is_active', true))
+            ->latest('id')
+            ->get();
+
+        if ($reviews->isEmpty()) {
+            return [[], []];
+        }
+
+        $grouped = $reviews
+            ->groupBy(fn (Review $review) => $review->service->category->id ?? 0)
+            ->sortByDesc(fn ($items) => $items->count())
+            ->values();
+
+        $testiTabs = $grouped
+            ->map(fn ($items) => $items->first()->service->category->name ?? 'อื่นๆ')
+            ->all();
+
+        $testimonials = $grouped
+            ->map(fn ($items) => $items
+                ->map(fn (Review $review) => $this->formatReview($review))
+                ->values()
+                ->all())
+            ->all();
+
+        return [$testiTabs, $testimonials];
+    }
+
+    /**
+     * @return array{i: string, name: string, project: string, quote: string, rating: int}
+     */
+    private function formatReview(Review $review): array
+    {
+        $displayName = preg_replace('/^คุณ\s*/u', '', $review->author_name) ?? $review->author_name;
+        $project = $review->service->title;
+
+        if ($review->location) {
+            $project .= ' · '.$review->location;
+        }
+
+        return [
+            'i' => mb_substr(trim($displayName), 0, 1),
+            'name' => $review->author_name,
+            'project' => $project,
+            'quote' => $review->review_text,
+            'rating' => (int) $review->rating,
+        ];
     }
 
     /**

@@ -14,9 +14,10 @@ class hero extends Component
         public ?string $current = null,
         public string $eyebrow = 'บริการของเรา',
         public string $title = 'งานก่อสร้างนอกตัวบ้าน<br/>ครบจบในที่เดียว',
-        public string $description = 'ทีมช่างเฉพาะทาง 35 คน รับงานตั้งแต่โปรเจกต์เล็ก 5 ตร.ม. ถึงโครงการขนาดใหญ่ — ในเขตกรุงเทพฯ และปริมณฑล พร้อมรับประกันงาน 2 ปี',
+        public ?string $description = null,
         ?array $badges = null,
     ) {
+        $this->description = $description ?? 'ทีมช่างเฉพาะทาง ' . config('company.team_size') . ' คน รับงานตั้งแต่โปรเจกต์เล็ก 5 ตร.ม. ถึงโครงการขนาดใหญ่ — ในเขตกรุงเทพฯ และปริมณฑล พร้อมรับประกันงาน 2 ปี';
         $this->badges = $badges ?? [
             ['icon' => 'bi-clock', 'text' => 'สำรวจหน้างานฟรี ภายใน 3 วัน'],
             ['icon' => 'bi-shield-check', 'text' => 'รับประกันงาน 2 ปีเต็ม'],

@@ -1,7 +1,6 @@
 @extends('layouts.frontend')
 
 @section('content')
-<x-frontend.breadcrumb bar :current="$blog->title" />
 
 <article class="mx-auto max-w-4xl px-4 sm:px-6 py-16 lg:py-24">
     @if ($blog->service)

@@ -15,7 +15,18 @@ class BlogController extends Controller
             ->latest()
             ->paginate(12);
 
-        return view('frontend.blog.index', compact('blogs'));
+        $hero = [
+            'eyebrow' => 'บทความ',
+            'title' => 'บทความและผลงาน',
+            'description' => 'บทความ ความรู้ และตัวอย่างผลงานก่อสร้างจากทีมงานของเรา',
+            'badges' => [
+                ['icon' => 'bi-journal-text', 'text' => $blogs->total().' บทความ'],
+                ['icon' => 'bi-lightbulb', 'text' => 'ความรู้ก่อสร้าง'],
+                ['icon' => 'bi-shield-check', 'text' => 'จากทีมงานจริง'],
+            ],
+        ];
+
+        return view('frontend.blog.index', compact('blogs', 'hero'))->with('hideLayoutBreadcrumb', true);
     }
 
     public function show(string $slug)
@@ -33,6 +44,8 @@ class BlogController extends Controller
 
         $blogSchemaLd = BlogPageSchema::graph($blog);
 
-        return view('frontend.blog.show', compact('blog', 'relatedBlogs', 'blogSchemaLd'));
+        $breadcrumbCurrent = $blog->title;
+
+        return view('frontend.blog.show', compact('blog', 'relatedBlogs', 'blogSchemaLd', 'breadcrumbCurrent'));
     }
 }

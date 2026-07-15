@@ -1,7 +1,6 @@
 <section class="relative overflow-hidden bg-navy-900 text-white">
   <div class="pointer-events-none absolute -top-32 right-0 h-[500px] w-[500px] rounded-full bg-accent/40 blur-3xl opacity-50"></div>
   <div class="relative mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-20">
-    <x-frontend.breadcrumb variant="dark" :current="$current" class="mb-8" />
     <div class="max-w-3xl">
       <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase">
         <span class="w-7 h-px bg-hivis"></span> {{ $eyebrow }}

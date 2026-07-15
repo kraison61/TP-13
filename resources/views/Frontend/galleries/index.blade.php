@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 
 @section('content')
-<x-frontend.service.hero ...$hero />
+<x-frontend.page-hero ...$hero />
 
 <div class="bg-white border-b border-slate-200 sticky top-0 z-20 shadow-sm">
     <div class="max-w-6xl mx-auto px-7 flex items-center gap-5 h-15">
