@@ -6,6 +6,7 @@ use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ServiceController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ContactController;
+use App\Http\Controllers\Frontend\GalleryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -30,6 +31,9 @@ Route::prefix('services')->name('frontend.services.')->group(function () {
     Route::get('/', [ServiceController::class, 'index'])->name('index');
     Route::get('/calculate', [ServiceController::class, 'soilCalculate'])->name('calculate');
     // Route::get('/{slug}', [ServiceController::class, 'show'])->name('show');
+});
+Route::prefix('galleries')->name('frontend.galleries.')->group(function () {
+    Route::get('/', [GalleryController::class, 'index'])->name('index');
 });
 
 Route::get('/{slug}', [ServiceController::class, 'show'])->name('frontend.services.show');

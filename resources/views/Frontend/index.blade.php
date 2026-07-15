@@ -28,6 +28,9 @@ $steps = [
 
 @section('content')
 
+{{-- ============ BREADCRUMB (HOME) ============ --}}
+<x-frontend.breadcrumb bar />
+
 {{-- ============ HERO ============ --}}
 <x-frontend.hero />
 

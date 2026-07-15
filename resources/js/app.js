@@ -90,6 +90,49 @@ projectFilters?.addEventListener('click', e => {
 
 projectSearch?.addEventListener('input', applyProjectFilters);
 
+// Gallery page — category filter
+const galleryFilters = document.getElementById('gallery-filters');
+const galleryGrid = document.getElementById('gallery-grid');
+const galleryEmpty = document.getElementById('gallery-empty');
+const galleryCount = document.getElementById('gallery-count');
+
+let activeGalleryFilter = 'all';
+
+const setGalleryFilterButtonState = (activeBtn) => {
+    galleryFilters?.querySelectorAll('[data-filter]').forEach(btn => {
+        const on = btn === activeBtn;
+        btn.classList.toggle('bg-navy-900', on);
+        btn.classList.toggle('border-navy-900', on);
+        btn.classList.toggle('text-white', on);
+        btn.classList.toggle('bg-white', !on);
+        btn.classList.toggle('text-navy-900', !on);
+        btn.setAttribute('aria-selected', on ? 'true' : 'false');
+    });
+};
+
+const applyGalleryFilters = () => {
+    let visible = 0;
+
+    galleryGrid?.querySelectorAll('[data-gallery-card]').forEach(card => {
+        const matches = activeGalleryFilter === 'all' || card.dataset.cat === activeGalleryFilter;
+        card.classList.toggle('hidden', !matches);
+        if (matches) visible++;
+    });
+
+    galleryCount && (galleryCount.textContent = String(visible));
+    galleryEmpty?.classList.toggle('hidden', visible > 0);
+    galleryGrid?.classList.toggle('hidden', visible === 0);
+};
+
+galleryFilters?.addEventListener('click', e => {
+    const btn = e.target.closest('[data-filter]');
+    if (!btn) return;
+
+    activeGalleryFilter = btn.dataset.filter;
+    setGalleryFilterButtonState(btn);
+    applyGalleryFilters();
+});
+
 // Finance carousel — Tailwind breakpoints: mobile 1 / tablet 2 / desktop 3
 (function () {
     const viewport = document.getElementById('finViewport');

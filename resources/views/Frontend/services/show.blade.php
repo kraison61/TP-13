@@ -2,16 +2,11 @@
 
 @section('content')
 
-{{-- ============ BREADCRUMB ============ --}}
-<nav aria-label="breadcrumb" class="border-b border-line bg-surface">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-3.5 text-[14px] text-muted flex items-center gap-2 flex-wrap">
-        <a href="{{ route('home') }}" class="hover:text-navy-900 transition">หน้าแรก</a>
-        <i class="bi bi-chevron-right text-[11px]"></i>
-        <a href="{{ route('frontend.services.index') }}" class="hover:text-navy-900 transition">บริการ</a>
-        <i class="bi bi-chevron-right text-[11px]"></i>
-        <span class="text-navy-900 font-medium">{{ $service->title }}</span>
-    </div>
-</nav>
+<x-frontend.breadcrumb
+    bar
+    :parents="[['label' => 'บริการทั้งหมด', 'url' => route('frontend.services.index')]]"
+    :current="$service->title"
+/>
 
 {{-- ============ SERVICE HERO ============ --}}
 <section class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
