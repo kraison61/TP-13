@@ -33,7 +33,7 @@ class BlogPageSchema
         return [
             '@type' => 'GeneralContractor',
             '@id' => self::SITE.'#organization',
-            'name' => 'บริษัทธีรพงษ์เซอร์วิส จำกัด',
+            'name' => config('company.legal_name'),
             'url' => self::SITE,
             'logo' => [
                 '@type' => 'ImageObject',

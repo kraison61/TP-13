@@ -30,6 +30,7 @@ class GalleryController extends Controller
         ];
 
         $hero = [
+            'current' => 'คลังผลงาน',
             'eyebrow' => 'ผลงานของเรา',
             'title' => 'คลังผลงาน',
             'description' => 'ผลงานที่เราภาคภูมิใจ — โครงการก่อสร้างและวิศวกรรมทั่วประเทศไทย',

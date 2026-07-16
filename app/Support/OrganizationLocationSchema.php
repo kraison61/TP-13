@@ -9,6 +9,7 @@ class OrganizationLocationSchema
         $schema = config('frontend.schema');
 
         return [
+            'priceRange' => $schema['price_range'],
             'geo' => [
                 '@type' => 'GeoCoordinates',
                 'latitude' => $schema['geo']['latitude'],

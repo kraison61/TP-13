@@ -177,7 +177,7 @@ class ServicePageSchema
             $validUntil = \Illuminate\Support\Carbon::parse($price->price_valid_until)->format('Y-m-d');
         }
 
-        return [
+        $offer = [
             '@type' => 'Offer',
             'url' => $serviceUrl,
             'priceCurrency' => $price->price_currency ?: 'THB',
@@ -185,6 +185,12 @@ class ServicePageSchema
             'itemCondition' => 'https://schema.org/NewCondition',
             'priceValidUntil' => $validUntil,
         ];
+
+        if ($price->price !== null) {
+            $offer['price'] = (float) $price->price;
+        }
+
+        return $offer;
     }
 
     private static function priceSpecification(ServicePrice $price): ?array

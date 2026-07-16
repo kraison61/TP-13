@@ -23,6 +23,8 @@ class HomeController extends Controller
             ->orderBy('id')
             ->get();
 
+        $homeServices = $services->take(config('frontend.services_list.home_limit', 4));
+
         $allProjectBlogs = Blog::with('service')
             ->whereNotNull('service_id')
             ->whereHas('service', fn ($q) => $q->where('is_active', true))
@@ -33,11 +35,19 @@ class HomeController extends Controller
 
         $projectSchemaLd = ProjectSchema::itemList($allProjectBlogs);
 
-        $faqs = Faq::query()
+        $faqs = Service::query()
             ->where('is_active', true)
-            ->orderBy('sort_order')
+            ->whereHas('faqs', fn ($q) => $q->where('is_active', true))
+            ->with(['faqs' => fn ($q) => $q
+                ->where('is_active', true)
+                ->orderBy('sort_order')
+                ->orderBy('id')
+                ->limit(1)])
             ->orderBy('id')
-            ->get();
+            ->get()
+            ->map(fn (Service $service) => $service->faqs->first())
+            ->filter()
+            ->values();
 
         $faqItems = $faqs->map(fn (Faq $faq) => [
             'q' => $faq->question,
@@ -46,30 +56,22 @@ class HomeController extends Controller
 
         $mainSchemaLd = MainPageSchema::graph($services, $faqs);
 
-        $filterServices = Service::query()
-            ->where('is_active', true)
-            ->whereHas('blogs', fn ($q) => $q->whereNotNull('service_id'))
-            ->withCount(['blogs' => fn ($q) => $q->whereNotNull('service_id')])
-            ->orderBy('title')
-            ->get();
-
-        [$testiTabs, $testimonials] = $this->buildTestimonials();
+        $testimonials = $this->buildTestimonials();
 
         return view('Frontend.index', compact(
             'services',
+            'homeServices',
             'allProjectBlogs',
             'projectBlogs',
             'projectSchemaLd',
             'mainSchemaLd',
             'faqItems',
-            'filterServices',
-            'testiTabs',
             'testimonials',
         ));
     }
 
     /**
-     * @return array{0: list<string>, 1: list<list<array{i: string, name: string, project: string, quote: string, rating: int}>>}
+     * @return list<array{i: string, name: string, project: string, quote: string, rating: int}>
      */
     private function buildTestimonials(): array
     {
@@ -83,26 +85,13 @@ class HomeController extends Controller
             ->get();
 
         if ($reviews->isEmpty()) {
-            return [[], []];
+            return [];
         }
 
-        $grouped = $reviews
-            ->groupBy(fn (Review $review) => $review->service->category->id ?? 0)
-            ->sortByDesc(fn ($items) => $items->count())
-            ->values();
-
-        $testiTabs = $grouped
-            ->map(fn ($items) => $items->first()->service->category->name ?? 'อื่นๆ')
+        return $reviews
+            ->map(fn (Review $review) => $this->formatReview($review))
+            ->values()
             ->all();
-
-        $testimonials = $grouped
-            ->map(fn ($items) => $items
-                ->map(fn (Review $review) => $this->formatReview($review))
-                ->values()
-                ->all())
-            ->all();
-
-        return [$testiTabs, $testimonials];
     }
 
     /**

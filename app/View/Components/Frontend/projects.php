@@ -13,7 +13,6 @@ class projects extends Component
      */
     public function __construct(
         public $blogs,
-        public $filterServices,
         public $totalProjects = null,
     ) {}
 

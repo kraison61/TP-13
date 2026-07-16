@@ -3,12 +3,18 @@
 /**
  * เมนูนำทางหลัก (Nav)
  * เรียกใช้: config('frontend.nav')
+ *
+ * dropdown: 'services' → ดึงรายการบริการย่อยจาก DB อัตโนมัติ
  */
 return [
-    ['label' => 'หน้าแรก', 'url' => 'home', 'type' => 'route'],
-    ['label' => 'บริการ', 'url' => 'frontend.services.index', 'type' => 'route'],
-    ['label' => 'ผลงาน', 'url' => 'projects', 'type' => 'anchor'],
-    ['label' => 'บทความ', 'url' => 'blog.index', 'type' => 'route'],
-    ['label' => 'ทีมงาน', 'url' => 'about-us', 'type' => 'anchor'],
-    ['label' => 'ติดต่อ', 'url' => 'contact-us', 'type' => 'route', 'icon' => 'bi-arrow-up-right'],
+    ['label' => 'รับเหมาก่อสร้าง', 'url' => 'home', 'type' => 'route'],
+    [
+        'label' => 'บริการก่อสร้าง',
+        'url' => 'frontend.services.index',
+        'type' => 'route',
+        'dropdown' => 'services',
+    ],
+    ['label' => 'คลังผลงาน', 'url' => 'frontend.galleries.index', 'type' => 'route'],
+    ['label' => 'บทความและผลงาน', 'url' => 'blog.index', 'type' => 'route'],
+    ['label' => 'ติดต่อเรา', 'url' => 'contact-us', 'type' => 'route'],
 ];

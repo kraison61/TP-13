@@ -40,7 +40,7 @@
                 <div class="relative">
                     <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
                         <img src="https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/about/194914_0.jpg"
-                             alt="ทีมช่างของธีรพงษ์การช่าง" class="h-full w-full object-cover">
+                             alt="ทีมช่างของ{{ config('company.brand') }}" class="h-full w-full object-cover">
                         <div class="absolute inset-x-3 sm:inset-x-5 bottom-3 sm:bottom-5 flex items-center gap-3 sm:gap-4 rounded-xl bg-white/95 backdrop-blur p-3 sm:p-4 shadow-xl">
                             <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><i class="bi bi-patch-check-fill"></i></span>
                             <div>

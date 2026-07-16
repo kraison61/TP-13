@@ -16,6 +16,7 @@ class BlogController extends Controller
             ->paginate(12);
 
         $hero = [
+            'current' => 'บทความ',
             'eyebrow' => 'บทความ',
             'title' => 'บทความและผลงาน',
             'description' => 'บทความ ความรู้ และตัวอย่างผลงานก่อสร้างจากทีมงานของเรา',

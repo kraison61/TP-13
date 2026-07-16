@@ -1,7 +1,15 @@
 @extends('layouts.frontend')
 
 @section('content')
-<x-frontend.page-hero ...$hero />
+<x-frontend.page-hero
+    :current="$hero['current'] ?? null"
+    :eyebrow="$hero['eyebrow'] ?? ''"
+    :title="$hero['title'] ?? ''"
+    :description="$hero['description'] ?? ''"
+    :badges="$hero['badges'] ?? []"
+/>
+
+{{-- ============ MAIN CONTENT ============ --}}
     <main class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24 space-y-24">
 
         @foreach ($services as $service)

@@ -20,7 +20,7 @@ $steps = [
 <!-- <x-frontend.trust /> -->
 
 {{-- ============ SERVICES ============ --}}
-<x-frontend.services :services="$services" />
+<x-frontend.services :services="$homeServices" :total-services="$services->count()" />
 
 {{-- ============ STATS ============ --}}
 <x-frontend.stats />
@@ -29,7 +29,6 @@ $steps = [
 <x-frontend.projects
     :blogs="$projectBlogs"
     :total-projects="$allProjectBlogs->count()"
-    :filter-services="$filterServices"
 />
 
 @if (! empty($mainSchemaLd['@graph']))
@@ -49,7 +48,7 @@ $steps = [
 
 {{-- ============ TESTIMONIALS ============ --}}
 @if (! empty($testimonials))
-<x-frontend.testimonials :testimonials="$testimonials" :testiTabs="$testiTabs" />
+<x-frontend.testimonials :testimonials="$testimonials" />
 @endif
 
 {{-- ============ FAQ ============ --}}

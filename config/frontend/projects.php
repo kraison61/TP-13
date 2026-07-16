@@ -5,7 +5,7 @@
  * เรียกใช้: config('frontend.projects')
  */
 return [
-    'home_limit' => 6,
+    'home_limit' => 3,
 
     /** @deprecated ตัวอย่าง static — ใช้ข้อมูลจาก blogs ใน DB แทน */
     'samples' => [

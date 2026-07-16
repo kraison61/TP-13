@@ -5,8 +5,8 @@
             <span><i class="bi bi-clock-fill text-hivis mr-1"></i> {{ config('company.open_hours') }}</span>
         </div>
         <div class="flex items-center gap-6">
-            <a href="{{ config('compnany.line_official') }}" class="hover:text-white transition"><i class="bi bi-line text-hivis mr-1"></i> {{ config('company.line_official_name')}}</a>
-            <a href="tel:0{{ config('company.phone') }}" class="hover:text-white transition font-mono tabular-nums tracking-tight"><i class="bi bi-telephone-fill text-hivis mr-1"></i> {{ config('company.phone_formatted') }}</a>
+            <a href="{{ config('company.line_official') }}" class="hover:text-white transition"><i class="bi bi-line text-hivis mr-1"></i> {{ config('company.line_official_name') }}</a>
+            <a href="tel:{{ config('company.phone') }}" class="hover:text-white transition font-mono tabular-nums tracking-tight"><i class="bi bi-telephone-fill text-hivis mr-1"></i> {{ config('company.phone_formatted') }}</a>
         </div>
     </div>
 </div>

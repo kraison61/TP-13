@@ -31,64 +31,22 @@ const openMobileMenu = () => {
 
 menuBtn?.addEventListener('click', (e) => {
     e.stopPropagation();
-    mobileMenu?.classList.contains('hidden') ? openMobileMenu() : closeMobileMenu();
+    const open = mobileMenu?.classList.contains('hidden');
+    open ? openMobileMenu() : closeMobileMenu();
+    menuBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
 });
 
-mobileMenuBackdrop?.addEventListener('click', closeMobileMenu);
+mobileMenuBackdrop?.addEventListener('click', () => {
+    closeMobileMenu();
+    menuBtn?.setAttribute('aria-expanded', 'false');
+});
 
 mobileMenu?.addEventListener('click', e => {
-    if (e.target.closest('a')) closeMobileMenu();
+    if (e.target.closest('a')) {
+        closeMobileMenu();
+        menuBtn?.setAttribute('aria-expanded', 'false');
+    }
 });
-
-// Project / portfolio filter
-const projectFilters = document.getElementById('project-filters');
-const projectGrid = document.getElementById('project-grid');
-const projectSearch = document.getElementById('project-search');
-const projectEmpty = document.getElementById('project-empty');
-
-let activeProjectFilter = 'all';
-
-const setProjectFilterButtonState = (activeBtn) => {
-    projectFilters?.querySelectorAll('[data-filter]').forEach(btn => {
-        const on = btn === activeBtn;
-        btn.classList.toggle('bg-navy-900', on);
-        btn.classList.toggle('text-white', on);
-        btn.classList.toggle('border-navy-900', on);
-        btn.classList.toggle('text-ink2', !on);
-        btn.classList.toggle('border-line', !on);
-        btn.classList.toggle('bg-transparent', !on);
-        btn.setAttribute('aria-selected', on ? 'true' : 'false');
-    });
-};
-
-const applyProjectFilters = () => {
-    const query = (projectSearch?.value || '').trim().toLowerCase();
-    let visible = 0;
-
-    projectGrid?.querySelectorAll('[data-project-card]').forEach(card => {
-        const matchesCategory = activeProjectFilter === 'all' || card.dataset.cat === activeProjectFilter;
-        const matchesSearch = !query
-            || (card.dataset.title || '').toLowerCase().includes(query)
-            || (card.dataset.serviceTitle || '').toLowerCase().includes(query);
-        const show = matchesCategory && matchesSearch;
-
-        card.classList.toggle('hidden', !show);
-        if (show) visible++;
-    });
-
-    projectEmpty?.classList.toggle('hidden', visible > 0);
-};
-
-projectFilters?.addEventListener('click', e => {
-    const btn = e.target.closest('[data-filter]');
-    if (!btn) return;
-
-    activeProjectFilter = btn.dataset.filter;
-    setProjectFilterButtonState(btn);
-    applyProjectFilters();
-});
-
-projectSearch?.addEventListener('input', applyProjectFilters);
 
 // Gallery page — category filter
 const galleryFilters = document.getElementById('gallery-filters');
@@ -225,26 +183,93 @@ galleryFilters?.addEventListener('click', e => {
     play();
 })();
 
-// Testimonial tabs
-document.getElementById('testTabs')?.addEventListener('click', e => {
-    const btn = e.target.closest('[data-tab]');
-    if (!btn) return;
-    const tab = btn.dataset.tab;
+// Testimonials carousel — mobile 1 / tablet 2 / desktop 3
+(function () {
+    const viewport = document.getElementById('testiViewport');
+    const track = document.getElementById('testiTrack');
+    const nav = document.getElementById('testiNav');
+    const prevBtn = document.getElementById('testiPrev');
+    const nextBtn = document.getElementById('testiNext');
 
-    document.querySelectorAll('[data-tab]').forEach(b => {
-        const on = b === btn;
-        b.classList.toggle('bg-navy-900', on);
-        b.classList.toggle('text-white', on);
-        b.classList.toggle('border', !on);
-        b.classList.toggle('bg-white', !on);
-        b.classList.toggle('text-ink2', !on);
-        b.classList.toggle('border-line', !on);
-    });
+    if (!viewport || !track) return;
 
-    document.querySelectorAll('[data-panel]').forEach(p => {
-        p.classList.toggle('hidden', p.dataset.panel !== tab);
-    });
-});
+    const slides = [...track.querySelectorAll('.testi-slide')];
+    const total = slides.length;
+    if (total === 0) return;
+
+    const mqTablet = window.matchMedia('(min-width: 768px)');
+    const mqDesktop = window.matchMedia('(min-width: 1024px)');
+
+    let index = 0;
+    let timer = null;
+    let slidesPerView = 1;
+    let maxIndex = 0;
+
+    const getSlidesPerView = () => {
+        if (mqDesktop.matches) return 3;
+        if (mqTablet.matches) return 2;
+        return 1;
+    };
+
+    const offsetFor = (i) => slides[i]?.offsetLeft ?? 0;
+
+    const layout = () => {
+        slidesPerView = getSlidesPerView();
+        maxIndex = Math.max(0, total - slidesPerView);
+        index = Math.min(index, maxIndex);
+
+        track.style.transform = `translateX(-${offsetFor(index)}px)`;
+
+        const scrollable = total > slidesPerView;
+        nav?.classList.toggle('hidden', !scrollable);
+
+        updateNav();
+
+        if (!scrollable) clearInterval(timer);
+        else if (!timer) play();
+    };
+
+    const updateNav = () => {
+        const scrollable = total > slidesPerView;
+        prevBtn?.toggleAttribute('disabled', !scrollable || index === 0);
+        nextBtn?.toggleAttribute('disabled', !scrollable || index >= maxIndex);
+    };
+
+    const go = (n) => {
+        index = Math.max(0, Math.min(n, maxIndex));
+        track.style.transform = `translateX(-${offsetFor(index)}px)`;
+        updateNav();
+    };
+
+    const play = () => {
+        clearInterval(timer);
+        if (total <= slidesPerView) return;
+        timer = setInterval(() => go(index >= maxIndex ? 0 : index + 1), 5500);
+    };
+
+    prevBtn?.addEventListener('click', () => { go(index - 1); play(); });
+    nextBtn?.addEventListener('click', () => { go(index + 1); play(); });
+
+    viewport.addEventListener('mouseenter', () => clearInterval(timer));
+    viewport.addEventListener('mouseleave', play);
+
+    let touchStartX = null;
+    viewport.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+    viewport.addEventListener('touchend', e => {
+        if (touchStartX === null) return;
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        if (Math.abs(dx) > 40) go(index + (dx < 0 ? 1 : -1));
+        touchStartX = null;
+        play();
+    }, { passive: true });
+
+    mqTablet.addEventListener('change', layout);
+    mqDesktop.addEventListener('change', layout);
+    window.addEventListener('resize', layout, { passive: true });
+
+    layout();
+    play();
+})();
 
 // FAQ accordion — one item open at a time
 document.getElementById('faqItems')?.addEventListener('toggle', e => {

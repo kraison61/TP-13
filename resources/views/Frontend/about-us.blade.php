@@ -27,7 +27,7 @@
     </div>
     <div class="relative">
       <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
-        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80&auto=format&fit=crop" alt="ทีมช่างธีรพงษ์การช่าง" class="h-full w-full object-cover" />
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=1200&q=80&auto=format&fit=crop" alt="ทีมช่าง{{ config('company.brand') }}" class="h-full w-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-navy-950/60 via-transparent to-transparent"></div>
         <div class="absolute inset-x-5 bottom-5 flex items-center gap-4 rounded-xl bg-white/95 backdrop-blur p-4 shadow-xl">
           <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><i class="bi bi-patch-check-fill"></i></span>

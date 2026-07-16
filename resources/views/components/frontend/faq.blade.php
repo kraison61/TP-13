@@ -1,4 +1,6 @@
 @props(['faqs'])
+
+@if (! empty($faqs))
 <section id="faq" class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28">
     <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
         <div class="lg:col-span-5">
@@ -21,3 +23,4 @@
         </div>
     </div>
 </section>
+@endif

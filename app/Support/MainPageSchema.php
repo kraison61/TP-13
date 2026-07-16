@@ -58,7 +58,6 @@ class MainPageSchema
                     'name' => $name,
                 ])
                 ->all(),
-            'priceRange' => $schema['price_range'],
             ...OrganizationLocationSchema::fields(),
             'sameAs' => array_values(array_filter([
                 $company['line'] ?? null,
@@ -114,9 +113,45 @@ class MainPageSchema
             );
         }
 
-        return [
+        $offer = [
             '@type' => 'Offer',
             'itemOffered' => $item,
+            'priceCurrency' => 'THB',
+        ];
+
+        if ($servicePrice = self::resolveServicePrice($service)) {
+            $offer['price'] = $servicePrice['price'];
+            $offer['priceCurrency'] = $servicePrice['currency'];
+        }
+
+        return $offer;
+    }
+
+    /**
+     * @return array{price: float, currency: string}|null
+     */
+    private static function resolveServicePrice(Service $service): ?array
+    {
+        $price = null;
+
+        if ($service->relationLoaded('activePrice') && $service->activePrice?->price !== null) {
+            $price = $service->activePrice;
+        } elseif ($service->relationLoaded('lowestPrice') && $service->lowestPrice?->price !== null) {
+            $price = $service->lowestPrice;
+        } elseif ($service->relationLoaded('activePrices') && $service->activePrices->isNotEmpty()) {
+            $price = $service->activePrices
+                ->filter(fn ($activePrice) => $activePrice->price !== null)
+                ->sortBy(fn ($activePrice) => (float) $activePrice->price)
+                ->first();
+        }
+
+        if (! $price) {
+            return null;
+        }
+
+        return [
+            'price' => (float) $price->price,
+            'currency' => $price->price_currency ?: 'THB',
         ];
     }
 

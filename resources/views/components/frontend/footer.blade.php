@@ -6,7 +6,7 @@ $services = config('frontend.services');
         <div class="md:col-span-5">
             <div class="flex items-center gap-3 mb-4">
                 <span class="grid place-items-center w-10 h-10 rounded-lg bg-white text-navy-900 font-mono font-bold text-sm">TP</span>
-                <span class="font-bold text-white text-[17px]">ธีรพงษ์การช่าง</span>
+                <span class="font-bold text-white text-[17px]">{{ config('company.brand') }}</span>
             </div>
             <p class="max-w-sm text-[15px] leading-relaxed">รับเหมาก่อสร้างครบวงจร — กำแพงกันดิน รั้ว ถนน ลานคอนกรีต และงานปรับพื้นที่ ในเขตกรุงเทพฯ และปริมณฑล</p>
             <div class="mt-5 flex gap-2.5">

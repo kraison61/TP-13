@@ -174,7 +174,7 @@
           <div class="ml-6">
             <div class="inline-block rounded-full bg-hivis/15 text-accent text-xs font-bold tracking-widest px-3 py-1 mb-3">ปัจจุบัน</div>
             <h3 class="text-xl font-bold text-navy-900"><i class="bi bi-bricks text-accent mr-1.5"></i>ผู้เชี่ยวชาญกำแพงกันดิน ถมดิน และรั้ว</h3>
-            <p class="mt-2 text-[15px] text-ink2 leading-relaxed">จากเด็กติดรถคนนั้น วันนี้คือ บริษัท ธีรพงษ์เซอร์วิส จำกัด ผู้เชี่ยวชาญเฉพาะทางด้านงานกำแพงกันดิน งานถมดิน และงานรั้ว ด้วย {{ config('company.experience_label') }} {{ config('company.experience_years') }} ปี — ครบทุกมุม: รู้เครื่องจักร รู้หน้างาน รู้หลักวิศวกรรม และรู้ใจลูกค้า</p>
+            <p class="mt-2 text-[15px] text-ink2 leading-relaxed">จากเด็กติดรถคนนั้น วันนี้คือ {{ config('company.legal_name') }} ผู้เชี่ยวชาญเฉพาะทางด้านงานกำแพงกันดิน งานถมดิน และงานรั้ว ด้วย {{ config('company.experience_label') }} {{ config('company.experience_years') }} ปี — ครบทุกมุม: รู้เครื่องจักร รู้หน้างาน รู้หลักวิศวกรรม และรู้ใจลูกค้า</p>
           </div>
         </div>
 

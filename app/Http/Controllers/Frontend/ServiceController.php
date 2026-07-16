@@ -23,6 +23,7 @@ class ServiceController extends Controller
         $compareColumns = config('frontend.service_compare.columns');
 
         $hero = [
+            'current' => 'บริการทั้งหมด',
             'eyebrow' => 'บริการของเรา',
             'title' => 'งานก่อสร้างนอกตัวบ้าน<br/>ครบจบในที่เดียว',
             'description' => 'ทีมช่างเฉพาะทาง ' . config('company.team_size') . ' คน รับงานตั้งแต่โปรเจกต์เล็ก 5 ตร.ม. ถึงโครงการขนาดใหญ่ — ในเขตกรุงเทพฯ และปริมณฑล พร้อมรับประกันงาน 2 ปี',
@@ -36,6 +37,7 @@ class ServiceController extends Controller
 
         return view('frontend.services.index', compact('services', 'compareColumns', 'hero'))
             ->with('hideLayoutBreadcrumb', true);
+        // return "services";
     }
 
     /**
