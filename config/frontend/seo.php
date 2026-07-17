@@ -66,4 +66,21 @@ return [
             'keywords' => 'เกี่ยวกับเรา, รับเหมาก่อสร้าง, ประวัติบริษัท',
         ],
     ],
+
+    'sitemap' => [
+        'static' => [
+            ['route' => 'home', 'changefreq' => 'weekly', 'priority' => '1.0'],
+            ['route' => 'frontend.services.index', 'changefreq' => 'weekly', 'priority' => '0.9'],
+            ['route' => 'frontend.services.calculate', 'changefreq' => 'monthly', 'priority' => '0.8'],
+            ['route' => 'blog.index', 'changefreq' => 'weekly', 'priority' => '0.8'],
+        ],
+        'services' => [
+            'changefreq' => 'monthly',
+            'priority' => '0.8',
+        ],
+        'blogs' => [
+            'changefreq' => 'monthly',
+            'priority' => '0.7',
+        ],
+    ],
 ];

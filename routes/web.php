@@ -10,6 +10,7 @@ use App\Http\Controllers\Frontend\GalleryController;
 use App\Http\Controllers\Frontend\HomeController;
 use App\Http\Controllers\Frontend\ProjectController;
 use App\Http\Controllers\Frontend\ServiceController;
+use App\Http\Controllers\Frontend\SitemapController;
 use App\Http\Controllers\QuoteController;
 use App\Http\Controllers\VoucherController;
 use Illuminate\Http\Request;
@@ -88,6 +89,7 @@ Route::redirect('/blog/ถมที่ด้วยเศษวัสดุก่
 Route::redirect('/blog/เทพื้นปูน ราคาต่อ ตาราง เมตร 2567 | รับเหมาเทพื้นคอนกรีต มืออาชีพ', '/blogs/เทพื้นปูน-ราคาต่อตารางเมตร-2567-รับเหมาเทพื้นคอนกรีต-มืออาชีพ', 301);
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 // Route::prefix('admin')->name('admin.')->group(function () {
 //     Route::get('/', [AdminController::class, 'index'])->name('index');
