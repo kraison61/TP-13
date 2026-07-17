@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Blog extends Model
 {
+    public const DEFAULT_GEO = '13.836991,100.443780';
+
     protected $fillable = [
         'title',
         'slug',
@@ -16,6 +18,7 @@ class Blog extends Model
         'cover_image',
         'service_id',
         'author',
+        'geo',
     ];
 
     public function service(): BelongsTo

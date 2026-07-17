@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
@@ -25,5 +26,19 @@ class ImageUpload extends Model
     public function imageable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function scopeFirstPerLocation(Builder $query): Builder
+    {
+        return $query
+            ->whereNotNull('location')
+            ->where('location', '!=', '')
+            ->whereIn('id', function ($sub) {
+                $sub->selectRaw('MIN(id)')
+                    ->from('image_uploads')
+                    ->whereNotNull('location')
+                    ->where('location', '!=', '')
+                    ->groupBy('location');
+            });
     }
 }

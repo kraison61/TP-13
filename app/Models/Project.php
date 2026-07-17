@@ -9,12 +9,15 @@ use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Project extends Model
 {
+    public const DEFAULT_GEO = '13.836991,100.443780';
+
     protected $fillable = [
         'user_id',
         'name',
         'slug',
         'description',
         'status',
+        'geo',
     ];
 
     public function user(): BelongsTo

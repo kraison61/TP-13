@@ -1,5 +1,3 @@
-@props(['services', 'totalServices' => null])
-
 @php
     $totalServices = $totalServices ?? $services->count();
 @endphp

@@ -4,10 +4,11 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Models\Blog;
 use App\Models\Faq;
-use App\Models\Review;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
+use App\Support\GalleryPresenter;
 use App\Support\MainPageSchema;
+use App\Support\OrganizationSchema;
 use App\Support\ProjectSchema;
 use Illuminate\Http\Request;
 
@@ -56,63 +57,28 @@ class HomeController extends Controller
 
         $mainSchemaLd = MainPageSchema::graph($services, $faqs);
 
-        $testimonials = $this->buildTestimonials();
+        $organizationSchemaLd = OrganizationSchema::graph(
+            OrganizationSchema::extrasFromServices($services)
+        );
 
-        return view('Frontend.index', compact(
+        $allGalleryImages = GalleryPresenter::firstPerLocation();
+        $galleryProjects = GalleryPresenter::toProjects(
+            $allGalleryImages->take(config('frontend.galleries.home_limit', 6))
+        );
+        $totalGalleryProjects = $allGalleryImages->count();
+
+        return view('frontend.index', compact(
             'services',
             'homeServices',
             'allProjectBlogs',
             'projectBlogs',
             'projectSchemaLd',
             'mainSchemaLd',
+            'organizationSchemaLd',
             'faqItems',
-            'testimonials',
+            'galleryProjects',
+            'totalGalleryProjects',
         ));
-    }
-
-    /**
-     * @return list<array{i: string, name: string, project: string, quote: string, rating: int}>
-     */
-    private function buildTestimonials(): array
-    {
-        $reviews = Review::query()
-            ->with(['service' => fn ($q) => $q
-                ->where('is_active', true)
-                ->select('id', 'title', 'service_category_id')
-                ->with('category:id,name')])
-            ->whereHas('service', fn ($q) => $q->where('is_active', true))
-            ->latest('id')
-            ->get();
-
-        if ($reviews->isEmpty()) {
-            return [];
-        }
-
-        return $reviews
-            ->map(fn (Review $review) => $this->formatReview($review))
-            ->values()
-            ->all();
-    }
-
-    /**
-     * @return array{i: string, name: string, project: string, quote: string, rating: int}
-     */
-    private function formatReview(Review $review): array
-    {
-        $displayName = preg_replace('/^คุณ\s*/u', '', $review->author_name) ?? $review->author_name;
-        $project = $review->service->title;
-
-        if ($review->location) {
-            $project .= ' · '.$review->location;
-        }
-
-        return [
-            'i' => mb_substr(trim($displayName), 0, 1),
-            'name' => $review->author_name,
-            'project' => $project,
-            'quote' => $review->review_text,
-            'rating' => (int) $review->rating,
-        ];
     }
 
     /**

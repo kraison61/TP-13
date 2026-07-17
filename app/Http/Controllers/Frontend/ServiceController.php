@@ -73,12 +73,15 @@ class ServiceController extends Controller
             ->where('is_active', true)
             ->firstOrFail();
 
-        $otherServices = Service::query()
+        $allOtherServices = Service::query()
             ->with('activePrice')
             ->where('is_active', true)
             ->where('id', '!=', $service->id)
             ->orderBy('id')
             ->get();
+
+        $otherServices = $allOtherServices->take(config('frontend.services_list.home_limit', 4));
+        $totalOtherServices = $allOtherServices->count();
 
         $portfolios = $service->portfolios()
             ->latest()
@@ -102,6 +105,7 @@ class ServiceController extends Controller
         return view('frontend.services.show', compact(
             'service',
             'otherServices',
+            'totalOtherServices',
             'portfolios',
             'steps',
             'serviceSchemaLd',
@@ -132,5 +136,17 @@ class ServiceController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function soilCalculate()
+    {
+        $hero = [
+            'current' => 'คำนวณดินถม',
+            'eyebrow' => 'เครื่องมือช่วยวางแผน',
+            'title' => 'คำนวณปริมาณดินถม<br/><span class="text-hivis">ได้ทันที ฟรี ไม่ต้องสมัคร</span>',
+            'description' => 'กรอกขนาดที่ดิน (ไร่ · งาน · วา) และความสูงที่ต้องการถม — ระบบคำนวณปริมาณดิน จำนวนรถ และราคาโดยประมาณให้อัตโนมัติ',
+        ];
+
+        return view('frontend.services.soil-calculate', compact('hero'))
+            ->with('hideLayoutBreadcrumb', true);
     }
 }

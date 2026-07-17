@@ -1,12 +1,11 @@
-@props(['testimonials'])
-<section class="bg-surface">
+<section {{ $attributes->class('bg-surface') }}>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28">
         <div class="flex items-end justify-between gap-4">
             <div class="max-w-2xl">
                 <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> เสียงจากลูกค้าจริง</span>
-                <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ลูกค้ากว่า 400 บ้านพูดเป็นเสียงเดียวกัน</h2>
+                <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ลูกค้ากว่า 100 บ้านพูดเป็นเสียงเดียวกัน</h2>
             </div>
-            @if (count($testimonials) > 1)
+            @if (is_array($testimonials) && count($testimonials) > 1)
             <div id="testiNav" class="flex shrink-0 gap-2">
                 <button type="button" id="testiPrev" aria-label="รีวิวก่อนหน้า"
                         class="grid size-10 place-items-center rounded-full border border-line text-navy-900 transition hover:border-navy-900 hover:bg-navy-900 hover:text-white disabled:pointer-events-none disabled:opacity-40 sm:size-11">
@@ -20,7 +19,7 @@
             @endif
         </div>
 
-        @if (empty($testimonials))
+        @if (empty($testimonials) || !is_array($testimonials))
             <p class="mt-12 text-center text-muted py-12">ยังไม่มีรีวิวจากลูกค้า</p>
         @else
             <div id="testiViewport" class="@container mt-12 overflow-hidden">

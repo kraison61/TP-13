@@ -20,7 +20,11 @@ class SeoMeta
             return self::normalize($viewData['seo']);
         }
 
-        if (! empty($viewData['service']) && $viewData['service'] instanceof Service) {
+        if (
+            ! empty($viewData['service'])
+            && $viewData['service'] instanceof Service
+            && filled($viewData['service']->slug)
+        ) {
             return self::forService($viewData['service']);
         }
 

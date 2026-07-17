@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>คำนวณปริมาณดินถม — ธีรพงษ์การช่าง</title>
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap" rel="stylesheet" />
+  <style type="text/tailwindcss">
+    @theme {
+      --color-navy-950: #04111d;
+      --color-navy-900: #071a2c;
+      --color-navy-800: #0a2540;
+      --color-navy-700: #0a3d62;
+      --color-accent:   #0a3d62;
+      --color-hivis:    #ffc83a;
+      --color-ink:      #0f1722;
+      --color-ink2:     #36475a;
+      --color-muted:    #6a7787;
+      --color-line:     #e3e7ee;
+      --color-surface:  #f6f8fb;
+      --font-sans: "IBM Plex Sans Thai", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+      --font-mono: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .result-fade { animation: fadeUp 0.25s ease-out both; }
+    a { color: inherit; }
+    a:hover { color: inherit; }
+  </style>
+</helmet>
+
+<!-- ===== UTILITY BAR ===== -->
+<div class="hidden md:block bg-navy-950 text-white/70 text-[13px]">
+  <div class="mx-auto max-w-7xl px-6 h-10 flex items-center justify-between">
+    <div class="flex items-center gap-6">
+      <span><i class="bi bi-geo-alt-fill text-hivis mr-1"></i> บางใหญ่ นนทบุรี · รับงาน กทม. &amp; ปริมณฑล</span>
+      <span><i class="bi bi-clock-fill text-hivis mr-1"></i> จันทร์–เสาร์ 8:00–18:00 น.</span>
+    </div>
+    <div class="flex items-center gap-6">
+      <a href="#" class="hover:text-white transition"><i class="bi bi-line text-hivis mr-1"></i> @theeraphong</a>
+      <a href="tel:0812345678" class="hover:text-white transition font-mono tabular-nums tracking-tight"><i class="bi bi-telephone-fill text-hivis mr-1"></i> 081-234-5678</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== NAV ===== -->
+<header id="nav" class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-line">
+  <nav class="mx-auto max-w-7xl px-6 h-[68px] flex items-center justify-between gap-4">
+    <a href="index.html" class="flex items-center gap-3 shrink-0">
+      <span class="relative grid place-items-center w-10 h-10 rounded-lg bg-navy-900 text-white font-mono font-bold text-sm">TP
+        <span class="absolute w-1.5 h-1.5 rounded-[2px] bg-hivis translate-x-3 translate-y-3"></span>
+      </span>
+      <span class="font-bold text-navy-900 tracking-tight text-[17px] whitespace-nowrap">ธีรพงษ์การช่าง</span>
+    </a>
+
+    <div class="hidden lg:flex items-center gap-1 text-[15px] font-medium text-ink2">
+      <a href="index.html" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">หน้าแรก</a>
+      <a href="service.html?service=wall" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บริการ</a>
+      <a href="index.html#projects" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ผลงาน</a>
+      <a href="index.html#process" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">ขั้นตอน</a>
+      <a href="blog.html" class="px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">บทความ</a>
+      <a href="calculate.dc.html" class="px-3.5 py-2 rounded-lg bg-accent/8 text-accent font-semibold transition"><i class="bi bi-calculator mr-1"></i> คำนวณดินถม</a>
+    </div>
+
+    <div class="flex items-center gap-2">
+      <a href="index.html#contact" class="hidden sm:inline-flex items-center gap-2 rounded-xl bg-accent px-4 py-2.5 text-sm font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา</a>
+      <button id="menuBtn" class="lg:hidden grid place-items-center w-10 h-10 rounded-lg border border-line text-navy-900"><i class="bi bi-list text-2xl"></i></button>
+    </div>
+  </nav>
+  <div id="mobileMenu" class="lg:hidden hidden border-t border-line bg-white">
+    <div class="mx-auto max-w-7xl px-6 py-3 flex flex-col text-[15px] font-medium text-ink2">
+      <a href="index.html" class="py-2.5 border-b border-line/70">หน้าแรก</a>
+      <a href="service.html?service=wall" class="py-2.5 border-b border-line/70">บริการ</a>
+      <a href="index.html#projects" class="py-2.5 border-b border-line/70">ผลงาน</a>
+      <a href="index.html#process" class="py-2.5 border-b border-line/70">ขั้นตอน</a>
+      <a href="blog.html" class="py-2.5 border-b border-line/70">บทความ</a>
+      <a href="calculate.dc.html" class="py-2.5 text-accent font-semibold">คำนวณดินถม</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== HERO ===== -->
+<section class="relative overflow-hidden bg-gradient-to-b from-navy-900 to-navy-800">
+  <div class="pointer-events-none absolute -top-20 right-0 h-96 w-96 rounded-full bg-hivis/10 blur-3xl"></div>
+  <div class="pointer-events-none absolute left-1/3 bottom-0 h-64 w-64 rounded-full bg-accent/30 blur-3xl"></div>
+  <div class="relative mx-auto max-w-7xl px-6 py-14 lg:py-20">
+    <div class="flex items-center gap-2 text-white/50 text-[13px] mb-6">
+      <a href="index.html" class="hover:text-white/80 transition">หน้าแรก</a>
+      <i class="bi bi-chevron-right text-[11px]"></i>
+      <a href="service.html?service=land" class="hover:text-white/80 transition">ปรับพื้นที่ &amp; ถมดิน</a>
+      <i class="bi bi-chevron-right text-[11px]"></i>
+      <span class="text-white/80">คำนวณดินถม</span>
+    </div>
+    <div class="max-w-2xl">
+      <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase mb-4">
+        <span class="w-7 h-px bg-hivis"></span> เครื่องมือช่วยวางแผน
+      </span>
+      <h1 class="text-[clamp(2rem,4vw,3.2rem)] font-bold leading-tight tracking-tight text-white">
+        คำนวณปริมาณดินถม<br /><span class="text-hivis">ได้ทันที ฟรี ไม่ต้องสมัคร</span>
+      </h1>
+      <p class="mt-4 text-lg text-white/65 leading-relaxed max-w-xl">
+        กรอกขนาดที่ดิน (ไร่ · งาน · วา) และความสูงที่ต้องการถม — ระบบคำนวณปริมาณดิน จำนวนรถ และราคาโดยประมาณให้อัตโนมัติ
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CALCULATOR ===== -->
+<section class="bg-surface">
+  <div class="mx-auto max-w-7xl px-6 py-12 lg:py-16 grid lg:grid-cols-[1fr_420px] gap-8 items-start">
+
+    <!-- FORM CARD -->
+    <div class="rounded-2xl bg-white border border-line shadow-sm p-7 lg:p-9">
+      <div class="flex items-center gap-3 mb-7">
+        <span class="grid place-items-center w-11 h-11 rounded-xl bg-navy-900 text-white text-xl"><i class="bi bi-calculator"></i></span>
+        <div>
+          <div class="font-bold text-navy-900 text-lg leading-tight">กรอกข้อมูลที่ดิน</div>
+          <div class="text-[13px] text-muted">ระบบคำนวณแบบ real-time ทุกการพิมพ์</div>
+        </div>
+      </div>
+
+      <!-- Presets -->
+      <div class="mb-6">
+        <div class="text-[12px] font-semibold uppercase tracking-[0.12em] text-muted mb-2.5">ตัวอย่างด่วน</div>
+        <div class="flex flex-wrap gap-2">
+          <button onClick="{{ fillPreset1 }}" class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-ink2 hover:border-accent hover:text-accent transition">1 งาน · สูง 1 ม.</button>
+          <button onClick="{{ fillPreset2 }}" class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-ink2 hover:border-accent hover:text-accent transition">1 ไร่ · สูง 1 ม.</button>
+          <button onClick="{{ fillPreset3 }}" class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-ink2 hover:border-accent hover:text-accent transition">2 ไร่ · สูง 1.5 ม.</button>
+          <button onClick="{{ resetAll }}" class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-muted hover:border-red-300 hover:text-red-500 transition"><i class="bi bi-x-circle mr-1"></i>ล้าง</button>
+        </div>
+      </div>
+
+      <div class="border-t border-line/70 pt-6 space-y-6">
+
+        <!-- Area inputs -->
+        <div>
+          <label class="block text-sm font-semibold text-navy-900 mb-3">
+            <i class="bi bi-bounding-box mr-1.5 text-accent"></i> ขนาดที่ดิน
+            <span class="font-normal text-muted ml-2 text-[12px]">กรอกอย่างน้อย 1 ช่อง</span>
+          </label>
+          <div class="grid grid-cols-3 gap-3">
+            <div>
+              <div class="relative">
+                <input value="{{ rai }}" onChange="{{ setRai }}" type="number" min="0" step="any" placeholder="0" class="w-full rounded-xl border border-line px-4 py-3 pr-14 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition font-mono tabular-nums text-right text-navy-900 font-semibold" />
+                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[13px] text-muted font-medium pointer-events-none">ไร่</span>
+              </div>
+              <div class="mt-1 text-[11px] text-muted text-center">1 ไร่ = 1,600 ตร.ม.</div>
+            </div>
+            <div>
+              <div class="relative">
+                <input value="{{ ngan }}" onChange="{{ setNgan }}" type="number" min="0" step="any" placeholder="0" class="w-full rounded-xl border border-line px-4 py-3 pr-14 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition font-mono tabular-nums text-right text-navy-900 font-semibold" />
+                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[13px] text-muted font-medium pointer-events-none">งาน</span>
+              </div>
+              <div class="mt-1 text-[11px] text-muted text-center">1 งาน = 400 ตร.ม.</div>
+            </div>
+            <div>
+              <div class="relative">
+                <input value="{{ wa }}" onChange="{{ setWa }}" type="number" min="0" step="any" placeholder="0" class="w-full rounded-xl border border-line px-4 py-3 pr-12 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition font-mono tabular-nums text-right text-navy-900 font-semibold" />
+                <span class="absolute right-3.5 top-1/2 -translate-y-1/2 text-[13px] text-muted font-medium pointer-events-none">วา</span>
+              </div>
+              <div class="mt-1 text-[11px] text-muted text-center">1 วา = 4 ตร.ม.</div>
+            </div>
+          </div>
+          <div class="mt-2.5 flex items-center gap-2 rounded-lg bg-surface px-3.5 py-2">
+            <i class="bi bi-rulers text-accent text-sm"></i>
+            <span class="text-[13px] text-ink2">พื้นที่รวม: <strong class="font-mono tabular-nums text-navy-900">{{ areaFmt }}</strong> ตร.ม.</span>
+          </div>
+        </div>
+
+        <!-- Height -->
+        <div>
+          <label class="block text-sm font-semibold text-navy-900 mb-2">
+            <i class="bi bi-arrow-up-circle mr-1.5 text-accent"></i> ความสูงที่ต้องการถม
+          </label>
+          <div class="relative max-w-xs">
+            <input value="{{ height }}" onChange="{{ setHeight }}" type="number" min="0" step="0.1" placeholder="0.00" class="w-full rounded-xl border border-line px-4 py-3 pr-16 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition font-mono tabular-nums text-right text-navy-900 font-semibold text-lg" />
+            <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[14px] text-muted font-medium pointer-events-none">เมตร</span>
+          </div>
+          <p class="mt-1.5 text-[13px] text-muted">วัดจากระดับดินเดิมถึงระดับที่ต้องการ</p>
+        </div>
+
+        <!-- Buffer radio -->
+        <div>
+          <label class="block text-sm font-semibold text-navy-900 mb-1">
+            <i class="bi bi-arrow-down-circle mr-1.5 text-accent"></i> เผื่อดินยุบตัว
+          </label>
+          <p class="text-[13px] text-muted mb-3">ดินถมจะทรุดตัวลงหลังบดอัด ควรสั่งดินเพิ่มกว่าปริมาณจริง</p>
+          <div class="grid grid-cols-3 gap-2.5">
+            <label class="flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 cursor-pointer transition" style="border-color: {{ buf0Border }}; background: {{ buf0Bg }}">
+              <input type="radio" name="buffer" checked="{{ bufIs0 }}" onChange="{{ setBuffer0 }}" class="sr-only" />
+              <span class="font-mono font-bold text-xl" style="color: {{ buf0Color }}">0%</span>
+              <span class="text-[11px] text-center leading-tight" style="color: {{ buf0Color }}">ไม่เผื่อ</span>
+            </label>
+            <label class="flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 cursor-pointer transition" style="border-color: {{ buf20Border }}; background: {{ buf20Bg }}">
+              <input type="radio" name="buffer" checked="{{ bufIs20 }}" onChange="{{ setBuffer20 }}" class="sr-only" />
+              <span class="font-mono font-bold text-xl" style="color: {{ buf20Color }}">20%</span>
+              <span class="text-[11px] text-center leading-tight" style="color: {{ buf20Color }}">แนะนำ</span>
+            </label>
+            <label class="flex flex-col items-center gap-1.5 rounded-xl border-2 p-3 cursor-pointer transition" style="border-color: {{ buf30Border }}; background: {{ buf30Bg }}">
+              <input type="radio" name="buffer" checked="{{ bufIs30 }}" onChange="{{ setBuffer30 }}" class="sr-only" />
+              <span class="font-mono font-bold text-xl" style="color: {{ buf30Color }}">30%</span>
+              <span class="text-[11px] text-center leading-tight" style="color: {{ buf30Color }}">ดินทราย</span>
+            </label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RESULT CARD -->
+    <div class="space-y-4 lg:sticky lg:top-24">
+
+      <!-- Volume result -->
+      <div class="rounded-2xl bg-navy-900 text-white p-7 relative overflow-hidden">
+        <div class="pointer-events-none absolute -right-8 -top-8 w-40 h-40 rounded-full bg-hivis/10 blur-2xl"></div>
+        <div class="pointer-events-none absolute -left-4 bottom-0 w-32 h-32 rounded-full bg-white/5 blur-xl"></div>
+        <div class="relative">
+          <div class="text-white/60 text-[13px] font-semibold uppercase tracking-[0.15em] mb-1">ปริมาณดินที่ต้องสั่ง</div>
+          <div class="flex items-end gap-3 mt-1">
+            <span class="font-mono font-bold tabular-nums leading-none" style="font-size: clamp(2.8rem, 6vw, 4rem)">{{ volumeFmt }}</span>
+            <span class="text-white/55 text-lg mb-1">คิว</span>
+          </div>
+          <div class="mt-1 text-[13px] text-white/50">(ลูกบาศก์เมตร) {{ bufferLabelNote }}</div>
+
+          <div class="mt-5 pt-5 border-t border-white/10 grid grid-cols-2 gap-3">
+            <div class="rounded-xl bg-white/8 p-3.5">
+              <div class="text-[11px] text-white/50 uppercase tracking-wide mb-1">พื้นที่</div>
+              <div class="font-mono font-bold tabular-nums text-xl">{{ areaFmt }}</div>
+              <div class="text-[12px] text-white/50">ตร.ม.</div>
+            </div>
+            <div class="rounded-xl bg-white/8 p-3.5">
+              <div class="text-[11px] text-white/50 uppercase tracking-wide mb-1">ดินจริง (ก่อนเผื่อ)</div>
+              <div class="font-mono font-bold tabular-nums text-xl">{{ rawVolFmt }}</div>
+              <div class="text-[12px] text-white/50">คิว</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Truck count -->
+      <div class="rounded-2xl bg-white border border-line p-6">
+        <div class="flex items-center gap-2 mb-4">
+          <i class="bi bi-truck text-accent text-lg"></i>
+          <span class="font-semibold text-navy-900">จำนวนรถดั๊มพ์โดยประมาณ</span>
+        </div>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-xl bg-surface p-4 text-center">
+            <div class="font-mono font-bold text-3xl tabular-nums text-navy-900">{{ trucks6Fmt }}</div>
+            <div class="text-[12px] text-muted mt-1">คัน (รถ 6 ล้อ)</div>
+            <div class="text-[11px] text-muted/70">≈ 6 คิว/คัน</div>
+          </div>
+          <div class="rounded-xl bg-surface p-4 text-center">
+            <div class="font-mono font-bold text-3xl tabular-nums text-navy-900">{{ trucks10Fmt }}</div>
+            <div class="text-[12px] text-muted mt-1">คัน (รถ 10 ล้อ)</div>
+            <div class="text-[11px] text-muted/70">≈ 12 คิว/คัน</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cost estimate -->
+      <div class="rounded-2xl bg-white border border-line p-6">
+        <div class="flex items-center gap-2 mb-1">
+          <i class="bi bi-cash-coin text-accent text-lg"></i>
+          <span class="font-semibold text-navy-900">ราคาโดยประมาณ</span>
+        </div>
+        <p class="text-[12px] text-muted mb-4">รวมค่าดิน + ค่าขนส่ง + ค่าบดอัด · อ้างอิงตลาด กทม. ปริมณฑล</p>
+        <div class="space-y-2.5">
+          <div class="flex justify-between items-center">
+            <span class="text-[14px] text-ink2">ค่าดินถม <span class="text-muted">(150–220 บ./คิว)</span></span>
+            <span class="font-mono font-semibold text-navy-900 tabular-nums text-[15px]">{{ soilLowFmt }}–{{ soilHighFmt }}</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-[14px] text-ink2">ค่าแรง + เครื่องจักร</span>
+            <span class="font-mono font-semibold text-navy-900 tabular-nums text-[15px]">{{ laborLowFmt }}–{{ laborHighFmt }}</span>
+          </div>
+          <div class="border-t border-dashed border-line pt-2.5 flex justify-between items-end">
+            <span class="font-semibold text-navy-900">รวมโดยประมาณ</span>
+            <div class="text-right">
+              <div class="font-mono font-bold text-xl text-accent tabular-nums">{{ costLowFmt }}</div>
+              <div class="text-[12px] text-muted">ถึง {{ costHighFmt }} บาท</div>
+            </div>
+          </div>
+        </div>
+        <div class="mt-4 rounded-xl bg-hivis/10 border border-hivis/30 p-3.5 flex items-start gap-3">
+          <span class="grid place-items-center w-8 h-8 rounded-lg bg-hivis text-navy-900 text-sm shrink-0 mt-0.5"><i class="bi bi-tag-fill"></i></span>
+          <div>
+            <div class="font-semibold text-navy-900 text-[14px]">ธีรพงษ์การช่าง: เริ่มต้น {{ tpCostFmt }} บาท</div>
+            <div class="text-[12px] text-ink2 mt-0.5">ราคา 220 บ./คิว รวมบดอัด ตรวจสอบได้</div>
+          </div>
+        </div>
+        <p class="text-[11px] text-muted mt-3">* ราคาจริงขึ้นอยู่กับระยะทาง ประเภทดิน และสภาพหน้างาน</p>
+      </div>
+
+      <a href="index.html#contact" class="flex items-center justify-center gap-2 rounded-2xl bg-accent text-white font-semibold py-4 px-6 hover:bg-navy-900 transition text-[15px] shadow-lg shadow-navy-900/20">ขอใบเสนอราคาฟรี — ไม่มีค่าใช้จ่าย <i class="bi bi-arrow-right"></i></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== สาระน่ารู้ ===== -->
+<section class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+  <div class="max-w-2xl mb-12">
+    <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> สาระน่ารู้</span>
+    <h2 class="mt-4 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900 leading-tight">รู้ก่อนถมดิน ประหยัดกว่า ปลอดภัยกว่า</h2>
+  </div>
+  <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-calculator"></i></span>
+      <h3 class="font-bold text-navy-900 text-lg">สูตรคำนวณดินถม</h3>
+      <p class="mt-2 text-[14px] text-ink2 leading-relaxed">พื้นที่ (ตร.ม.) × ความสูง (ม.) = ปริมาณดิน (คิว) จากนั้นบวกเพิ่ม 20–30% สำหรับดินที่ยุบหลังบดอัด</p>
+      <div class="mt-4 rounded-lg bg-surface px-3 py-2.5 font-mono text-[12px] text-accent leading-relaxed">
+        1 ไร่ × 1 ม. = <strong>1,600 คิว</strong><br />
+        + เผื่อ 20% = <strong>1,920 คิว</strong>
+      </div>
+    </div>
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-layers"></i></span>
+      <h3 class="font-bold text-navy-900 text-lg">ประเภทดินที่ใช้ถม</h3>
+      <p class="mt-2 text-[14px] text-ink2 leading-relaxed">ดินลูกรัง และดินเหนียวปนทรายเหมาะที่สุด บดอัดแน่น ไม่ทรุดง่าย ต่างจากดินทราย/ดินเลนที่ยุบตัวสูงถึง 30%</p>
+    </div>
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-shield-check"></i></span>
+      <h3 class="font-bold text-navy-900 text-lg">ถมดินให้ไม่ทรุด</h3>
+      <p class="mt-2 text-[14px] text-ink2 leading-relaxed">ถมเป็นชั้น ชั้นละ 20–30 ซม. บดอัดด้วยรถแบคโฮหรือแทมเปอร์ทุกชั้น หลีกเลี่ยงการถมครั้งเดียวหนาเกิน 50 ซม.</p>
+    </div>
+    <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
+      <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-file-earmark-text"></i></span>
+      <h3 class="font-bold text-navy-900 text-lg">ขออนุญาตถมดิน</h3>
+      <p class="mt-2 text-[14px] text-ink2 leading-relaxed">ในเขต กทม. ถมสูงกว่า 0.50 ม. จากระดับถนนต้องแจ้ง อบต./เขต ก่อน พร้อมแนบแบบแปลนและหนังสือยินยอมข้างเคียง</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== หน่วยการวัด ===== -->
+<section class="bg-navy-900 text-white">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:py-20">
+    <div class="text-center mb-10">
+      <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-hivis"></span> ตารางอ้างอิง</span>
+      <h2 class="mt-3 text-2xl lg:text-3xl font-bold tracking-tight">หน่วยที่ดิน &amp; หน่วยดินถม</h2>
+    </div>
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden">
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-4xl font-bold tabular-nums">1<span class="text-xl text-hivis ml-1.5">ไร่</span></div>
+        <div class="mt-2 text-white/50 text-[14px]">= 4 งาน</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= 400 ตารางวา</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= 1,600 ตร.ม.</div>
+      </div>
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-4xl font-bold tabular-nums">1<span class="text-xl text-hivis ml-1.5">งาน</span></div>
+        <div class="mt-2 text-white/50 text-[14px]">= 100 ตารางวา</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= 400 ตร.ม.</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= ¼ ไร่</div>
+      </div>
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-4xl font-bold tabular-nums">1<span class="text-xl text-hivis ml-1.5">วา</span></div>
+        <div class="mt-2 text-white/50 text-[14px]">= 4 ตร.ม.</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= 2 × 2 เมตร</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= 0.01 งาน</div>
+      </div>
+      <div class="bg-navy-900 p-7">
+        <div class="font-mono text-4xl font-bold tabular-nums">1<span class="text-xl text-hivis ml-1.5">คิว</span></div>
+        <div class="mt-2 text-white/50 text-[14px]">= 1 ม³</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= ≈ 1.5–1.8 ตัน</div>
+        <div class="mt-0.5 text-white/50 text-[14px]">= ⅙ รถ 6 ล้อ</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FAQ ===== -->
+<section id="faq" class="mx-auto max-w-7xl px-6 py-20 lg:py-28">
+  <div class="grid lg:grid-cols-12 gap-10 lg:gap-16">
+    <div class="lg:col-span-4">
+      <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> FAQ</span>
+      <h2 class="mt-4 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900 leading-tight">คำถามที่พบบ่อยเรื่องถมดิน</h2>
+      <p class="mt-4 text-[15px] text-ink2 leading-relaxed">มีคำถามเพิ่มเติม? โทร <a href="tel:0812345678" class="font-mono tabular-nums text-accent font-semibold">081-234-5678</a> ทีมงานยินดีให้คำปรึกษาฟรี</p>
+      <a href="index.html#contact" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white hover:bg-navy-900 transition text-[15px]">ขอคำปรึกษาฟรี <i class="bi bi-arrow-right"></i></a>
+    </div>
+    <div class="lg:col-span-8 space-y-3" id="faqListCalc">
+      <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden" open="">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
+          ถมดินต้องขออนุญาตหรือเปล่า?
+          <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+        </summary>
+        <p class="pb-5 -mt-1 text-[15px] text-ink2 leading-relaxed">ในเขตเทศบาลและ กทม. ถ้าถมสูงกว่าระดับถนนสาธารณะมากกว่า 50 ซม. ต้องยื่นขออนุญาตจากเจ้าพนักงานท้องถิ่น พร้อมแนบหนังสือยินยอมเจ้าของที่ดินข้างเคียง ถ้าถมต่ำกว่า 50 ซม. มักไม่ต้องขออนุญาต แต่ควรแจ้งเพื่อนบ้านก่อน</p>
+      </details>
+      <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
+          ราคาดินถมต่อคิวอยู่ที่เท่าไหร่?
+          <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+        </summary>
+        <p class="pb-5 -mt-1 text-[15px] text-ink2 leading-relaxed">ราคาตลาดในเขต กทม. ปริมณฑล ดินลูกรังอยู่ที่ <strong class="text-navy-900">150–220 บาท/คิว</strong> ค่าขนส่งและบดอัดรวมอยู่ที่ 50–100 บาท/คิว รวมทั้งหมดประมาณ 200–320 บาท/คิว ขึ้นอยู่กับระยะทาง ปริมาณ และสภาพหน้างาน</p>
+      </details>
+      <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
+          ทำไมต้องเผื่อดินยุบตัว?
+          <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+        </summary>
+        <p class="pb-5 -mt-1 text-ink2 text-[15px] leading-relaxed">ดินที่ขนมาใหม่มีความฟูและมีช่องอากาศสูง เมื่อบดอัดและแช่น้ำฝนจะยุบตัวลง 15–30% ขึ้นกับประเภทดิน ดินลูกรังยุบประมาณ 15–20% ดินทรายยุบ 20–30% การเผื่อไว้ตั้งแต่ต้นทำให้ระดับสุดท้ายถูกต้องและประหยัดกว่าการสั่งเพิ่มภายหลัง</p>
+      </details>
+      <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
+          ถมดินเองดีกว่าจ้างมืออาชีพไหม?
+          <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+        </summary>
+        <p class="pb-5 -mt-1 text-ink2 text-[15px] leading-relaxed">ถมดินเองประหยัดค่าแรงได้ แต่มักขาดเครื่องบดอัดที่มีประสิทธิภาพ ทำให้ดินไม่แน่น ส่งผลให้บ้าน ถนน หรือโครงสร้างที่ทำทีหลังทรุดตัว การจ้างมืออาชีพที่มีเครื่องมือครบมักคุ้มกว่าในระยะยาว โดยเฉพาะงานที่ต้องสร้างโครงสร้างถาวรบนพื้นที่นั้น</p>
+      </details>
+      <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
+        <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
+          ถมดินใกล้กำแพงข้างเคียงได้ไหม?
+          <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+        </summary>
+        <p class="pb-5 -mt-1 text-ink2 text-[15px] leading-relaxed">ได้ แต่ต้องระวังแรงดันดินด้านข้างที่จะดันกำแพงหรือรั้วข้างเคียง หากถมสูงมากกว่า 1 เมตรควรวางแผนทำ <strong class="text-navy-900">กำแพงกันดิน</strong> หรือเสริมฐานรากรองรับ การไม่จัดการแรงดันดินเป็นสาเหตุหลักของกำแพงพัง ซึ่งอาจสร้างความเสียหายให้ทรัพย์สินข้างเคียง</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CTA ===== -->
+<section class="bg-surface border-t border-line">
+  <div class="mx-auto max-w-7xl px-6 py-16 lg:py-20 flex flex-col lg:flex-row items-center justify-between gap-8">
+    <div>
+      <h2 class="text-2xl lg:text-3xl font-bold tracking-tight text-navy-900">ได้ตัวเลขแล้ว — ขอราคาจริงจากทีมช่างได้เลย</h2>
+      <p class="mt-3 text-[15px] text-ink2 leading-relaxed max-w-xl">เราสำรวจหน้างานฟรี ไม่มีค่าใช้จ่าย และเสนอราคาจริงพร้อมรายละเอียดวัสดุทุกชิ้น ภายใน 5–7 วันทำการ</p>
+      <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[14px] text-ink2">
+        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> สำรวจหน้างานฟรี</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ไม่มีค่าแอบแฝง</span>
+        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> รับประกันงาน 2 ปี</span>
+      </div>
+    </div>
+    <div class="flex flex-col sm:flex-row gap-3 shrink-0">
+      <a href="index.html#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-4 font-semibold text-white hover:bg-navy-900 transition shadow-lg shadow-navy-900/20 whitespace-nowrap">ขอใบเสนอราคาฟรี <i class="bi bi-arrow-right"></i></a>
+      <a href="tel:0812345678" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-7 py-4 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition whitespace-nowrap"><i class="bi bi-telephone-fill"></i> 081-234-5678</a>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="bg-navy-950 text-white/60">
+  <div class="mx-auto max-w-7xl px-6 pt-16 pb-10 grid md:grid-cols-12 gap-10">
+    <div class="md:col-span-5">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="grid place-items-center w-10 h-10 rounded-lg bg-white text-navy-900 font-mono font-bold text-sm">TP</span>
+        <span class="font-bold text-white text-[17px]">ธีรพงษ์การช่าง</span>
+      </div>
+      <p class="max-w-sm text-[15px] leading-relaxed">รับเหมาก่อสร้างครบวงจร — กำแพงกันดิน รั้ว ถนน ลานคอนกรีต และงานปรับพื้นที่ ในเขตกรุงเทพฯ และปริมณฑล</p>
+      <div class="mt-5 flex gap-2.5">
+        <a href="#" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-facebook"></i> Facebook</a>
+        <a href="#" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-line"></i> @theeraphong</a>
+      </div>
+    </div>
+    <div class="md:col-span-2">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">บริการ</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><a href="service.html?service=wall" class="hover:text-white transition">กำแพงกันดิน</a></li>
+        <li><a href="service.html?service=fence" class="hover:text-white transition">รั้วบ้าน</a></li>
+        <li><a href="service.html?service=road" class="hover:text-white transition">ถนน &amp; ทางเข้า</a></li>
+        <li><a href="service.html?service=slab" class="hover:text-white transition">ลานคอนกรีต</a></li>
+        <li><a href="service.html?service=land" class="hover:text-white transition">ปรับพื้นที่ &amp; ถมดิน</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-2">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">เครื่องมือ</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><a href="calculate.dc.html" class="text-hivis font-medium">คำนวณดินถม</a></li>
+        <li><a href="index.html#projects" class="hover:text-white transition">ผลงานก่อสร้าง</a></li>
+        <li><a href="index.html#process" class="hover:text-white transition">ขั้นตอนทำงาน</a></li>
+        <li><a href="blog.html" class="hover:text-white transition">บทความ</a></li>
+        <li><a href="portal.html" class="hover:text-white transition">พอร์ทัลลูกค้า</a></li>
+      </ul>
+    </div>
+    <div class="md:col-span-3">
+      <h3 class="text-white font-semibold mb-3.5 text-[15px]">ติดต่อ</h3>
+      <ul class="space-y-2.5 text-[15px]">
+        <li><i class="bi bi-telephone-fill text-hivis mr-2"></i><span class="font-mono tabular-nums">081-234-5678</span></li>
+        <li><i class="bi bi-envelope-fill text-hivis mr-2"></i>work@theeraphong.co.th</li>
+        <li><i class="bi bi-geo-alt-fill text-hivis mr-2"></i>88/15 ถ.กาญจนาภิเษก บางใหญ่ นนทบุรี 11140</li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-white/10">
+    <div class="mx-auto max-w-7xl px-6 py-5 flex flex-wrap justify-between gap-2 text-[14px]">
+      <div>© 2026 ห้างหุ้นส่วนจำกัด ธีรพงษ์การช่าง · เลขผู้เสียภาษี 0125555012345</div>
+      <div class="flex gap-5"><a href="#" class="hover:text-white transition">นโยบายความเป็นส่วนตัว</a><a href="#" class="hover:text-white transition">เงื่อนไขการให้บริการ</a></div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const mm = document.getElementById('mobileMenu');
+  if(mm) {
+    document.getElementById('menuBtn').addEventListener('click', () => mm.classList.toggle('hidden'));
+    mm.addEventListener('click', e => { if(e.target.tagName==='A') mm.classList.add('hidden'); });
+  }
+</script>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  state = { rai: '', ngan: '', wa: '', height: '', buffer: '0.2' };
+
+  renderVals() {
+    const { rai, ngan, wa, height, buffer } = this.state;
+    const area = (parseFloat(rai)||0)*1600 + (parseFloat(ngan)||0)*400 + (parseFloat(wa)||0)*4;
+    const rawVol = area * (parseFloat(height)||0);
+    const bufVal = parseFloat(buffer)||0;
+    const volume = rawVol * (1 + bufVal);
+    const hasResult = volume > 0;
+
+    const fmt = n => n.toLocaleString('th-TH', { maximumFractionDigits: 2, minimumFractionDigits: 2 });
+    const fmtInt = n => Math.ceil(n).toLocaleString('th-TH');
+    const fmtMoney = n => Math.round(n).toLocaleString('th-TH');
+
+    const trucks6  = volume > 0 ? Math.ceil(volume / 6)  : 0;
+    const trucks10 = volume > 0 ? Math.ceil(volume / 12) : 0;
+
+    const soilLow   = volume * 150;
+    const soilHigh  = volume * 220;
+    const laborLow  = Math.max(15000, volume * 35);
+    const laborHigh = Math.max(30000, volume * 65);
+    const costLow   = soilLow + laborLow;
+    const costHigh  = soilHigh + laborHigh;
+    const tpCost    = volume * 220 + Math.max(20000, volume * 45);
+
+    const bufferLabelNote = bufVal === 0
+      ? '(ไม่เผื่อดินยุบตัว)'
+      : `(รวมเผื่อดินยุบตัว ${bufVal*100}%)`;
+
+    return {
+      // inputs
+      rai, ngan, wa, height, buffer,
+      // display
+      areaFmt:     fmt(area),
+      volumeFmt:   fmt(volume),
+      rawVolFmt:   fmt(rawVol),
+      trucks6Fmt:  fmtInt(trucks6),
+      trucks10Fmt: fmtInt(trucks10),
+      soilLowFmt:  fmtMoney(soilLow),
+      soilHighFmt: fmtMoney(soilHigh),
+      laborLowFmt: fmtMoney(laborLow),
+      laborHighFmt:fmtMoney(laborHigh),
+      costLowFmt:  fmtMoney(costLow),
+      costHighFmt: fmtMoney(costHigh),
+      tpCostFmt:   fmtMoney(tpCost),
+      hasResult,
+      bufferLabelNote,
+      bufIs0:  buffer === '0',
+      bufIs20: buffer === '0.2',
+      bufIs30: buffer === '0.3',
+      buf0Border:  buffer === '0'   ? '#0a3d62' : '#e3e7ee',
+      buf20Border: buffer === '0.2' ? '#0a3d62' : '#e3e7ee',
+      buf30Border: buffer === '0.3' ? '#0a3d62' : '#e3e7ee',
+      buf0Bg:      buffer === '0'   ? '#f0f4f9' : 'white',
+      buf20Bg:     buffer === '0.2' ? '#f0f4f9' : 'white',
+      buf30Bg:     buffer === '0.3' ? '#f0f4f9' : 'white',
+      buf0Color:   buffer === '0'   ? '#0a3d62' : '#6a7787',
+      buf20Color:  buffer === '0.2' ? '#0a3d62' : '#6a7787',
+      buf30Color:  buffer === '0.3' ? '#0a3d62' : '#6a7787',
+      // handlers
+      setRai:    e => this.setState({ rai:    e.target.value }),
+      setNgan:   e => this.setState({ ngan:   e.target.value }),
+      setWa:     e => this.setState({ wa:     e.target.value }),
+      setHeight: e => this.setState({ height: e.target.value }),
+      setBuffer0:  () => this.setState({ buffer: '0'   }),
+      setBuffer20: () => this.setState({ buffer: '0.2' }),
+      setBuffer30: () => this.setState({ buffer: '0.3' }),
+      // presets
+      fillPreset1: () => this.setState({ rai:'0', ngan:'1', wa:'0', height:'1',   buffer:'0.2' }),
+      fillPreset2: () => this.setState({ rai:'1', ngan:'0', wa:'0', height:'1',   buffer:'0.2' }),
+      fillPreset3: () => this.setState({ rai:'2', ngan:'0', wa:'0', height:'1.5', buffer:'0.3' }),
+      resetAll:    () => this.setState({ rai:'', ngan:'', wa:'', height:'', buffer:'0.2' }),
+    };
+  }
+}
+</script>
+</body>
+</html>

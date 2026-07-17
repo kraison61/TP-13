@@ -3,12 +3,17 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Models\Service;
 
 class ContactController extends Controller
 {
     public function index()
     {
-        return view('frontend.contact-us');
+        $serviceOptions = Service::query()
+            ->where('is_active', true)
+            ->orderBy('title')
+            ->get(['id', 'title']);
+
+        return view('frontend.contact-us', compact('serviceOptions'));
     }
 }

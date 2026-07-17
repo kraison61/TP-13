@@ -6,85 +6,32 @@ use App\Models\Blog;
 
 class BlogPageSchema
 {
-    private const SITE = 'https://www.theeraphong.com';
-
     public static function graph(Blog $blog): array
     {
-        $blogUrl = self::SITE.'/blogs/'.$blog->slug;
+        $base = OrganizationSchema::baseUrl();
+        $blogUrl = route('blog.show', $blog->slug);
 
         return [
             '@context' => 'https://schema.org',
             '@graph' => [
-                self::organization(),
-                self::author(),
+                self::author($base),
                 self::webPage($blog, $blogUrl),
-                self::blogPosting($blog, $blogUrl),
-                self::breadcrumbList($blog, $blogUrl),
+                self::blogPosting($blog, $blogUrl, $base),
+                self::breadcrumbList($blog, $blogUrl, $base),
             ],
         ];
     }
 
-    private static function organization(): array
-    {
-        $schema = config('schema');
-        $logoUrl = BlogImageVariants::absoluteUrl($schema['logo']['path']);
-        $logoSvgUrl = BlogImageVariants::absoluteUrl('images/tp-logo.svg');
-
-        return [
-            '@type' => 'GeneralContractor',
-            '@id' => self::SITE.'#organization',
-            'name' => config('company.legal_name'),
-            'url' => self::SITE,
-            'logo' => [
-                '@type' => 'ImageObject',
-                'url' => $logoUrl,
-                'width' => $schema['logo']['width'],
-                'height' => $schema['logo']['height'],
-            ],
-            'image' => $logoSvgUrl,
-            'telephone' => '+66627188847',
-            'priceRange' => '฿฿',
-            'address' => [
-                '@type' => 'PostalAddress',
-                'streetAddress' => '14 ต.บางกร่าง อ.เมืองนนทบุรี',
-                'addressLocality' => 'นนทบุรี',
-                'postalCode' => '11000',
-                'addressCountry' => 'TH',
-            ],
-            'geo' => [
-                '@type' => 'GeoCoordinates',
-                'latitude' => $schema['geo']['latitude'],
-                'longitude' => $schema['geo']['longitude'],
-            ],
-            'openingHoursSpecification' => [
-                '@type' => 'OpeningHoursSpecification',
-                'dayOfWeek' => $schema['opening_hours_specification']['dayOfWeek'],
-                'opens' => $schema['opening_hours_specification']['opens'],
-                'closes' => $schema['opening_hours_specification']['closes'],
-            ],
-            'areaServed' => [
-                'Bangkok',
-                'Nonthaburi',
-                'Pathum Thani',
-                'Samut Prakan',
-                'Chaiyaphum',
-            ],
-            'sameAs' => [
-                'https://line.me/ti/p/~0627188847',
-            ],
-        ];
-    }
-
-    private static function author(): array
+    private static function author(string $base): array
     {
         return [
             '@type' => 'Person',
-            '@id' => self::SITE.'#author',
+            '@id' => "{$base}/#author",
             'name' => 'ช่างรัก (Mr.Theeraphong Sarsuk)',
             'jobTitle' => 'ผู้เชี่ยวชาญด้านงานก่อสร้าง',
-            'url' => self::SITE.'/about-us',
+            'url' => route('about-us'),
             'worksFor' => [
-                '@id' => self::SITE.'#organization',
+                '@id' => OrganizationSchema::organizationId(),
             ],
             'knowsAbout' => [
                 'รับเหมาก่อสร้างกำแพงกันดิน',
@@ -105,7 +52,7 @@ class BlogPageSchema
         ];
     }
 
-    private static function blogPosting(Blog $blog, string $blogUrl): array
+    private static function blogPosting(Blog $blog, string $blogUrl, string $base): array
     {
         $node = [
             '@type' => 'BlogPosting',
@@ -116,10 +63,10 @@ class BlogPageSchema
             'headline' => $blog->title,
             'description' => $blog->description,
             'author' => [
-                '@id' => self::SITE.'#author',
+                '@id' => "{$base}/#author",
             ],
             'publisher' => [
-                '@id' => self::SITE.'#organization',
+                '@id' => OrganizationSchema::organizationId(),
             ],
             'datePublished' => $blog->created_at
                 ->setTimezone('Asia/Bangkok')
@@ -147,7 +94,7 @@ class BlogPageSchema
         return $node;
     }
 
-    private static function breadcrumbList(Blog $blog, string $blogUrl): array
+    private static function breadcrumbList(Blog $blog, string $blogUrl, string $base): array
     {
         return [
             '@type' => 'BreadcrumbList',
@@ -157,13 +104,13 @@ class BlogPageSchema
                     '@type' => 'ListItem',
                     'position' => 1,
                     'name' => 'Home',
-                    'item' => self::SITE,
+                    'item' => $base,
                 ],
                 [
                     '@type' => 'ListItem',
                     'position' => 2,
                     'name' => 'Blogs',
-                    'item' => self::SITE.'/blogs',
+                    'item' => route('blog.index'),
                 ],
                 [
                     '@type' => 'ListItem',

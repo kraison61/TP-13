@@ -4,7 +4,7 @@
     <div class="mb-5 flex items-end justify-between gap-4">
       <div>
         <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.16em] text-xs uppercase">
-          <span class="w-6 h-px bg-accent"></span> สินเชื่อพันธมิตร Affiliate
+          <span class="w-6 h-px bg-accent"></span> สินเชื่อพันธมิตร
         </span>
         <h2 class="mt-3 text-2xl lg:text-3xl font-bold tracking-tight text-navy-900 leading-tight">
           ทุนไม่พร้อม? เริ่มก่อน ผ่อนทีหลัง — เลือกพันธมิตรที่ใช่

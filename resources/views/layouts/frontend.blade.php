@@ -17,7 +17,7 @@
 <body class="font-sans text-ink bg-white antialiased [text-wrap:pretty] overflow-x-hidden">
 
 {{-- ============ UTILITY BAR ============ --}}
-    <x-frontend.utililty-bar />
+    <x-frontend.utility-bar />
 
     {{-- ============ NAV ============ --}}
     <x-frontend.nav />

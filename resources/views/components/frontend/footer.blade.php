@@ -1,6 +1,3 @@
-<?php
-$services = config('frontend.services');
-?>
 <footer class="bg-navy-950 text-white/60">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 pt-16 pb-10 grid md:grid-cols-12 gap-10">
         <div class="md:col-span-5">
@@ -17,9 +14,10 @@ $services = config('frontend.services');
         <div class="md:col-span-2">
             <h3 class="text-white font-semibold mb-3.5 text-[15px]">บริการ</h3>
             <ul class="space-y-2.5 text-[15px]">
-                @foreach($services as $s)
-                <li><a href="{{ route('frontend.services.index', ['service' => $s['slug']]) }}" class="hover:text-white transition">{{ $s['name'] }}</a></li>
+                @foreach ($footerServices as $service)
+                <li><a href="{{ route('frontend.services.show', $service->slug) }}" class="hover:text-white transition">{{ $service->title }}</a></li>
                 @endforeach
+                <li><a href="{{ route('frontend.services.index') }}" class="inline-flex items-center gap-1.5 text-hivis font-medium hover:text-white transition">บริการทั้งหมด <i class="bi bi-arrow-right text-xs"></i></a></li>
             </ul>
         </div>
         <div class="md:col-span-2">
