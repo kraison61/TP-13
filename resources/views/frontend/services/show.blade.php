@@ -12,8 +12,7 @@
                 {{ $service->category?->name ?? 'บริการของเรา' }}
             </span>
             <div class="mt-5 flex items-center gap-4">
-                <span class="grid place-items-center w-16 h-16 rounded-2xl bg-accent/8 text-accent text-3xl shrink-0">
-                    <i class="bi {{ $service->icon_name }}"></i>
+                <span class="grid place-items-center w-16 h-16 rounded-2xl bg-accent/8 text-accent text-3xl shrink-0"><x-icon :name="$service->icon_name" />
                 </span>
                 <h1 class="text-[clamp(1.9rem,3.6vw,3rem)] font-bold leading-[1.2] tracking-tight text-navy-900">
                     {{ $service->h1 ?: $service->title }}
@@ -26,25 +25,25 @@
             <div class="mt-7 flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-ink2">
                 @if ($service->activePrice)
                     <span>
-                        <i class="bi bi-cash-coin text-accent mr-1.5"></i>
+                        <x-icon name="cash-coin" class="text-accent mr-1.5 inline-block" />
                         เริ่มต้น {{ number_format((float) $service->activePrice->price, 0) }} / {{ $service->activePrice->unit }}
                     </span>
                 @endif
                 @if ($service->dur)
                     <span>
-                        <i class="bi bi-calendar-check text-accent mr-1.5"></i>
+                        <x-icon name="calendar-check" class="text-accent mr-1.5 inline-block" />
                         ระยะงาน {{ $service->dur }} วัน
                     </span>
                 @endif
-                <span><i class="bi bi-patch-check-fill text-accent mr-1.5"></i> รับประกัน 2 ปี</span>
+                <span><x-icon name="patch-check-fill" class="text-accent mr-1.5 inline-block" /> รับประกัน 2 ปี</span>
             </div>
 
             <div class="mt-8 flex flex-wrap gap-3">
                 <a href="/#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">
-                    ขอใบเสนอราคาฟรี <i class="bi bi-arrow-right"></i>
+                    ขอใบเสนอราคาฟรี <x-icon name="arrow-right" />
                 </a>
                 <a href="tel:{{ config('company.phone') }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">
-                    <i class="bi bi-telephone-fill"></i> โทรปรึกษาช่าง
+                    <x-icon name="telephone-fill" /> โทรปรึกษาช่าง
                 </a>
             </div>
         </div>
@@ -53,14 +52,15 @@
             <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
                 @if ($service->img_1)
                     <img src="{{ Storage::disk('s3')->url($service->img_1) }}?width=900&format=webp&fit=cover"
-                         alt="{{ $service->title }}" class="h-full w-full object-cover" />
+                         alt="{{ $service->title }}" width="800" height="1000" loading="eager" fetchpriority="high"
+                         class="h-full w-full object-cover" />
                 @else
                     <img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop"
-                         alt="{{ $service->title }}" class="h-full w-full object-cover" />
+                         alt="{{ $service->title }}" width="800" height="1000" loading="eager" fetchpriority="high"
+                         class="h-full w-full object-cover" />
                 @endif
                 <div class="absolute inset-x-5 bottom-5 flex items-center gap-4 rounded-xl bg-white/95 backdrop-blur p-4 shadow-xl">
-                    <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl">
-                        <i class="bi bi-patch-check-fill"></i>
+                    <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><x-icon name="patch-check-fill" />
                     </span>
                     <div>
                         <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 2 ปีเต็ม</div>
@@ -90,11 +90,11 @@
             @endif
 
             @if ($service->scopes->isNotEmpty())
-                <h3 class="mt-10 text-xl font-bold text-navy-900">งานนี้รวมอะไรบ้าง</h3>
+                <h3 class="mt-10 font-bold text-navy-900">งานนี้รวมอะไรบ้าง</h3>
                 <ul class="mt-4 grid sm:grid-cols-2 gap-x-6 gap-y-3 text-[15px] text-ink2">
                     @foreach ($service->scopes as $scope)
                         <li class="flex items-start gap-2.5">
-                            <i class="bi bi-check-circle-fill text-accent mt-1 shrink-0"></i>
+                            <x-icon name="check-circle-fill" class="text-accent mt-1 shrink-0" />
                             <span>{{ $scope->name }}</span>
                         </li>
                     @endforeach
@@ -122,19 +122,19 @@
 
                 @if ($service->dur)
                     <div class="mt-4 flex items-center gap-2.5 rounded-xl bg-navy-900/5 px-3.5 py-2.5 text-[13px] text-navy-900">
-                        <i class="bi bi-calendar-check text-accent text-base shrink-0"></i>
+                        <x-icon name="calendar-check" class="text-accent text-base shrink-0" />
                         <span>ระยะเวลางานโดยประมาณ <b class="font-semibold">{{ $service->dur }} วันทำการ</b></span>
                     </div>
                 @endif
 
                 <a href="/#contact" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">
-                    ขอใบเสนอราคางานนี้ <i class="bi bi-arrow-right"></i>
+                    ขอใบเสนอราคางานนี้ <x-icon name="arrow-right" />
                 </a>
                 <a href="tel:{{ config('company.phone') }}" class="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-white px-6 py-3 font-semibold text-navy-900 hover:border-navy-900 transition">
-                    <i class="bi bi-telephone-fill text-accent"></i> {{ config('company.phone_formatted') }}
+                    <x-icon name="telephone-fill" class="text-accent" /> {{ config('company.phone_formatted') }}
                 </a>
                 <a href="{{ route('frontend.services.index') }}#{{ $service->slug }}" class="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-white px-6 py-3 font-semibold text-navy-900 hover:border-navy-900 transition">
-                    <i class="bi bi-arrow-left"></i> กลับหน้าบริการ
+                    <x-icon name="arrow-left" /> กลับหน้าบริการ
                 </a>
             </div>
         </aside>
@@ -162,7 +162,7 @@
                 </h2>
             </div>
             <a href="{{ route('home') }}#projects" class="inline-flex items-center gap-1.5 text-accent font-semibold text-[15px] hover:gap-2.5 transition-all">
-                ดูผลงานทั้งหมด <i class="bi bi-arrow-right"></i>
+                ดูผลงานทั้งหมด <x-icon name="arrow-right" />
             </a>
         </div>
         <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -171,7 +171,7 @@
                    class="group relative block aspect-4/3 overflow-hidden rounded-2xl ring-1 ring-line">
                     <img src="{{ $portfolio->cover_image ?: 'https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop' }}"
                          alt="{{ $portfolio->title }}"
-                         loading="lazy"
+                         loading="lazy" width="900" height="675"
                          class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500" />
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/15 to-transparent"></div>
                     <div class="absolute inset-0 p-5 flex flex-col justify-end text-white">
@@ -212,7 +212,7 @@
                         ]) @if($loop->first) open @endif>
                             <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
                                 {{ $faq->question }}
-                                <i class="bi bi-plus-lg text-accent transition group-open:rotate-45"></i>
+                                <x-icon name="plus-lg" class="text-accent transition group-open:rotate-45" />
                             </summary>
                             <p class="pb-5 -mt-1 text-[15px] text-ink2 leading-relaxed">{{ $faq->answer }}</p>
                         </details>

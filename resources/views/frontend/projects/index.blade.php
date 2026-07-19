@@ -10,10 +10,10 @@
                class="group block rounded-2xl overflow-hidden ring-1 ring-line bg-white hover:shadow-lg transition">
                 @if ($blog->cover_image)
                     @if (str_starts_with($blog->cover_image, 'http'))
-                        <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" loading="lazy" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" loading="lazy" width="600" height="450" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
                     @else
                         <img src="{{ Storage::disk('s3')->url($blog->cover_image) }}?width=600&format=webp&fit=cover"
-                             alt="{{ $blog->title }}" loading="lazy" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
+                             alt="{{ $blog->title }}" loading="lazy" width="600" height="450" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
                     @endif
                 @endif
                 <div class="p-5">

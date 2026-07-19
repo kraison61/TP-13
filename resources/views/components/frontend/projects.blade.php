@@ -20,14 +20,16 @@
                     @if ($blog->cover_image)
                         @if (str_starts_with($blog->cover_image, 'http'))
                             <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" loading="lazy"
+                                 width="900" height="675"
                                  class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500">
                         @else
                             <img src="{{ Storage::disk('s3')->url($blog->cover_image) }}?width=900&format=webp&fit=cover"
-                                 alt="{{ $blog->title }}" loading="lazy"
+                                 alt="{{ $blog->title }}" loading="lazy" width="900" height="675"
                                  class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500">
                         @endif
                     @else
                         <img src="{{ $fallbackImage }}" alt="{{ $blog->title }}" loading="lazy"
+                             width="900" height="675"
                              class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500">
                     @endif
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/15 to-transparent"></div>
@@ -46,7 +48,7 @@
             <div class="mt-10 text-center">
                 <a href="{{ route('blog.index') }}"
                    class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">
-                    เพิ่มเติม ({{ $totalProjects }}) <i class="bi bi-arrow-right"></i>
+                    เพิ่มเติม ({{ $totalProjects }}) <x-icon name="arrow-right" />
                 </a>
             </div>
         @endif

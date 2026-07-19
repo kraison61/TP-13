@@ -11,7 +11,7 @@
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         @foreach($steps as $step)
         <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 transition">
-            <span class="grid place-items-center w-12 h-12 rounded-xl bg-navy-900 text-white text-xl mb-5"><i class="bi {{ $step['icon'] }}"></i></span>
+            <span class="grid place-items-center w-12 h-12 rounded-xl bg-navy-900 text-white text-xl mb-5"><x-icon:name="$step['icon']" /></span>
             <div class="font-mono text-xs font-bold tracking-[0.15em] text-accent">{{ $step['label'] }}</div>
             <h3 class="mt-2 text-lg font-bold text-navy-900">{{ $step['title'] }}</h3>
             <p class="mt-1.5 text-[15px] text-ink2 leading-relaxed">{{ $step['desc'] }}</p>

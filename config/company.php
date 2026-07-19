@@ -21,5 +21,6 @@ return [
     'line_official_qr' => 'hhttps://qr-official.line.me/gs/M_650qssxw_GW.png?oat_content=qr',
     'line_official_name' => '@theeraphong',
     'open_hours' => 'จันทร์–เสาร์ 8:00–18:00 น.',
-    'map_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.035138354722!2d100.4437907!3d13.836928600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29bca7908e447%3A0xc1935f1371184218!2z4LiY4Li14Lij4Lie4LiH4Lip4LmMIOC5gOC4i-C4reC4o-C5jOC4p-C4tOC4qg!5e0!3m2!1sen!2sth!4v1783933048573!5m2!1sen!2sth" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="strict-origin-when-cross-origin'
+    'map' => 'https://www.google.com/maps/place/14+%E0%B8%AB%E0%B8%A1%E0%B8%B9%E0%B9%88+5+%E0%B8%95.%E0%B8%9A%E0%B8%B2%E0%B8%87%E0%B8%81%E0%B8%A3%E0%B9%88%E0%B8%B2%E0%B8%87+%E0%B8%AD.%E0%B9%80%E0%B8%A1%E0%B8%B7%E0%B8%AD%E0%B8%87%E0%B8%99%E0%B8%99%E0%B8%97%E0%B8%9A%E0%B8%B8%E0%B8%A3%E0%B8%B5/@13.8369286,100.4437907,17z',
+    'map_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.035138354722!2d100.4437907!3d13.836928600000002!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29bca7908e447%3A0xc1935f1371184218!2z4LiY4Li14Lij4Lie4LiH4Lip4LmMIOC5gOC4i-C4reC4o-C5jOC4p-C4tOC4qg!5e0!3m2!1sen!2sth!4v1783933048573!5m2!1sen!2sth',
 ];

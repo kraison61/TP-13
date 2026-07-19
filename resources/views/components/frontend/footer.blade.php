@@ -7,8 +7,8 @@
             </div>
             <p class="max-w-sm text-[15px] leading-relaxed">รับเหมาก่อสร้างครบวงจร — กำแพงกันดิน รั้ว ถนน ลานคอนกรีต และงานปรับพื้นที่ ในเขตกรุงเทพฯ และปริมณฑล</p>
             <div class="mt-5 flex gap-2.5">
-                <a href="{{ config('company.facebook') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-facebook"></i> Facebook</a>
-                <a href="{{ config('company.line') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><i class="bi bi-line"></i> LINE</a>
+                <a href="{{ config('company.facebook') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><x-icon name="facebook" /> Facebook</a>
+                <a href="{{ config('company.line') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><x-icon name="line" /> LINE</a>
             </div>
         </div>
         <div class="md:col-span-2">
@@ -17,7 +17,7 @@
                 @foreach ($footerServices as $service)
                 <li><a href="{{ route('frontend.services.show', $service->slug) }}" class="hover:text-white transition">{{ $service->title }}</a></li>
                 @endforeach
-                <li><a href="{{ route('frontend.services.index') }}" class="inline-flex items-center gap-1.5 text-hivis font-medium hover:text-white transition">บริการทั้งหมด <i class="bi bi-arrow-right text-xs"></i></a></li>
+                <li><a href="{{ route('frontend.services.index') }}" class="inline-flex items-center gap-1.5 text-hivis font-medium hover:text-white transition">บริการทั้งหมด <x-icon name="arrow-right" class="text-xs" /></a></li>
             </ul>
         </div>
         <div class="md:col-span-2">
@@ -36,14 +36,14 @@
                 <li>
                     <a href="tel:{{ config('company.phone') }}"
                        class="inline-flex items-center hover:text-white transition">
-                        <i class="bi bi-telephone-fill text-hivis mr-2"></i>
+                        <x-icon name="telephone-fill" class="text-hivis mr-2 inline-block" />
                         <span class="font-mono tabular-nums">{{ config('company.phone_formatted') }}</span>
                     </a>
                 </li>
                 <li>
                     <a href="mailto:{{ config('company.email') }}"
                        class="inline-flex items-center hover:text-white transition">
-                        <i class="bi bi-envelope-fill text-hivis mr-2"></i>
+                        <x-icon name="envelope-fill" class="text-hivis mr-2 inline-block" />
                         {{ config('company.email') }}
                     </a>
                 </li>
@@ -52,7 +52,7 @@
                        target="_blank"
                        rel="noopener noreferrer"
                        class="inline-flex items-start hover:text-white transition">
-                        <i class="bi bi-geo-alt-fill text-hivis mr-2 mt-0.5 shrink-0"></i>
+                        <x-icon name="geo-alt-fill" class="text-hivis mr-2 inline-block mt-0.5 shrink-0" />
                         <span>{{ config('company.address') }}</span>
                     </a>
                 </li>

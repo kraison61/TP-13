@@ -26,31 +26,33 @@
                         ควบคุมงานทุกโปรเจกต์โดยวิศวกรวิชาชีพ
                     </p>
                     <div class="mt-8 flex flex-wrap gap-3">
-                        <a href="#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">ขอใบเสนอราคาฟรี <i class="bi bi-arrow-right"></i></a>
+                        <a href="#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">ขอใบเสนอราคาฟรี <x-icon name="arrow-right" /></a>
                         <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">ดูผลงานก่อสร้าง</a>
                     </div>
                     <div class="mt-9 flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-3 text-[14px] sm:text-[15px] text-ink2">
-                        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> {{ config('company.experience_label') }} {{ config('company.experience_years') }} ปี</span>
-                        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> รับประกันงาน 2 ปี</span>
-                        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ใบอนุญาตถูกต้อง</span>
-                        <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ทีมงาน {{ config('company.team_size') }} คน</span>
+                        <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> {{ config('company.experience_label') }} {{ config('company.experience_years') }} ปี</span>
+                        <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> รับประกันงาน 2 ปี</span>
+                        <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ใบอนุญาตถูกต้อง</span>
+                        <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ทีมงาน {{ config('company.team_size') }} คน</span>
                     </div>
                 </div>
 
                 <div class="relative">
                     <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
-                        <img src="https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/about/194914_0.jpg"
-                             alt="ทีมช่างของ{{ config('company.brand') }}" class="h-full w-full object-cover">
+                        <img src="{{ \App\Support\R2Image::url('images/about/194914_0.jpg', 800) }}"
+                             alt="ทีมช่างของ{{ config('company.brand') }}"
+                             width="800" height="1000"
+                             fetchpriority="high" loading="eager" decoding="async"
+                             class="h-full w-full object-cover">
                         <div class="absolute inset-x-3 sm:inset-x-5 bottom-3 sm:bottom-5 flex items-center gap-3 sm:gap-4 rounded-xl bg-white/95 backdrop-blur p-3 sm:p-4 shadow-xl">
-                            <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><i class="bi bi-patch-check-fill"></i></span>
+                            <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><x-icon name="patch-check-fill" /></span>
                             <div>
                                 <div class="font-bold text-navy-900 text-[15px]">ใบรับรองมาตรฐาน วศ.</div>
-                                <!-- <div class="text-[13px] text-muted">มอก. 109-2552 · รับเหมาก่อสร้าง ระดับ ค</div> -->
                             </div>
                         </div>
                     </div>
                     <div class="absolute -left-4 top-8 hidden sm:flex items-center gap-3 rounded-xl bg-white p-3 pr-4 shadow-xl ring-1 ring-line">
-                        <span class="grid place-items-center w-10 h-10 rounded-lg bg-hivis/20 text-accent text-lg"><i class="bi bi-buildings-fill"></i></span>
+                        <span class="grid place-items-center w-10 h-10 rounded-lg bg-hivis/20 text-accent text-lg"><x-icon name="buildings-fill" /></span>
                         <div>
                             <div class="font-mono font-bold text-navy-900 leading-none tabular-nums">{{ config('company.projects_completed') }}</div>
                             <div class="text-[12px] text-muted mt-0.5">โครงการ</div>
@@ -76,7 +78,7 @@
                 <div class="mt-10 flex flex-wrap gap-3">
                     @foreach ($badges as $badge)
                         <span class="inline-flex items-center gap-2 rounded-full bg-surface ring-1 ring-line px-4 py-2 text-[14px] text-ink2">
-                            <i class="bi {{ $badge['icon'] }} text-accent"></i> {{ $badge['text'] }}
+                            <x-icon:name="$badge['icon']" class="text-accent" /> {{ $badge['text'] }}
                         </span>
                     @endforeach
                 </div>

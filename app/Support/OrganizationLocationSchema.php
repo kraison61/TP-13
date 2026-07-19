@@ -12,14 +12,16 @@ class OrganizationLocationSchema
             'priceRange' => $schema['price_range'],
             'geo' => [
                 '@type' => 'GeoCoordinates',
-                'latitude' => $schema['geo']['latitude'],
-                'longitude' => $schema['geo']['longitude'],
+                'latitude' => (float) $schema['geo']['latitude'],
+                'longitude' => (float) $schema['geo']['longitude'],
             ],
             'openingHoursSpecification' => [
-                '@type' => 'OpeningHoursSpecification',
-                'dayOfWeek' => $schema['opening_hours_specification']['dayOfWeek'],
-                'opens' => $schema['opening_hours_specification']['opens'],
-                'closes' => $schema['opening_hours_specification']['closes'],
+                [
+                    '@type' => 'OpeningHoursSpecification',
+                    'dayOfWeek' => $schema['opening_hours_specification']['dayOfWeek'],
+                    'opens' => $schema['opening_hours_specification']['opens'],
+                    'closes' => $schema['opening_hours_specification']['closes'],
+                ],
             ],
         ];
     }

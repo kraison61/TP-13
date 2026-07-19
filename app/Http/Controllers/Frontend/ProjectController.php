@@ -2,9 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 use App\Models\Blog;
-use App\Support\BlogPageSchema;
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 
 class ProjectController extends Controller
 {

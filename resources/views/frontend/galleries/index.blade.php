@@ -49,12 +49,12 @@
                     </div>
                     <div class="px-5 py-3.5 flex items-center justify-between border-t border-slate-100">
                         <span class="flex items-center gap-1.5 text-slate-400 text-sm">
-                            <svg width="10" height="13" viewBox="0 0 10 13" fill="none" aria-hidden="true"><path d="M5 0C2.79 0 1 1.79 1 4c0 3 4 9 4 9s4-6 4-9c0-2.21-1.79-4-4-4zm0 5.5A1.5 1.5 0 1 1 5 2.5a1.5 1.5 0 0 1 0 3z" fill="currentColor"/></svg>
+                            <x-icon name="gallery-pin" class="w-[10px] h-[13px]" />
                             {{ $project['province'] }}
                         </span>
                         <span class="flex items-center gap-1 text-navy-900 text-[13px] font-semibold">
                             ดูรายละเอียด
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7h9M7.5 3L11.5 7l-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            <x-icon name="gallery-arrow" class="w-[14px] h-[14px]" />
                         </span>
                     </div>
                 </a>
@@ -63,7 +63,7 @@
     </div>
 
     <div id="gallery-empty" class="hidden text-center py-24 text-slate-400">
-        <svg width="48" height="48" viewBox="0 0 48 48" fill="none" class="mx-auto mb-4 opacity-35"><rect x="6" y="6" width="36" height="36" rx="8" stroke="currentColor" stroke-width="2"/><path d="M16 28l6-6 4 4 6-8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <x-icon name="gallery-empty" class="mx-auto mb-4 opacity-35 w-12 h-12" />
         <p class="text-lg font-medium text-slate-600 mb-1">ไม่พบโครงการในหมวดนี้</p>
         <p class="text-sm">ลองเลือกหมวดหมู่อื่น</p>
     </div>

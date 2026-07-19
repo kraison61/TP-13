@@ -3,6 +3,7 @@
 namespace App\View\Components\Frontend;
 
 use App\Models\Service;
+use App\Support\FrontendCache;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\Database\Eloquent\Collection;
@@ -26,10 +27,13 @@ class Contact extends Component
 
         $this->reference = $reference;
 
-        $this->services = Service::query()
-            ->where('is_active', true)
-            ->orderBy('title')
-            ->get(['id', 'title']);
+        $this->services = Service::hydrate(
+            FrontendCache::remember('contact.services', fn () => Service::query()
+                ->where('is_active', true)
+                ->orderBy('title')
+                ->get(['id', 'title'])
+                ->toArray())
+        );
     }
 
     public function render(): View|Closure|string

@@ -41,14 +41,14 @@
               <td class="px-6 py-4 text-center text-ink2">{{ $service->dur ?: '—' }}</td>
               <td class="px-6 py-4 text-center text-[14px]">
                 @if ($warranty = $service->scopes->firstWhere('group', 'warranty'))
-                  <span class="text-green-700 font-medium"><i class="bi bi-shield-check-fill text-green-600 mr-1"></i>{{ $warranty->name }}</span>
+                  <span class="text-green-700 font-medium"><x-icon name="shield-check-fill" class="text-green-600 mr-1" />{{ $warranty->name }}</span>
                 @else
                   <span class="text-muted">—</span>
                 @endif
               </td>
               <td class="px-6 py-4 text-center">
                 @if ($service->scopes->contains('group', 'cert'))
-                  <i class="bi bi-check-circle-fill text-accent text-lg"></i>
+                  <x-icon name="check-circle-fill" class="text-accent text-lg" />
                 @else
                   <span class="text-muted">—</span>
                 @endif

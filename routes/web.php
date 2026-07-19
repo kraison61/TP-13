@@ -1,9 +1,6 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
-use App\Http\Controllers\Backend\AdminController;
-use App\Http\Controllers\Backend\ServiceController as AdminServiceController;
-use App\Http\Controllers\Backend\ServicePriceController as AdminServicePriceController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\GalleryController;
@@ -90,22 +87,6 @@ Route::redirect('/blog/เทพื้นปูน ราคาต่อ ตา�
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
-
-// Route::prefix('admin')->name('admin.')->group(function () {
-//     Route::get('/', [AdminController::class, 'index'])->name('index');
-
-//     Route::prefix('api')->name('api.')->group(function () {
-//         Route::get('/services', [AdminServiceController::class, 'index'])->name('services.index');
-//         Route::post('/services', [AdminServiceController::class, 'store'])->name('services.store');
-//         Route::put('/services/{service}', [AdminServiceController::class, 'update'])->name('services.update');
-//         Route::delete('/services/{service}', [AdminServiceController::class, 'destroy'])->name('services.destroy');
-
-//         Route::get('/service-prices', [AdminServicePriceController::class, 'index'])->name('service-prices.index');
-//         Route::post('/service-prices', [AdminServicePriceController::class, 'store'])->name('service-prices.store');
-//         Route::put('/service-prices/{servicePrice}', [AdminServicePriceController::class, 'update'])->name('service-prices.update');
-//         Route::delete('/service-prices/{servicePrice}', [AdminServicePriceController::class, 'destroy'])->name('service-prices.destroy');
-//     });
-// });
 
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us');
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');

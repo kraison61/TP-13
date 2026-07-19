@@ -53,14 +53,14 @@
 <dialog id="gallery-lb" class="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-0 bg-[rgba(5,15,30,.96)] p-0 backdrop:bg-[rgba(5,15,30,.96)] open:flex open:flex-col open:items-center open:justify-center">
     <form method="dialog" class="fixed top-4 right-4 z-10">
         <button type="submit" class="w-10 h-10 rounded-full flex items-center justify-center bg-white/8 border border-white/14 text-white hover:bg-white/20 transition-colors" aria-label="ปิด">
-            <i class="bi bi-x-lg"></i>
+            <x-icon name="x-lg" />
         </button>
     </form>
     <button type="button" id="gallery-lb-prev" class="fixed left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/8 border border-white/12 text-white hover:bg-white/18 transition-colors" aria-label="ก่อนหน้า">
-        <i class="bi bi-chevron-left text-xl"></i>
+        <x-icon name="chevron-left" />
     </button>
     <button type="button" id="gallery-lb-next" class="fixed right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full flex items-center justify-center bg-white/8 border border-white/12 text-white hover:bg-white/18 transition-colors" aria-label="ถัดไป">
-        <i class="bi bi-chevron-right text-xl"></i>
+        <x-icon name="chevron-right" />
     </button>
     <div class="flex-1 w-full flex items-center justify-center overflow-hidden px-4 sm:px-20 pt-14 pb-5 min-h-0">
         <img id="gallery-lb-main" src="" alt="" class="max-w-full max-h-[70vh] object-contain rounded shadow-2xl block" />
@@ -78,7 +78,7 @@
                     'w-15 h-11 rounded overflow-hidden cursor-pointer opacity-45 hover:opacity-80 transition-opacity shrink-0 ring-0 ring-white',
                     'opacity-100 ring-2' => $index === 0,
                 ])>
-                <img src="{{ $photo['thumb'] }}" alt="{{ $photo['caption'] }}" class="w-full h-full object-cover block" loading="lazy" />
+                <img src="{{ $photo['thumb'] }}" alt="{{ $photo['caption'] }}" class="w-full h-full object-cover block" loading="lazy" width="60" height="44" />
             </button>
         @endforeach
     </div>

@@ -30,9 +30,7 @@ class BlogPageSchema
             'name' => 'ช่างรัก (Mr.Theeraphong Sarsuk)',
             'jobTitle' => 'ผู้เชี่ยวชาญด้านงานก่อสร้าง',
             'url' => route('about-us'),
-            'worksFor' => [
-                '@id' => OrganizationSchema::organizationId(),
-            ],
+            'worksFor' => OrganizationSchema::reference(),
             'knowsAbout' => [
                 'รับเหมาก่อสร้างกำแพงกันดิน',
                 'รับสร้างรั้วบ้าน',
@@ -58,16 +56,16 @@ class BlogPageSchema
             '@type' => 'BlogPosting',
             '@id' => "{$blogUrl}#article",
             'mainEntityOfPage' => [
+                '@type' => 'WebPage',
                 '@id' => "{$blogUrl}#webpage",
             ],
             'headline' => $blog->title,
             'description' => $blog->description,
             'author' => [
+                '@type' => 'Person',
                 '@id' => "{$base}/#author",
             ],
-            'publisher' => [
-                '@id' => OrganizationSchema::organizationId(),
-            ],
+            'publisher' => OrganizationSchema::reference(),
             'datePublished' => $blog->created_at
                 ->setTimezone('Asia/Bangkok')
                 ->toIso8601String(),
@@ -116,6 +114,7 @@ class BlogPageSchema
                     '@type' => 'ListItem',
                     'position' => 3,
                     'name' => $blog->title,
+                    'item' => $blogUrl,
                 ],
             ],
         ];

@@ -18,7 +18,7 @@
                            class="inline-flex items-center gap-1 px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition"
                            aria-haspopup="true">
                             {{ $item['label'] }}
-                            <i class="bi bi-chevron-down text-[10px]" aria-hidden="true"></i>
+                            <x-icon name="chevron-down" class="text-[10px] shrink-0" />
                         </a>
                         <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block min-w-[260px] z-50">
                             <ul class="rounded-xl border border-line bg-white py-2 shadow-lg shadow-navy-900/10">
@@ -27,7 +27,7 @@
                                         <a href="{{ $child['href'] }}"
                                            class="flex items-center gap-2.5 px-4 py-2.5 text-[14px] hover:bg-surface hover:text-navy-900 transition">
                                             @if ($child['icon'])
-                                                <i class="bi {{ $child['icon'] }} text-accent text-base" aria-hidden="true"></i>
+                                                <x-icon:name="$child['icon']" class="text-accent shrink-0" />
                                             @endif
                                             {{ $child['label'] }}
                                         </a>
@@ -36,14 +36,14 @@
                                 <li class="border-t border-line mt-1 pt-1">
                                     <a href="{{ $item['href'] }}"
                                        class="block px-4 py-2.5 text-[13px] font-semibold text-accent hover:bg-surface transition">
-                                        ดูบริการก่อสร้างทั้งหมด <i class="bi bi-arrow-right text-xs" aria-hidden="true"></i>
+                                        ดูบริการก่อสร้างทั้งหมด <x-icon name="arrow-right" class="text-xs inline-block" />
                                     </a>
                                 </li>
                             </ul>
                         </div>
                     @else
                         <a href="{{ $item['href'] }}" class="block px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">
-                            {{ $item['label'] }}@if ($item['icon']) <i class="bi {{ $item['icon'] }} text-xs" aria-hidden="true"></i>@endif
+                            {{ $item['label'] }}@if ($item['icon']) <x-icon:name="$item['icon']" class="text-xs inline-block" />@endif
                         </a>
                     @endif
                 </li>
@@ -57,10 +57,10 @@
             </a>
             <a href="{{ $ctaHref }}"
                class="hidden lg:inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-navy-900/15 hover:bg-navy-900 transition">
-                {{ $ctaLabel }} <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                {{ $ctaLabel }} <x-icon name="arrow-right" />
             </a>
-            <button id="menuBtn" type="button" class="lg:hidden grid place-items-center w-10 h-10 rounded-lg border border-line text-navy-900" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="mobileMenu">
-                <i class="bi bi-list text-2xl" aria-hidden="true"></i>
+            <button id="menuBtn" type="button" class="lg:hidden grid place-items-center w-10 h-10 rounded-lg border border-line text-navy-900 text-2xl" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="mobileMenu">
+                <x-icon name="list" />
             </button>
         </div>
     </nav>
@@ -73,13 +73,13 @@
                     <details class="border-b border-line/70 group/nav">
                         <summary class="py-2.5 cursor-pointer list-none flex items-center justify-between gap-2 marker:content-none">
                             <span>{{ $item['label'] }}</span>
-                            <i class="bi bi-chevron-down text-xs transition group-open/nav:rotate-180" aria-hidden="true"></i>
+                            <x-icon name="chevron-down" class="text-xs transition group-open/nav:rotate-180 shrink-0" />
                         </summary>
                         <div class="pb-2 pl-1 space-y-0.5">
                             @foreach ($item['children'] as $child)
                                 <a href="{{ $child['href'] }}" class="flex items-center gap-2 py-2 pl-3 text-[14px] hover:text-navy-900 transition">
                                     @if ($child['icon'])
-                                        <i class="bi {{ $child['icon'] }} text-accent" aria-hidden="true"></i>
+                                        <x-icon:name="$child['icon']" class="text-accent shrink-0" />
                                     @endif
                                     {{ $child['label'] }}
                                 </a>
@@ -97,7 +97,7 @@
             @endforeach
             <a href="{{ $ctaHref }}"
                class="mt-3 inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-white hover:bg-navy-900 transition">
-                {{ $ctaLabel }} <i class="bi bi-arrow-right" aria-hidden="true"></i>
+                {{ $ctaLabel }} <x-icon name="arrow-right" />
             </a>
         </div>
     </div>

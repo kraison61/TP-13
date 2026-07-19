@@ -6,6 +6,7 @@ use App\Models\Blog;
 use App\Models\Faq;
 use App\Models\Service;
 use App\Http\Controllers\Controller;
+use App\Support\FrontendCache;
 use App\Support\GalleryPresenter;
 use App\Support\MainPageSchema;
 use App\Support\OrganizationSchema;
@@ -19,24 +20,22 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $services = Service::with('activePrice')
+        $services = FrontendCache::rememberIds('home.service-ids', fn () => Service::with('activePrice')
             ->where('is_active', true)
-            ->orderBy('id')
-            ->get();
+            ->orderBy('id'));
 
         $homeServices = $services->take(config('frontend.services_list.home_limit', 4));
 
-        $allProjectBlogs = Blog::with('service')
+        $allProjectBlogs = FrontendCache::rememberIds('home.project-blog-ids', fn () => Blog::with('service')
             ->whereNotNull('service_id')
             ->whereHas('service', fn ($q) => $q->where('is_active', true))
-            ->latest()
-            ->get();
+            ->latest());
 
         $projectBlogs = $allProjectBlogs->take(config('frontend.projects.home_limit', 6));
 
-        $projectSchemaLd = ProjectSchema::itemList($allProjectBlogs);
+        $projectSchemaLd = ProjectSchema::itemList($projectBlogs);
 
-        $faqs = Service::query()
+        $faqIds = FrontendCache::remember('home.faq-ids', fn () => Service::query()
             ->where('is_active', true)
             ->whereHas('faqs', fn ($q) => $q->where('is_active', true))
             ->with(['faqs' => fn ($q) => $q
@@ -46,26 +45,40 @@ class HomeController extends Controller
                 ->limit(1)])
             ->orderBy('id')
             ->get()
-            ->map(fn (Service $service) => $service->faqs->first())
+            ->map(fn (Service $service) => $service->faqs->first()?->id)
             ->filter()
-            ->values();
+            ->values()
+            ->all());
+
+        $faqs = $faqIds === []
+            ? collect()
+            : Faq::query()->whereIn('id', $faqIds)->get()
+                ->sortBy(fn (Faq $faq) => array_search($faq->id, $faqIds, true))
+                ->values();
 
         $faqItems = $faqs->map(fn (Faq $faq) => [
             'q' => $faq->question,
             'a' => nl2br(e($faq->answer)),
         ])->all();
 
-        $mainSchemaLd = MainPageSchema::graph($services, $faqs);
+        $mainSchemaLd = MainPageSchema::graph($homeServices, $faqs);
 
         $organizationSchemaLd = OrganizationSchema::graph(
             OrganizationSchema::extrasFromServices($services)
         );
 
-        $allGalleryImages = GalleryPresenter::firstPerLocation();
-        $galleryProjects = GalleryPresenter::toProjects(
-            $allGalleryImages->take(config('frontend.galleries.home_limit', 6))
-        );
-        $totalGalleryProjects = $allGalleryImages->count();
+        $galleryData = FrontendCache::remember('home.gallery', function () {
+            $images = GalleryPresenter::firstPerLocation();
+
+            return [
+                'projects' => GalleryPresenter::toProjects(
+                    $images->take(config('frontend.galleries.home_limit', 6))
+                ),
+                'total' => $images->count(),
+            ];
+        });
+        $galleryProjects = $galleryData['projects'];
+        $totalGalleryProjects = $galleryData['total'];
 
         return view('frontend.index', compact(
             'services',

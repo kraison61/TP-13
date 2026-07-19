@@ -3,6 +3,7 @@
 namespace App\View\Components\Frontend;
 
 use App\Models\Review;
+use App\Support\FrontendCache;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
@@ -15,7 +16,7 @@ class Testimonials extends Component
     public function __construct()
     {
         try {
-            $this->testimonials = Review::query()
+            $this->testimonials = FrontendCache::remember('testimonials.reviews', fn () => Review::query()
                 ->with(['service' => fn ($q) => $q
                     ->where('is_active', true)
                     ->select('id', 'title', 'service_category_id')
@@ -25,7 +26,7 @@ class Testimonials extends Component
                 ->get()
                 ->map(fn (Review $review) => $this->formatReview($review))
                 ->values()
-                ->all();
+                ->all());
         } catch (\Throwable) {
             $this->testimonials = [];
         }

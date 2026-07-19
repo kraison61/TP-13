@@ -4,15 +4,15 @@
     $voucherTiers = $voucherConfig['tiers'];
 @endphp
 <section id="contact" class="bg-navy-900 text-white">
-    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28 grid lg:grid-cols-12 gap-12">
-        <div class="lg:col-span-5">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-28 grid lg:grid-cols-12 gap-12 min-w-0">
+        <div class="lg:col-span-5 min-w-0">
             <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-hivis"></span> ขอใบเสนอราคา</span>
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight leading-tight">จบปัญหาทิ้งงาน คุมงบได้เป๊ะ ไม่บานปลาย</h2>
             <p class="mt-4 text-lg text-white/60 leading-relaxed">วิศวกรคุมงานเอง พร้อมแจกแจงราคาทุกรายการโปร่งใส กรอกข้อมูลเพื่อรับการประเมินหน้างานฟรีภายใน 24 ชม. พร้อมสิทธิ์ E-Voucher สำหรับลูกค้าเว็บไซต์</p>
 
             <div class="mt-8 rounded-2xl border border-hivis/40 bg-gradient-to-br from-hivis/15 to-transparent p-6">
                 <p class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-hivis">
-                    <i class="bi bi-gift-fill"></i> {{ $voucherConfig['banner']['badge'] }}
+                    <x-icon name="gift-fill" /> {{ $voucherConfig['banner']['badge'] }}
                 </p>
                 <p class="mt-3 text-lg font-bold leading-snug">
                     {{ $voucherConfig['banner']['headline'] }}
@@ -24,7 +24,7 @@
 
             <ul class="mt-8 space-y-4 text-white/85">
             <li class="flex gap-3.5">
-        <i class="bi bi-telephone-fill text-hivis text-xl"></i>
+        <x-icon name="telephone-fill" class="text-hivis text-xl shrink-0" />
         <div>
             <div class="text-[13px] text-white/50">โทรเลย</div>
             <a href="tel:{{ config('company.phone') }}"
@@ -34,7 +34,7 @@
         </div>
     </li>
     <li class="flex gap-3.5">
-        <i class="bi bi-line text-hivis text-xl"></i>
+        <x-icon name="line" class="text-hivis text-xl shrink-0" />
         <div>
             <div class="text-[13px] text-white/50">LINE Official</div>
             <a href="{{ config('company.line_official') }}"
@@ -46,7 +46,7 @@
         </div>
     </li>
     <li class="flex gap-3.5">
-        <i class="bi bi-envelope-fill text-hivis text-xl"></i>
+        <x-icon name="envelope-fill" class="text-hivis text-xl shrink-0" />
         <div>
             <div class="text-[13px] text-white/50">อีเมล</div>
             <a href="mailto:{{ config('company.email') }}"
@@ -55,12 +55,12 @@
             </a>
         </div>
     </li>
-                <li class="flex gap-3.5"><i class="bi bi-geo-alt-fill text-hivis text-xl"></i><div><div class="text-[13px] text-white/50">สำนักงาน</div><div class="font-medium">{{config('company.address')}}</div></div></li>
-                <li class="flex gap-3.5"><i class="bi bi-clock-fill text-hivis text-xl"></i><div><div class="text-[13px] text-white/50">เวลาทำการ</div><div class="font-medium">{{config('company.open_hours')}}</div></div></li>
+                <li class="flex gap-3.5"><x-icon name="geo-alt-fill" class="text-hivis text-xl shrink-0" /><div><div class="text-[13px] text-white/50">สำนักงาน</div><div class="font-medium">{{config('company.address')}}</div></div></li>
+                <li class="flex gap-3.5"><x-icon name="clock-fill" class="text-hivis text-xl shrink-0" /><div><div class="text-[13px] text-white/50">เวลาทำการ</div><div class="font-medium">{{config('company.open_hours')}}</div></div></li>
             </ul>
         </div>
 
-        <div class="lg:col-span-7">
+        <div class="lg:col-span-7 min-w-0">
             <form id="quoteForm"
                   action="{{ route('quote.store') }}"
                   method="POST"
@@ -79,7 +79,10 @@
                                 data-copy="{{ $reference }}"
                                 data-save-url="{{ route('voucher.copy') }}"
                                 class="inline-flex items-center gap-1.5 rounded-lg bg-hivis px-3.5 py-2 text-sm font-semibold text-navy-900 hover:bg-hivis/80 active:scale-95 transition shrink-0">
-                            <i class="bi bi-clipboard" id="copyRefIcon"></i>
+                            <span id="copyRefIcon" class="inline-flex">
+                                <x-icon name="clipboard" class="copy-default" />
+                                <x-icon name="clipboard-check-fill" class="copy-done hidden" />
+                            </span>
                             <span id="copyRefLabel">คัดลอก</span>
                         </button>
                     </div>
@@ -88,8 +91,8 @@
 
                     <div id="voucherCard" class="mt-4 flex items-start gap-3.5 rounded-xl bg-white/70 px-4 py-4 transition-all duration-300">
                         <span class="inline-flex size-11 shrink-0 items-center justify-center rounded-full bg-hivis text-navy-900 text-lg">
-                            <!-- <i class="bi bi-ticket-perforated-fill"></i> -->
-                             <i class="bi bi-gift-fill"></i>
+                            <!-- <x-icon name="ticket-perforated-fill" /> -->
+                             <x-icon name="gift-fill" />
                         </span>
                         <div class="min-w-0 flex-1">
                             <p id="voucherAmount" class="text-xl font-bold text-navy-900 tabular-nums leading-tight">{{ $voucherConfig['default']['amount_label'] }}</p>
@@ -98,13 +101,13 @@
                             <button type="button"
                                     id="voucherTermsBtn"
                                     class="mt-2 inline-flex items-center gap-1 text-xs text-accent font-medium hover:underline">
-                                <i class="bi bi-asterisk"></i> ดูเงื่อนไข E-Voucher
+                                <x-icon name="asterisk" /> ดูเงื่อนไข E-Voucher
                             </button>
                         </div>
                     </div>
 
                     <div class="mt-4 flex items-start gap-2 text-sm text-ink2 leading-relaxed">
-                        <i class="bi bi-shield-check text-accent mt-0.5 shrink-0"></i>
+                        <x-icon name="shield-check" class="text-accent mt-0.5 shrink-0" />
                         <span>
                             แจ้งรหัส E-Voucher นี้ทาง LINE เพื่อยืนยันสิทธิ์ส่วนลด
                             และเพื่อเป็นการรับประกันว่าท่านติดต่อจากทีมงานเว็บไซต์อย่างเป็นทางการ (ป้องกันมิจฉาชีพ)
@@ -112,8 +115,7 @@
                     </div>
 
                     <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer"
-                       class="mt-4 flex items-center justify-center gap-2.5 rounded-xl bg-[#06C755] px-6 py-4 text-lg font-bold text-white shadow-lg shadow-[#06C755]/30 hover:brightness-95 hover:-translate-y-0.5 active:scale-[0.99] transition">
-                        <i class="bi bi-line text-2xl"></i>
+                       class="mt-4 flex items-center justify-center gap-2.5 rounded-xl bg-[#06C755] px-6 py-4 text-lg font-bold text-white shadow-lg shadow-[#06C755]/30 hover:brightness-95 hover:-translate-y-0.5 active:scale-[0.99] transition"><x-icon name="line" class="shrink-0" />
                         แอด LINE Official ยืนยันสิทธิ์ E-Voucher
                     </a>
                 </div>
@@ -158,16 +160,16 @@
                 </label>
                 <div class="sm:col-span-2 flex flex-wrap items-center gap-4">
                     <button type="submit" id="quoteSubmitBtn" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3.5 font-semibold text-white hover:bg-navy-900 transition disabled:opacity-60 disabled:cursor-not-allowed">
-                    เช็คสิทธิ์และนัดประเมินหน้างานฟรี <i class="bi bi-arrow-right"></i>
+                    เช็คสิทธิ์และนัดประเมินหน้างานฟรี <x-icon name="arrow-right" />
                     </button>
                     <span class="text-sm text-muted">บริการสำรวจหน้างานฟรีสำหรับ กทม. และปริมณฑล (ต่างจังหวัดสามารถส่งรูปประเมินเบื้องต้นได้ฟรีผ่าน LINE)</span>
                 </div>
                 <div id="quoteError" class="sm:col-span-2 hidden flex items-start gap-2 rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-[15px]">
-                    <i class="bi bi-exclamation-triangle-fill mt-0.5 shrink-0"></i>
+                    <x-icon name="exclamation-triangle-fill" class="mt-0.5 shrink-0" />
                     <span id="quoteErrorText"></span>
                 </div>
                 <div id="quoteOK" class="sm:col-span-2 hidden flex items-start gap-2 rounded-xl bg-green-50 border border-green-200 text-green-700 px-4 py-3 text-[15px]">
-                    <i class="bi bi-check-circle-fill mt-0.5 shrink-0"></i>
+                    <x-icon name="check-circle-fill" class="mt-0.5 shrink-0" />
                     <span>
                         <span id="quoteOKText">ส่งคำขอเรียบร้อย!</span>
                         รหัสอ้างอิงของคุณคือ
@@ -188,7 +190,7 @@
                 <div class="flex items-start justify-between gap-4">
                     <h3 id="voucherTermsTitle" class="text-lg font-bold text-navy-900">เงื่อนไข E-Voucher</h3>
                     <button type="button" id="voucherTermsClose" class="text-muted hover:text-ink transition" aria-label="ปิด">
-                        <i class="bi bi-x-lg text-xl"></i>
+                        <x-icon name="x-lg" />
                     </button>
                 </div>
                 <p class="mt-4 text-sm text-ink2 leading-relaxed">{{ $voucherConfig['terms'] }}</p>

@@ -15,7 +15,7 @@
         {{-- FORM CARD --}}
         <div class="rounded-2xl bg-white border border-line shadow-sm p-7 lg:p-9">
             <div class="flex items-center gap-3 mb-7">
-                <span class="grid place-items-center w-11 h-11 rounded-xl bg-navy-900 text-white text-xl"><i class="bi bi-calculator"></i></span>
+                <span class="grid place-items-center w-11 h-11 rounded-xl bg-navy-900 text-white text-xl"><x-icon name="calculator" /></span>
                 <div>
                     <div class="font-bold text-navy-900 text-lg leading-tight">กรอกข้อมูลที่ดิน</div>
                     <div class="text-[13px] text-muted">ระบบคำนวณแบบ real-time ทุกการพิมพ์</div>
@@ -28,7 +28,7 @@
                     <button type="button" data-soil-preset="1" class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-ink2 hover:border-accent hover:text-accent transition">1 งาน · สูง 1 ม.</button>
                     <button type="button" data-soil-preset="2" class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-ink2 hover:border-accent hover:text-accent transition">1 ไร่ · สูง 1 ม.</button>
                     <button type="button" data-soil-preset="3" class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-ink2 hover:border-accent hover:text-accent transition">2 ไร่ · สูง 1.5 ม.</button>
-                    <button type="button" data-soil-reset class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-muted hover:border-red-300 hover:text-red-500 transition"><i class="bi bi-x-circle mr-1"></i>ล้าง</button>
+                    <button type="button" data-soil-reset class="rounded-full border border-line px-3.5 py-1.5 text-[13px] font-medium text-muted hover:border-red-300 hover:text-red-500 transition"><x-icon name="x-circle" class="mr-1 inline-block" />ล้าง</button>
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
 
                 <div>
                     <label class="block text-sm font-semibold text-navy-900 mb-3">
-                        <i class="bi bi-bounding-box mr-1.5 text-accent"></i> ขนาดที่ดิน
+                        <x-icon name="bounding-box" class="mr-1.5 text-accent inline-block" /> ขนาดที่ดิน
                         <span class="font-normal text-muted ml-2 text-[12px]">กรอกอย่างน้อย 1 ช่อง</span>
                     </label>
                     <div class="grid grid-cols-3 gap-3">
@@ -63,14 +63,14 @@
                         </div>
                     </div>
                     <div class="mt-2.5 flex items-center gap-2 rounded-lg bg-surface px-3.5 py-2">
-                        <i class="bi bi-rulers text-accent text-sm"></i>
+                        <x-icon name="rulers" class="text-accent shrink-0" />
                         <span class="text-[13px] text-ink2">พื้นที่รวม: <strong id="soil-area-fmt" class="font-mono tabular-nums text-navy-900">0.00</strong> ตร.ม.</span>
                     </div>
                 </div>
 
                 <div>
                     <label for="soil-height" class="block text-sm font-semibold text-navy-900 mb-2">
-                        <i class="bi bi-arrow-up-circle mr-1.5 text-accent"></i> ความสูงที่ต้องการถม
+                        <x-icon name="arrow-up-circle" class="mr-1.5 text-accent inline-block" /> ความสูงที่ต้องการถม
                     </label>
                     <div class="relative max-w-xs">
                         <input id="soil-height" type="number" min="0" step="0.1" placeholder="0.00" class="w-full rounded-xl border border-line px-4 py-3 pr-16 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition font-mono tabular-nums text-right text-navy-900 font-semibold text-lg" />
@@ -81,7 +81,7 @@
 
                 <div>
                     <div class="block text-sm font-semibold text-navy-900 mb-1">
-                        <i class="bi bi-arrow-down-circle mr-1.5 text-accent"></i> เผื่อดินยุบตัว
+                        <x-icon name="arrow-down-circle" class="mr-1.5 text-accent inline-block" /> เผื่อดินยุบตัว
                     </div>
                     <p class="text-[13px] text-muted mb-3">ดินถมจะทรุดตัวลงหลังบดอัด ควรสั่งดินเพิ่มกว่าปริมาณจริง</p>
                     <div class="grid grid-cols-3 gap-2.5" role="radiogroup" aria-label="เผื่อดินยุบตัว">
@@ -137,7 +137,7 @@
 
             <div class="rounded-2xl bg-white border border-line p-6">
                 <div class="flex items-center gap-2 mb-4">
-                    <i class="bi bi-truck text-accent text-lg"></i>
+                    <x-icon name="truck" class="text-accent shrink-0" />
                     <span class="font-semibold text-navy-900">จำนวนรถดั๊มพ์โดยประมาณ</span>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
@@ -156,7 +156,7 @@
 
             <div class="rounded-2xl bg-white border border-line p-6">
                 <div class="flex items-center gap-2 mb-1">
-                    <i class="bi bi-cash-coin text-accent text-lg"></i>
+                    <x-icon name="cash-coin" class="text-accent shrink-0" />
                     <span class="font-semibold text-navy-900">ราคาโดยประมาณ</span>
                 </div>
                 <p class="text-[12px] text-muted mb-4">รวมค่าดิน + ค่าขนส่ง + ค่าบดอัด · อ้างอิงตลาด กทม. ปริมณฑล</p>
@@ -178,7 +178,7 @@
                     </div>
                 </div>
                 <div class="mt-4 rounded-xl bg-hivis/10 border border-hivis/30 p-3.5 flex items-start gap-3">
-                    <span class="grid place-items-center w-8 h-8 rounded-lg bg-hivis text-navy-900 text-sm shrink-0 mt-0.5"><i class="bi bi-tag-fill"></i></span>
+                    <span class="grid place-items-center w-8 h-8 rounded-lg bg-hivis text-navy-900 text-sm shrink-0 mt-0.5"><x-icon name="tag-fill" /></span>
                     <div>
                         <div class="font-semibold text-navy-900 text-[14px]">{{ config('company.brand') }}: เริ่มต้น <span id="soil-tp-cost">0</span> บาท</div>
                         <div class="text-[12px] text-ink2 mt-0.5">ราคา 220 บ./คิว รวมบดอัด ตรวจสอบได้</div>
@@ -188,7 +188,7 @@
             </div>
 
             <a href="/#contact" class="flex items-center justify-center gap-2 rounded-2xl bg-accent text-white font-semibold py-4 px-6 hover:bg-navy-900 transition text-[15px] shadow-lg shadow-navy-900/20">
-                ขอใบเสนอราคาฟรี — ไม่มีค่าใช้จ่าย <i class="bi bi-arrow-right"></i>
+                ขอใบเสนอราคาฟรี — ไม่มีค่าใช้จ่าย <x-icon name="arrow-right" />
             </a>
         </div>
 
@@ -203,7 +203,7 @@
     </div>
     <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
-            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-calculator"></i></span>
+            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><x-icon name="calculator" /></span>
             <h3 class="font-bold text-navy-900 text-lg">สูตรคำนวณดินถม</h3>
             <p class="mt-2 text-[14px] text-ink2 leading-relaxed">พื้นที่ (ตร.ม.) × ความสูง (ม.) = ปริมาณดิน (คิว) จากนั้นบวกเพิ่ม 20–30% สำหรับดินที่ยุบหลังบดอัด</p>
             <div class="mt-4 rounded-lg bg-surface px-3 py-2.5 font-mono text-[12px] text-accent leading-relaxed">
@@ -212,17 +212,17 @@
             </div>
         </div>
         <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
-            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-layers"></i></span>
+            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><x-icon name="layers" /></span>
             <h3 class="font-bold text-navy-900 text-lg">ประเภทดินที่ใช้ถม</h3>
             <p class="mt-2 text-[14px] text-ink2 leading-relaxed">ดินลูกรัง และดินเหนียวปนทรายเหมาะที่สุด บดอัดแน่น ไม่ทรุดง่าย ต่างจากดินทราย/ดินเลนที่ยุบตัวสูงถึง 30%</p>
         </div>
         <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
-            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-shield-check"></i></span>
+            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><x-icon name="shield-check" /></span>
             <h3 class="font-bold text-navy-900 text-lg">ถมดินให้ไม่ทรุด</h3>
             <p class="mt-2 text-[14px] text-ink2 leading-relaxed">ถมเป็นชั้น ชั้นละ 20–30 ซม. บดอัดด้วยรถแบคโฮหรือแทมเปอร์ทุกชั้น หลีกเลี่ยงการถมครั้งเดียวหนาเกิน 50 ซม.</p>
         </div>
         <div class="rounded-2xl border border-line bg-white p-6 hover:shadow-xl hover:shadow-navy-900/5 hover:-translate-y-1 transition">
-            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><i class="bi bi-file-earmark-text"></i></span>
+            <span class="grid place-items-center w-12 h-12 rounded-xl bg-accent/8 text-accent text-2xl mb-5"><x-icon name="file-earmark-text" /></span>
             <h3 class="font-bold text-navy-900 text-lg">ขออนุญาตถมดิน</h3>
             <p class="mt-2 text-[14px] text-ink2 leading-relaxed">ในเขต กทม. ถมสูงกว่า 0.50 ม. จากระดับถนนต้องแจ้ง อบต./เขต ก่อน พร้อมแนบแบบแปลนและหนังสือยินยอมข้างเคียง</p>
         </div>
@@ -277,42 +277,42 @@
                 ทีมงานยินดีให้คำปรึกษาฟรี
             </p>
             <a href="/#contact" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white hover:bg-navy-900 transition text-[15px]">
-                ขอคำปรึกษาฟรี <i class="bi bi-arrow-right"></i>
+                ขอคำปรึกษาฟรี <x-icon name="arrow-right" />
             </a>
         </div>
         <div class="lg:col-span-8 space-y-3" id="faqListCalc">
             <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden" open>
                 <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
                     ถมดินต้องขออนุญาตหรือเปล่า?
-                    <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+                    <x-icon name="plus-lg" class="text-accent transition group-open:rotate-45 shrink-0" />
                 </summary>
                 <p class="pb-5 -mt-1 text-[15px] text-ink2 leading-relaxed">ในเขตเทศบาลและ กทม. ถ้าถมสูงกว่าระดับถนนสาธารณะมากกว่า 50 ซม. ต้องยื่นขออนุญาตจากเจ้าพนักงานท้องถิ่น พร้อมแนบหนังสือยินยอมเจ้าของที่ดินข้างเคียง ถ้าถมต่ำกว่า 50 ซม. มักไม่ต้องขออนุญาต แต่ควรแจ้งเพื่อนบ้านก่อน</p>
             </details>
             <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
                 <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
                     ราคาดินถมต่อคิวอยู่ที่เท่าไหร่?
-                    <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+                    <x-icon name="plus-lg" class="text-accent transition group-open:rotate-45 shrink-0" />
                 </summary>
                 <p class="pb-5 -mt-1 text-[15px] text-ink2 leading-relaxed">ราคาตลาดในเขต กทม. ปริมณฑล ดินลูกรังอยู่ที่ <strong class="text-navy-900">150–220 บาท/คิว</strong> ค่าขนส่งและบดอัดรวมอยู่ที่ 50–100 บาท/คิว รวมทั้งหมดประมาณ 200–320 บาท/คิว ขึ้นอยู่กับระยะทาง ปริมาณ และสภาพหน้างาน</p>
             </details>
             <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
                 <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
                     ทำไมต้องเผื่อดินยุบตัว?
-                    <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+                    <x-icon name="plus-lg" class="text-accent transition group-open:rotate-45 shrink-0" />
                 </summary>
                 <p class="pb-5 -mt-1 text-ink2 text-[15px] leading-relaxed">ดินที่ขนมาใหม่มีความฟูและมีช่องอากาศสูง เมื่อบดอัดและแช่น้ำฝนจะยุบตัวลง 15–30% ขึ้นกับประเภทดิน ดินลูกรังยุบประมาณ 15–20% ดินทรายยุบ 20–30% การเผื่อไว้ตั้งแต่ต้นทำให้ระดับสุดท้ายถูกต้องและประหยัดกว่าการสั่งเพิ่มภายหลัง</p>
             </details>
             <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
                 <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
                     ถมดินเองดีกว่าจ้างมืออาชีพไหม?
-                    <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+                    <x-icon name="plus-lg" class="text-accent transition group-open:rotate-45 shrink-0" />
                 </summary>
                 <p class="pb-5 -mt-1 text-ink2 text-[15px] leading-relaxed">ถมดินเองประหยัดค่าแรงได้ แต่มักขาดเครื่องบดอัดที่มีประสิทธิภาพ ทำให้ดินไม่แน่น ส่งผลให้บ้าน ถนน หรือโครงสร้างที่ทำทีหลังทรุดตัว การจ้างมืออาชีพที่มีเครื่องมือครบมักคุ้มกว่าในระยะยาว โดยเฉพาะงานที่ต้องสร้างโครงสร้างถาวรบนพื้นที่นั้น</p>
             </details>
             <details class="group rounded-2xl border border-line bg-white px-5 [&_summary::-webkit-details-marker]:hidden">
                 <summary class="flex cursor-pointer items-center justify-between gap-4 py-4 font-semibold text-navy-900">
                     ถมดินใกล้กำแพงข้างเคียงได้ไหม?
-                    <i class="bi bi-plus-lg text-accent transition group-open:rotate-45 shrink-0"></i>
+                    <x-icon name="plus-lg" class="text-accent transition group-open:rotate-45 shrink-0" />
                 </summary>
                 <p class="pb-5 -mt-1 text-ink2 text-[15px] leading-relaxed">ได้ แต่ต้องระวังแรงดันดินด้านข้างที่จะดันกำแพงหรือรั้วข้างเคียง หากถมสูงมากกว่า 1 เมตรควรวางแผนทำ <strong class="text-navy-900">กำแพงกันดิน</strong> หรือเสริมฐานรากรองรับ การไม่จัดการแรงดันดินเป็นสาเหตุหลักของกำแพงพัง ซึ่งอาจสร้างความเสียหายให้ทรัพย์สินข้างเคียง</p>
             </details>
@@ -327,17 +327,17 @@
             <h2 class="text-2xl lg:text-3xl font-bold tracking-tight text-navy-900">ได้ตัวเลขแล้ว — ขอราคาจริงจากทีมช่างได้เลย</h2>
             <p class="mt-3 text-[15px] text-ink2 leading-relaxed max-w-xl">เราสำรวจหน้างานฟรี ไม่มีค่าใช้จ่าย และเสนอราคาจริงพร้อมรายละเอียดวัสดุทุกชิ้น ภายใน 5–7 วันทำการ</p>
             <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[14px] text-ink2">
-                <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> สำรวจหน้างานฟรี</span>
-                <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> ไม่มีค่าแอบแฝง</span>
-                <span><i class="bi bi-check-circle-fill text-accent mr-1.5"></i> รับประกันงาน 2 ปี</span>
+                <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> สำรวจหน้างานฟรี</span>
+                <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ไม่มีค่าแอบแฝง</span>
+                <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> รับประกันงาน 2 ปี</span>
             </div>
         </div>
         <div class="flex flex-col sm:flex-row gap-3 shrink-0">
             <a href="/#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-4 font-semibold text-white hover:bg-navy-900 transition shadow-lg shadow-navy-900/20 whitespace-nowrap">
-                ขอใบเสนอราคาฟรี <i class="bi bi-arrow-right"></i>
+                ขอใบเสนอราคาฟรี <x-icon name="arrow-right" />
             </a>
             <a href="tel:{{ config('company.phone') }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-7 py-4 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition whitespace-nowrap">
-                <i class="bi bi-telephone-fill"></i> {{ config('company.phone_formatted') }}
+                <x-icon name="telephone-fill" class="shrink-0" /> {{ config('company.phone_formatted') }}
             </a>
         </div>
     </div>

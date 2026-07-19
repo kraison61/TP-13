@@ -17,6 +17,7 @@
                 <a href="{{ route('frontend.galleries.show', $project['slug']) }}"
                    class="group relative block aspect-4/3 overflow-hidden rounded-2xl ring-1 ring-line transition duration-300">
                     <img src="{{ $project['image'] }}" alt="{{ $project['alt'] }}" loading="lazy"
+                         width="900" height="675"
                          class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500" />
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/15 to-transparent"></div>
                     <div class="absolute inset-0 p-5 flex flex-col justify-end text-white">
@@ -36,7 +37,7 @@
             <div class="mt-10 text-center">
                 <a href="{{ route('frontend.galleries.index') }}"
                    class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">
-                    เพิ่มเติม ({{ $totalProjects }}) <i class="bi bi-arrow-right"></i>
+                    เพิ่มเติม ({{ $totalProjects }}) <x-icon name="arrow-right" />
                 </a>
             </div>
         @endif

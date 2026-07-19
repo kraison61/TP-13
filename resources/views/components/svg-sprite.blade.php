@@ -1,0 +1,1 @@
+<div hidden aria-hidden="true"><svg xmlns="http://www.w3.org/2000/svg">@foreach (\App\Support\BootstrapIcons::spriteIcons() as $name => $paths)<symbol id="icon-{{ $name }}" viewBox="{{ \App\Support\BootstrapIcons::viewBox($name) }}" fill="{{ \App\Support\BootstrapIcons::symbolFill($name) }}">{!! $paths !!}</symbol>@endforeach</svg></div>

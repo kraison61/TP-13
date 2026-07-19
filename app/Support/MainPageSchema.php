@@ -41,15 +41,18 @@ class MainPageSchema
             'serviceType' => $schema['service_type'],
             'name' => $schema['name'],
             'description' => $schema['description'],
-            'provider' => [
-                '@id' => "{$base}/#organization",
-            ],
+            'provider' => OrganizationSchema::reference(),
             'areaServed' => self::areaServed(),
             'hasOfferCatalog' => [
                 '@type' => 'OfferCatalog',
                 'name' => $schema['name'],
                 'itemListElement' => $services
-                    ->map(fn (Service $service) => self::serviceOffer($base, $service))
+                    ->values()
+                    ->map(fn (Service $service, int $index) => [
+                        '@type' => 'ListItem',
+                        'position' => $index + 1,
+                        'item' => self::serviceOffer($base, $service),
+                    ])
                     ->all(),
             ],
         ];
@@ -61,9 +64,7 @@ class MainPageSchema
             '@type' => 'Service',
             'name' => $service->title,
             'url' => route('frontend.services.show', $service->slug),
-            'provider' => [
-                '@id' => "{$base}/#organization",
-            ],
+            'provider' => OrganizationSchema::reference(),
             'areaServed' => self::areaServed(),
         ];
 

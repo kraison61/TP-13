@@ -34,7 +34,7 @@ class ServicePageSchema
     private static function serviceProduct(string $base, Service $service, string $serviceUrl): array
     {
         $node = [
-            '@type' => ['Service', 'Product'],
+            '@type' => 'Service',
             '@id' => "{$serviceUrl}/#service",
             'name' => $service->title,
             'serviceType' => $service->schema_type ?: $service->title,
@@ -45,9 +45,7 @@ class ServicePageSchema
                 'name' => config('frontend.schema.alternate_name'),
             ],
             'sku' => 'TP-SRV-'.$service->id,
-            'provider' => [
-                '@id' => "{$base}/#organization",
-            ],
+            'provider' => OrganizationSchema::reference(),
             'areaServed' => collect(config('frontend.schema.area_served'))
                 ->map(fn (string $name) => [
                     '@type' => 'AdministrativeArea',

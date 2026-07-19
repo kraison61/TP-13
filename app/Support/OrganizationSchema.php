@@ -81,6 +81,19 @@ class OrganizationSchema
         return self::baseUrl().'/#organization';
     }
 
+    /**
+     * Typed JSON-LD reference for cross-node links (GSC requires @type on references).
+     *
+     * @return array{@type: string, @id: string}
+     */
+    public static function reference(): array
+    {
+        return [
+            '@type' => 'GeneralContractor',
+            '@id' => self::organizationId(),
+        ];
+    }
+
     public static function baseUrl(): string
     {
         return rtrim((string) config('app.url'), '/');
