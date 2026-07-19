@@ -6,7 +6,8 @@
       "mcp__claude-in-chrome__navigate",
       "mcp__claude-in-chrome__tabs_context_mcp",
       "Bash(curl -s http://localhost:8000/)",
-      "Bash(git mv *)"
+      "Bash(git mv *)",
+      "Bash(git commit -m ' *)"
     ]
   }
 }
