@@ -65,17 +65,20 @@ menuBtn?.addEventListener('click', (e) => {
     const open = mobileMenu?.classList.contains('hidden');
     open ? openMobileMenu() : closeMobileMenu();
     menuBtn?.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuBtn?.setAttribute('aria-label', open ? 'ปิดเมนู' : 'เปิดเมนู');
 });
 
 mobileMenuBackdrop?.addEventListener('click', () => {
     closeMobileMenu();
     menuBtn?.setAttribute('aria-expanded', 'false');
+    menuBtn?.setAttribute('aria-label', 'เปิดเมนู');
 });
 
 mobileMenu?.addEventListener('click', (e) => {
     if (e.target.closest('a')) {
         closeMobileMenu();
         menuBtn?.setAttribute('aria-expanded', 'false');
+        menuBtn?.setAttribute('aria-label', 'เปิดเมนู');
     }
 });
 

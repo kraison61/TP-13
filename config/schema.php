@@ -32,6 +32,6 @@ return [
         'height' => 112,
     ],
 
-    'r2_base' => env('AWS_URL', 'https://pub-68154224aa0d447b83de9bf218e76277.r2.dev'),
+    'r2_base' => env('IMG_BASE', env('AWS_URL', 'https://pub-68154224aa0d447b83de9bf218e76277.r2.dev')),
 
 ];

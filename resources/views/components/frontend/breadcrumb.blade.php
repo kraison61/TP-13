@@ -1,6 +1,6 @@
 <!-- ============ BREADCRUMB ============ -->
 <nav
-  aria-label="breadcrumb"
+  aria-label="เส้นทางนำทาง"
   @class([
       'border-b border-line bg-surface' => $bar && ! $embedded,
       $attributes->get('class'),

@@ -32,14 +32,14 @@
     </div>
 </div>
 
-<main class="max-w-6xl mx-auto px-7 py-9 pb-20">
+<div class="max-w-6xl mx-auto px-7 py-9 pb-20">
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="gallery-grid">
         @foreach ($projects as $project)
             <article data-gallery-card data-cat="{{ $project['category'] }}"
                 class="bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 focus-within:outline-2 focus-within:outline-navy-900">
                 <a href="{{ route('frontend.galleries.show', $project['slug']) }}" class="block text-inherit no-underline">
                     <div class="aspect-[4/3] overflow-hidden relative">
-                        <img class="w-full h-full object-cover block" src="{{ $project['image'] }}" alt="{{ $project['alt'] }}" loading="lazy" width="800" height="600" />
+                        <img class="w-full h-full object-cover block" src="{{ $project['image'] }}" alt="{{ $project['alt'] }}" loading="lazy" decoding="async" width="800" height="600" />
                         <div class="absolute inset-0 pointer-events-none" style="background:linear-gradient(to top,rgba(6,44,74,.94),rgba(10,61,98,.5) 40%,transparent 70%)"></div>
                         <div class="absolute bottom-0 left-0 right-0 p-5">
                             <span class="inline-block bg-white/15 backdrop-blur border border-white/20 text-white text-[11px] font-semibold px-2.5 py-1 rounded mb-2 tracking-widest uppercase">{{ $project['category'] }}</span>
@@ -67,5 +67,5 @@
         <p class="text-lg font-medium text-slate-600 mb-1">ไม่พบโครงการในหมวดนี้</p>
         <p class="text-sm">ลองเลือกหมวดหมู่อื่น</p>
     </div>
-</main>
+</div>
 @endsection

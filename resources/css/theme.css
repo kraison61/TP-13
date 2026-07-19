@@ -17,7 +17,10 @@
     --color-hivis:    #ffc83a;
     --color-ink:      #0f1722;
     --color-ink2:     #36475a;
-    --color-muted:    #6a7787;
+    /* #5f6b7a on #fff ≈ 4.77:1, on #f6f8fb ≈ 4.59:1 (was #6a7787 ≈ 4.39:1 on white) */
+    --color-muted:    #5f6b7a;
+    /* #067d3b + #fff ≈ 4.93:1 (LINE brand green; was #06C755 ≈ 2.31:1) */
+    --color-line-green: #067d3b;
     --color-line:     #e3e7ee;
     --color-surface:  #f6f8fb;
     --font-sans: "IBM Plex Sans Thai", "IBM Plex Sans Thai Fallback", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;

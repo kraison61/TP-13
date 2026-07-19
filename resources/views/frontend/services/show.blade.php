@@ -52,11 +52,11 @@
             <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
                 @if ($service->img_1)
                     <img src="{{ Storage::disk('s3')->url($service->img_1) }}?width=900&format=webp&fit=cover"
-                         alt="{{ $service->title }}" width="800" height="1000" loading="eager" fetchpriority="high"
+                         alt="{{ $service->title }}" width="800" height="1000" loading="eager" fetchpriority="high" decoding="async"
                          class="h-full w-full object-cover" />
                 @else
                     <img src="https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop"
-                         alt="{{ $service->title }}" width="800" height="1000" loading="eager" fetchpriority="high"
+                         alt="{{ $service->title }}" width="800" height="1000" loading="eager" fetchpriority="high" decoding="async"
                          class="h-full w-full object-cover" />
                 @endif
                 <div class="absolute inset-x-5 bottom-5 flex items-center gap-4 rounded-xl bg-white/95 backdrop-blur p-4 shadow-xl">
@@ -171,7 +171,7 @@
                    class="group relative block aspect-4/3 overflow-hidden rounded-2xl ring-1 ring-line">
                     <img src="{{ $portfolio->cover_image ?: 'https://images.unsplash.com/photo-1517089596392-fb9a9033e05b?w=900&q=80&auto=format&fit=crop' }}"
                          alt="{{ $portfolio->title }}"
-                         loading="lazy" width="900" height="675"
+                         loading="lazy" decoding="async" width="900" height="675"
                          class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500" />
                     <div class="absolute inset-0 bg-gradient-to-t from-navy-950/85 via-navy-950/15 to-transparent"></div>
                     <div class="absolute inset-0 p-5 flex flex-col justify-end text-white">

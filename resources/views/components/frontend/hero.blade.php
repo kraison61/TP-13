@@ -39,9 +39,9 @@
 
                 <div class="relative">
                     <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
-                        <img src="{{ \App\Support\R2Image::url('images/about/194914_0.jpg', 800) }}"
+                        <img src="{{ \App\Support\R2Image::url('images/about/194914_0.jpg', 600, 'webp', 75) }}"
                              alt="ทีมช่างของ{{ config('company.brand') }}"
-                             width="800" height="1000"
+                             width="600" height="750"
                              fetchpriority="high" loading="eager" decoding="async"
                              class="h-full w-full object-cover">
                         <div class="absolute inset-x-3 sm:inset-x-5 bottom-3 sm:bottom-5 flex items-center gap-3 sm:gap-4 rounded-xl bg-white/95 backdrop-blur p-3 sm:p-4 shadow-xl">
@@ -78,7 +78,7 @@
                 <div class="mt-10 flex flex-wrap gap-3">
                     @foreach ($badges as $badge)
                         <span class="inline-flex items-center gap-2 rounded-full bg-surface ring-1 ring-line px-4 py-2 text-[14px] text-ink2">
-                            <x-icon:name="$badge['icon']" class="text-accent" /> {{ $badge['text'] }}
+                            <x-icon :name="$badge['icon']" class="text-accent" /> {{ $badge['text'] }}
                         </span>
                     @endforeach
                 </div>

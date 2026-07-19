@@ -21,7 +21,7 @@
         </div>
     </div>
 
-    <main class="max-w-6xl mx-auto px-4 sm:px-7 pt-8">
+    <div class="max-w-6xl mx-auto px-4 sm:px-7 pt-8">
         <div class="flex items-center justify-between mb-5 flex-wrap gap-3">
             <h2 class="text-lg font-bold text-navy-900">ภาพโครงการทั้งหมด</h2>
             <span class="text-sm text-muted">คลิกที่ภาพเพื่อขยาย</span>
@@ -34,12 +34,11 @@
                     data-index="{{ $index }}"
                     data-src="{{ $photo['src'] }}"
                     data-caption="{{ $photo['caption'] }}"
-                    aria-label="{{ $photo['caption'] }}"
                     @class([
                         'group relative overflow-hidden rounded-xl cursor-zoom-in bg-slate-200 text-left',
                         $photo['span'],
                     ])>
-                    <img src="{{ $photo['thumb'] }}" alt="{{ $photo['caption'] }}" loading="lazy" width="800" height="600"
+                    <img src="{{ $photo['thumb'] }}" alt="{{ $photo['caption'] }}" loading="lazy" decoding="async" width="800" height="600"
                          class="w-full h-full object-cover block transition duration-500 group-hover:scale-105" />
                     <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-end p-4 bg-linear-to-t from-navy-950/88 via-transparent to-transparent">
                         <p class="text-white text-sm font-medium leading-snug line-clamp-2">{{ $photo['caption'] }}</p>
@@ -47,7 +46,7 @@
                 </button>
             @endforeach
         </div>
-    </main>
+    </div>
 </div>
 
 <dialog id="gallery-lb" class="fixed inset-0 z-50 m-0 h-full max-h-none w-full max-w-none border-0 bg-[rgba(5,15,30,.96)] p-0 backdrop:bg-[rgba(5,15,30,.96)] open:flex open:flex-col open:items-center open:justify-center">

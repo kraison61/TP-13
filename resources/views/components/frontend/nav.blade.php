@@ -2,7 +2,7 @@
 
 <header id="nav" class="top-0 z-50 max-lg:fixed max-lg:inset-x-0 lg:sticky bg-white max-lg:backdrop-blur-none lg:bg-white/90 lg:backdrop-blur-md border-b border-line">
     <nav class="mx-auto max-w-7xl px-4 sm:px-6 h-[68px] flex items-center justify-between gap-2 sm:gap-4" aria-label="เมนูหลัก">
-        <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-3 min-w-0 shrink" aria-label="{{ config('company.brand') }} — หน้าแรก">
+        <a href="{{ route('home') }}" class="flex items-center gap-2 sm:gap-3 min-w-0 shrink">
             <span class="relative grid place-items-center w-10 h-10 rounded-lg bg-navy-900 text-white font-mono font-bold text-sm shrink-0">TP
                 <span class="absolute w-1.5 h-1.5 rounded-[2px] bg-hivis translate-x-3 translate-y-3"></span>
             </span>
@@ -27,7 +27,7 @@
                                         <a href="{{ $child['href'] }}"
                                            class="flex items-center gap-2.5 px-4 py-2.5 text-[14px] hover:bg-surface hover:text-navy-900 transition">
                                             @if ($child['icon'])
-                                                <x-icon:name="$child['icon']" class="text-accent shrink-0" />
+                                                <x-icon :name="$child['icon']" class="text-accent shrink-0" />
                                             @endif
                                             {{ $child['label'] }}
                                         </a>
@@ -43,7 +43,7 @@
                         </div>
                     @else
                         <a href="{{ $item['href'] }}" class="block px-3.5 py-2 rounded-lg hover:text-navy-900 hover:bg-surface transition">
-                            {{ $item['label'] }}@if ($item['icon']) <x-icon:name="$item['icon']" class="text-xs inline-block" />@endif
+                            {{ $item['label'] }}@if ($item['icon']) <x-icon :name="$item['icon']" class="text-xs inline-block" />@endif
                         </a>
                     @endif
                 </li>
@@ -79,7 +79,7 @@
                             @foreach ($item['children'] as $child)
                                 <a href="{{ $child['href'] }}" class="flex items-center gap-2 py-2 pl-3 text-[14px] hover:text-navy-900 transition">
                                     @if ($child['icon'])
-                                        <x-icon:name="$child['icon']" class="text-accent shrink-0" />
+                                        <x-icon :name="$child['icon']" class="text-accent shrink-0" />
                                     @endif
                                     {{ $child['label'] }}
                                 </a>

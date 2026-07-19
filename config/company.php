@@ -4,7 +4,7 @@ return [
     'name' => 'ธีรพงษ์เซอร์วิส จำกัด',
     'legal_name' => 'บริษัท ธีรพงษ์เซอร์วิส จำกัด',
     'brand' => 'ธีรพงษ์เซอร์วิส',
-    'favicon' => 'https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/favicon.png?width=180&format=png',
+    'favicon' => 'images/favicon.png',
     'founder_name' => 'นายธีรพงษ์ สารสุข',
     'founder_title' => 'ผู้ก่อตั้ง',
     'projects_completed' => '100+',

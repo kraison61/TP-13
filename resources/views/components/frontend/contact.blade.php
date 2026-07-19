@@ -115,7 +115,7 @@
                     </div>
 
                     <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer"
-                       class="mt-4 flex items-center justify-center gap-2.5 rounded-xl bg-[#06C755] px-6 py-4 text-lg font-bold text-white shadow-lg shadow-[#06C755]/30 hover:brightness-95 hover:-translate-y-0.5 active:scale-[0.99] transition"><x-icon name="line" class="shrink-0" />
+                       class="mt-4 flex items-center justify-center gap-2.5 rounded-xl bg-line-green px-6 py-4 text-lg font-bold text-white shadow-lg shadow-line-green/30 hover:brightness-95 hover:-translate-y-0.5 active:scale-[0.99] transition"><x-icon name="line" class="shrink-0" />
                         แอด LINE Official ยืนยันสิทธิ์ E-Voucher
                     </a>
                 </div>
@@ -130,8 +130,8 @@
                            class="w-full rounded-xl border border-line px-4 py-3 font-mono tabular-nums outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition">
                 </div>
                 <div class="sm:col-span-1">
-                    <label class="block text-sm font-medium text-navy-900 mb-1.5">ประเภทงาน <span class="text-red-500">*</span></label>
-                    <select name="service" required
+                    <label for="serviceSelect" class="block text-sm font-medium text-navy-900 mb-1.5">ประเภทงาน <span class="text-red-500">*</span></label>
+                    <select name="service" id="serviceSelect" required
                             class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition bg-white">
                         <option value="">เลือกประเภทงาน...</option>
                         @foreach ($services as $service)
@@ -140,7 +140,7 @@
                     </select>
                 </div>
                 <div class="sm:col-span-1">
-                    <label class="block text-sm font-medium text-navy-900 mb-1.5">งบประมาณคร่าวๆ <span class="text-red-500">*</span></label>
+                    <label for="budgetSelect" class="block text-sm font-medium text-navy-900 mb-1.5">งบประมาณคร่าวๆ <span class="text-red-500">*</span></label>
                     <select name="budget" id="budgetSelect" required
                             class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition bg-white">
                         <option value="" disabled selected>โปรดระบุงบประมาณ</option>

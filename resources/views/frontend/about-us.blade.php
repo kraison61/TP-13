@@ -47,7 +47,7 @@
     <div class="relative">
       <div class="relative aspect-4/5 overflow-hidden rounded-2xl shadow-2xl shadow-navy-900/30">
         <!-- TODO: เปลี่ยนเป็นรูปจริงของผู้ก่อตั้งข้างรถแบคโฮ/หน้างาน — รูปจริง 1 รูปสร้างความไว้ใจมากกว่าข้อความ 10 ย่อหน้า -->
-        <img src="{{ \App\Support\R2Image::url('images/about/194911_0.jpg', 800) }}" alt="{{ config('company.founder_name') }} ผู้ก่อตั้งธีรพงษ์เซอร์วิส" width="800" height="1000" fetchpriority="high" class="h-full w-full object-cover" />
+        <img src="{{ \App\Support\R2Image::url('images/about/194911_0.jpg', 800) }}" alt="{{ config('company.founder_name') }} ผู้ก่อตั้งธีรพงษ์เซอร์วิส" width="800" height="1000" fetchpriority="high" decoding="async" class="h-full w-full object-cover" />
         <div class="absolute inset-0 bg-gradient-to-t from-navy-950/60 via-transparent to-transparent"></div>
         <div class="absolute inset-x-5 bottom-5 flex items-center gap-4 rounded-xl bg-white/95 backdrop-blur p-4 shadow-xl">
           <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><x-icon name="patch-check-fill" /></span>
@@ -129,7 +129,7 @@
       <p class="mt-4 text-[16px] text-ink2 leading-relaxed">เพราะผมเริ่มจากศูนย์ คลุกคลีกับเครื่องจักรและหน้างานจริงมา {{ config('company.experience_years') }} ปี ผมจึงรู้ทันทุกปัญหาโครงสร้าง รู้ว่าตรงไหนมักถูกหมกเม็ด — และนั่นคือเหตุผลที่ผมกล้าการันตีว่า <strong class="text-navy-900">ปัญหาเหล่านั้นจะไม่เกิดขึ้นในบ้านของคุณ</strong></p>
       <div class="mt-8 flex items-center gap-4 p-5 rounded-2xl bg-surface border border-line">
         <!-- TODO: เปลี่ยนเป็นรูปถ่ายจริงของผู้ก่อตั้ง -->
-        <img src="{{ \App\Support\R2Image::url('images/about/TP.jpg', 112) }}" alt="{{ config('company.founder_name') }}" width="56" height="56" loading="lazy" class="w-14 h-14 rounded-xl object-cover shrink-0" />
+        <img src="{{ \App\Support\R2Image::url('images/about/TP.jpg', 112) }}" alt="{{ config('company.founder_name') }}" width="56" height="56" loading="lazy" decoding="async" class="w-14 h-14 rounded-xl object-cover shrink-0" />
         <div>
           <div class="font-bold text-navy-900">{{ config('company.founder_name') }}</div>
           <div class="text-[14px] text-muted mt-0.5">{{ config('company.founder_title') }} {{ config('company.name') }}</div>
@@ -222,7 +222,7 @@
     <div class="grid lg:grid-cols-5 gap-0">
       <div class="lg:col-span-2 relative aspect-4/3 lg:aspect-auto overflow-hidden">
         <!-- TODO: เปลี่ยนเป็นรูปจริงของผู้ก่อตั้ง (ถ้ามีรูปเก่าสมัยขับแบคโฮ + รูปปัจจุบัน จะทรงพลังมาก) -->
-        <img src="{{ \App\Support\R2Image::url('images/about/family-01.webp', 800) }}" alt="{{ config('company.founder_name') }}" width="800" height="600" loading="lazy" class="absolute inset-0 w-full h-full object-cover" />
+        <img src="{{ \App\Support\R2Image::url('images/about/family-01.webp', 800) }}" alt="{{ config('company.founder_name') }}" width="800" height="600" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover" />
       </div>
       <div class="lg:col-span-3 p-8 lg:p-10 flex flex-col justify-center">
         <span class="inline-block rounded-full bg-hivis/15 text-accent text-xs font-bold tracking-widest px-3 py-1 mb-4 self-start">{{ config('company.founder_title') }}</span>

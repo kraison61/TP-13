@@ -16,10 +16,10 @@
     @if ($blog->cover_image)
         <div class="mt-8 rounded-2xl overflow-hidden ring-1 ring-line aspect-[3/2]">
             @if (str_starts_with($blog->cover_image, 'http'))
-                <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" width="1200" height="800" loading="eager" fetchpriority="high" class="w-full h-full object-cover">
+                <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" width="1200" height="800" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover">
             @else
                 <img src="{{ Storage::disk('s3')->url($blog->cover_image) }}?width=1200&format=webp&fit=cover"
-                     alt="{{ $blog->title }}" width="1200" height="800" loading="eager" fetchpriority="high" class="w-full h-full object-cover">
+                     alt="{{ $blog->title }}" width="1200" height="800" loading="eager" fetchpriority="high" decoding="async" class="w-full h-full object-cover">
             @endif
         </div>
     @endif

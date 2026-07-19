@@ -8,8 +8,8 @@
     $twitter = $seo['twitter'] ?? [];
 @endphp
 
-<link rel="icon" href="{{ config('company.favicon') }}" type="image/png" sizes="180x180">
-<link rel="apple-touch-icon" href="{{ config('company.favicon') }}">
+<link rel="icon" href="{{ \App\Support\R2Image::url(config('company.favicon'), 180, 'png') }}" type="image/png" sizes="180x180">
+<link rel="apple-touch-icon" href="{{ \App\Support\R2Image::url(config('company.favicon'), 180, 'png') }}">
 
 <title>{{ $seoTitle }}</title>
 <meta name="description" content="{{ $seoDescription }}">

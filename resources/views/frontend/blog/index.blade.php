@@ -9,17 +9,17 @@
     :badges="$hero['badges'] ?? []"
 />
 
-<main class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24">
+<div class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-24">
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         @foreach ($blogs as $blog)
             <a href="{{ route('blog.show', $blog->slug) }}"
                class="group block rounded-2xl overflow-hidden ring-1 ring-line bg-white hover:shadow-lg transition">
                 @if ($blog->cover_image)
                     @if (str_starts_with($blog->cover_image, 'http'))
-                        <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" loading="lazy" width="600" height="450" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
+                        <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" loading="lazy" decoding="async" width="600" height="450" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
                     @else
                         <img src="{{ Storage::disk('s3')->url($blog->cover_image) }}?width=600&format=webp&fit=cover"
-                             alt="{{ $blog->title }}" loading="lazy" width="600" height="450" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
+                             alt="{{ $blog->title }}" loading="lazy" decoding="async" width="600" height="450" class="aspect-4/3 w-full object-cover group-hover:scale-105 transition duration-500">
                     @endif
                 @endif
                 <div class="p-5">
@@ -36,5 +36,5 @@
     <div class="mt-12">
         {{ $blogs->links() }}
     </div>
-</main>
+</div>
 @endsection

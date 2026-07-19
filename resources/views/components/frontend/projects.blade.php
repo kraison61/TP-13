@@ -19,16 +19,16 @@
                    class="group relative block aspect-4/3 overflow-hidden rounded-2xl ring-1 ring-line transition duration-300">
                     @if ($blog->cover_image)
                         @if (str_starts_with($blog->cover_image, 'http'))
-                            <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" loading="lazy"
+                            <img src="{{ $blog->cover_image }}" alt="{{ $blog->title }}" loading="lazy" decoding="async"
                                  width="900" height="675"
                                  class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500">
                         @else
                             <img src="{{ Storage::disk('s3')->url($blog->cover_image) }}?width=900&format=webp&fit=cover"
-                                 alt="{{ $blog->title }}" loading="lazy" width="900" height="675"
+                                 alt="{{ $blog->title }}" loading="lazy" decoding="async" width="900" height="675"
                                  class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500">
                         @endif
                     @else
-                        <img src="{{ $fallbackImage }}" alt="{{ $blog->title }}" loading="lazy"
+                        <img src="{{ $fallbackImage }}" alt="{{ $blog->title }}" loading="lazy" decoding="async"
                              width="900" height="675"
                              class="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition duration-500">
                     @endif

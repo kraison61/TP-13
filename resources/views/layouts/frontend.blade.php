@@ -2,30 +2,24 @@
 <!doctype html>
 <html lang="th" class="scroll-smooth">
 <head>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     @include('partials.seo-head')
-    <link rel="preconnect" href="https://pub-68154224aa0d447b83de9bf218e76277.r2.dev" crossorigin>
-    @if (request()->routeIs('home'))
-    <link rel="preload" as="image"
-          href="{{ \App\Support\R2Image::url('images/about/194914_0.jpg', 800) }}"
-          fetchpriority="high">
-    @endif
     @php
-        $fontsUrl = 'https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@400;600;700&family=IBM+Plex+Sans:wght@500;600;700&display=swap';
-        $thaiFontWoff2 = 'https://fonts.gstatic.com/s/ibmplexsansthai/v11/m8JPje1VVIzcq1HzJq2AEdo2Tj_qvLqMHdYgVcM.woff2';
+        $imgBase = rtrim((string) config('schema.r2_base'), '/');
         $criticalCss = \App\Support\CriticalCss::contents();
     @endphp
-    @if ($criticalCss !== '')
-    <link rel="stylesheet" href="{{ asset('build/critical.css') }}">
+    <link rel="preconnect" href="{{ $imgBase }}" crossorigin>
+    @if (request()->routeIs('home'))
+    <link rel="preload" as="image"
+          href="{{ \App\Support\R2Image::url('images/about/194914_0.jpg', 600, 'webp', 75) }}"
+          fetchpriority="high">
     @endif
-    <link rel="preload" as="font" type="font/woff2" href="{{ $thaiFontWoff2 }}" crossorigin>
-    <link rel="preload" as="style" href="{{ $fontsUrl }}">
-    <link rel="stylesheet" href="{{ $fontsUrl }}" media="print" onload="this.media='all'">
-    <noscript><link rel="stylesheet" href="{{ $fontsUrl }}"></noscript>
+    @if ($criticalCss !== '')
+    <style>{!! $criticalCss !!}</style>
+    @endif
+    <link rel="preload" href="{{ asset('fonts/ibm-plex-sans-thai-400-thai.woff2') }}" as="font" type="font/woff2" crossorigin>
+    <link rel="stylesheet" href="{{ asset('fonts/fonts.css') }}">
     @vite('resources/js/app.js')
     <link rel="preload" href="{{ Vite::asset('resources/css/app.css') }}" as="style" onload="this.onload=null;this.rel='stylesheet'">
     <noscript><link rel="stylesheet" href="{{ Vite::asset('resources/css/app.css') }}"></noscript>
@@ -40,6 +34,8 @@
 
     {{-- ============ NAV ============ --}}
     <x-frontend.nav />
+
+    <main id="main-content">
     {{-- ============ BREADCRUMB ============ --}}
     @empty($hideLayoutBreadcrumb)
         <x-frontend.breadcrumb
@@ -48,13 +44,14 @@
             :parents="$breadcrumbParents ?? []"
         />
     @endempty
-@yield('content')
+    @yield('content')
 
-{{-- ============ FINANCE ============ --}}
-<x-frontend.finance />
+    {{-- ============ FINANCE ============ --}}
+    <x-frontend.finance />
 
-{{-- ============ CONTACT ============ --}}
-<x-frontend.contact />
+    {{-- ============ CONTACT ============ --}}
+    <x-frontend.contact />
+    </main>
 
 {{-- ============ FOOTER ============ --}}
 <x-frontend.footer />
