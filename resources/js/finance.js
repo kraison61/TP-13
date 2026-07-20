@@ -1,7 +1,7 @@
 import { initCarousel } from './lib/carousel.js';
 
 const icon = (name, className = 'icon') =>
-    `<svg class="${className}" viewBox="0 0 16 16" aria-hidden="true"><use href="#icon-${name}"/></svg>`;
+    `<svg class="${className}" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><use href="#icon-${name}"/></svg>`;
 
 const escapeHtml = (value) => String(value)
     .replaceAll('&', '&amp;')

@@ -26,3 +26,13 @@
     --font-sans: "IBM Plex Sans Thai", "IBM Plex Sans Thai Fallback", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
     --font-mono: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
 }
+
+.icon {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    flex-shrink: 0;
+    vertical-align: -0.125em;
+    max-width: none;
+    fill: currentColor;
+}
