@@ -6,9 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Service;
 use App\Models\ServiceCategory;
 use App\Support\ServiceContentTransformer;
+use App\Support\UploadedImageStorage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Validation\Rule;
+use Illuminate\Validation\ValidationException;
 
 class ServiceController extends Controller
 {
@@ -29,11 +32,12 @@ class ServiceController extends Controller
     public function store(Request $request): JsonResponse
     {
         $data = $this->validateService($request);
+        $slug = $data['slug'];
 
         $service = Service::create([
             'service_category_id' => $data['service_category_id'],
             'title' => $data['title'],
-            'slug' => $data['slug'],
+            'slug' => $slug,
             'h1' => $data['h1'] ?? null,
             'icon_name' => $data['icon_name'] ?? null,
             'dur' => $data['dur'] ?? null,
@@ -43,8 +47,8 @@ class ServiceController extends Controller
                 : null,
             'meta_title' => $data['meta_title'] ?? null,
             'meta_des' => $data['meta_des'] ?? null,
-            'img_1' => $data['img_1'] ?? null,
-            'img_2' => $data['img_2'] ?? null,
+            'img_1' => $this->resolveImagePath($request, 'img_1_file', 'img_1', "{$slug}-img1"),
+            'img_2' => $this->resolveImagePath($request, 'img_2_file', 'img_2', "{$slug}-img2"),
             'is_active' => $data['is_active'] ?? true,
         ]);
 
@@ -59,11 +63,12 @@ class ServiceController extends Controller
     public function update(Request $request, Service $service): JsonResponse
     {
         $data = $this->validateService($request, $service->id);
+        $slug = $data['slug'];
 
         $service->update([
             'service_category_id' => $data['service_category_id'],
             'title' => $data['title'],
-            'slug' => $data['slug'],
+            'slug' => $slug,
             'h1' => $data['h1'] ?? null,
             'icon_name' => $data['icon_name'] ?? null,
             'dur' => $data['dur'] ?? null,
@@ -73,8 +78,8 @@ class ServiceController extends Controller
                 : null,
             'meta_title' => $data['meta_title'] ?? null,
             'meta_des' => $data['meta_des'] ?? null,
-            'img_1' => $data['img_1'] ?? null,
-            'img_2' => $data['img_2'] ?? null,
+            'img_1' => $this->resolveImagePath($request, 'img_1_file', 'img_1', "{$slug}-img1", $service->img_1),
+            'img_2' => $this->resolveImagePath($request, 'img_2_file', 'img_2', "{$slug}-img2", $service->img_2),
             'is_active' => $data['is_active'] ?? true,
         ]);
 
@@ -95,7 +100,7 @@ class ServiceController extends Controller
 
     private function validateService(Request $request, ?int $ignoreId = null): array
     {
-        return $request->validate([
+        $data = $request->validate([
             'service_category_id' => ['required', 'exists:service_categories,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => [
@@ -113,8 +118,49 @@ class ServiceController extends Controller
             'meta_des' => ['nullable', 'string', 'max:500'],
             'img_1' => ['nullable', 'string', 'max:255'],
             'img_2' => ['nullable', 'string', 'max:255'],
+            'img_1_file' => ['nullable', 'image', 'max:2048'],
+            'img_2_file' => ['nullable', 'image', 'max:2048'],
             'is_active' => ['nullable', 'boolean'],
         ]);
+
+        if (array_key_exists('is_active', $data)) {
+            $data['is_active'] = filter_var($data['is_active'], FILTER_VALIDATE_BOOLEAN);
+        }
+
+        return $data;
+    }
+
+    private function resolveImagePath(
+        Request $request,
+        string $fileKey,
+        string $pathKey,
+        string $slug,
+        ?string $current = null,
+    ): ?string {
+        $uploaded = $request->file($fileKey);
+
+        if ($uploaded) {
+            if (! $uploaded->isValid()) {
+                $maxKb = (int) round(UploadedFile::getMaxFilesize() / 1024);
+                throw ValidationException::withMessages([
+                    $fileKey => "อัปโหลดรูปไม่สำเร็จ (รหัส {$uploaded->getError()}) — ขนาดสูงสุดประมาณ {$maxKb} KB",
+                ]);
+            }
+
+            return UploadedImageStorage::store(
+                $uploaded,
+                $slug,
+                'images/services'
+            );
+        }
+
+        $path = $request->input($pathKey);
+
+        if (filled($path)) {
+            return $path;
+        }
+
+        return $current;
     }
 
     private function formatService(Service $service): array

@@ -66,14 +66,17 @@
 
     <!-- User -->
     <div style="padding:10px 8px;border-top:1px solid rgba(255,255,255,.08);">
-      <div style="display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:12px;cursor:pointer;transition:background .15s;" onmouseover="this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.background='transparent'">
-        <div style="width:32px;height:32px;border-radius:50%;background:#ffc83a;display:grid;place-items:center;color:#071a2c;font-weight:700;font-size:13px;flex-shrink:0;">T</div>
-        <div style="flex:1;min-width:0;">
-          <div style="color:#fff;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Admin</div>
-          <div style="color:rgba(255,255,255,.35);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">work@theeraphong.co.th</div>
-        </div>
-        <i class="bi bi-box-arrow-right" style="color:rgba(255,255,255,.25);font-size:14px;"></i>
-      </div>
+      <form method="POST" action="{{ route('logout') }}">
+        @csrf
+        <button type="submit" title="ออกจากระบบ" style="width:100%;display:flex;align-items:center;gap:10px;padding:10px 10px;border-radius:12px;cursor:pointer;transition:background .15s;background:transparent;border:none;text-align:left;font:inherit;" onmouseover="this.style.background='rgba(255,255,255,.05)'" onmouseout="this.style.background='transparent'">
+          <div style="width:32px;height:32px;border-radius:50%;background:#ffc83a;display:grid;place-items:center;color:#071a2c;font-weight:700;font-size:13px;flex-shrink:0;">{{ mb_substr(auth()->user()->name, 0, 1) }}</div>
+          <div style="flex:1;min-width:0;">
+            <div style="color:#fff;font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ auth()->user()->name }}</div>
+            <div style="color:rgba(255,255,255,.35);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">{{ auth()->user()->email }}</div>
+          </div>
+          <i class="bi bi-box-arrow-right" style="color:rgba(255,255,255,.25);font-size:14px;"></i>
+        </button>
+      </form>
     </div>
   </aside>
 
@@ -147,22 +150,7 @@ let DB = {
     {id:5,title:'รีวิว: โครงการกำแพงกันดินบางบัวทอง 64 เมตร',               cat:'กรณีศึกษา',    author:'ธีรพงษ์', date:'2026-04-28',status:'published',views:432},
     {id:6,title:'เตรียมพื้นที่ก่อนสร้างบ้าน: ถมดิน บดอัด ระดับได้มาตรฐาน', cat:'เทคนิคก่อสร้าง',author:'ทีมงาน',  date:'2026-04-10',status:'draft',    views:0},
   ],
-  images:[
-    {id:1,name:'project-wall-bangbuathong.jpg',  size:'2.4 MB',date:'2026-06-15',tag:'กำแพงกันดิน',src:'1590725140246-20acdee442be'},
-    {id:2,name:'project-fence-rachapreuk.jpg',   size:'1.8 MB',date:'2026-06-01',tag:'รั้วบ้าน',    src:'1558618666-fcd25c85cd64'},
-    {id:3,name:'project-road-pathumthani.jpg',   size:'3.1 MB',date:'2026-05-20',tag:'ถนน',          src:'1518709268805-4e9042af9f23'},
-    {id:4,name:'project-slab-nonthaburi.jpg',    size:'1.5 MB',date:'2026-05-10',tag:'ลานคอนกรีต',  src:'1604719312566-8912e9227c6a'},
-    {id:5,name:'project-wall-bangyang.jpg',      size:'2.9 MB',date:'2026-04-28',tag:'กำแพงกันดิน',src:'1517089596392-fb9a9033e05b'},
-    {id:6,name:'project-drain-ladkrabang.jpg',   size:'1.2 MB',date:'2026-04-15',tag:'ระบายน้ำ',    src:'1581094288338-2314dddb7ece'},
-    {id:7,name:'hero-team.jpg',                  size:'4.2 MB',date:'2026-03-20',tag:'ทีมงาน',      src:'1503387762-592deb58ef4e'},
-    {id:8,name:'project-fence-nawanakorn.jpg',   size:'2.0 MB',date:'2026-03-10',tag:'รั้วบ้าน',    src:'1486718448742-163732cd1544'},
-  ],
-  users:[
-    {id:1,name:'ธีรพงษ์ รักษาดี',     email:'work@theeraphong.co.th',        role:'owner', status:'active',  lastLogin:'2026-07-01', period:'2008-01 – ปัจจุบัน'},
-    {id:2,name:'สมชาย ภักดี',          email:'somchai@theeraphong.co.th',     role:'admin', status:'active',  lastLogin:'2026-06-30', period:'2019-06 – ปัจจุบัน'},
-    {id:3,name:'ปรียา วงศ์เจริญ',      email:'priya@theeraphong.co.th',       role:'editor',status:'active',  lastLogin:'2026-06-28', period:'2022-03 – ปัจจุบัน'},
-    {id:4,name:'กชกร เลิศมงคล',        email:'kotchakorn@theeraphong.co.th',  role:'viewer',status:'inactive',lastLogin:'2026-06-01', period:'2023-09 – 2026-05'},
-  ],
+  users:[],
   quotes:[
     {id:1,name:'คุณมานพ ใจดี',       phone:'081-234-5678',service:'กำแพงกันดิน',budget:'500k–1M',  date:'2026-07-01',status:'new'},
     {id:2,name:'คุณวีระชัย สุขใจ',   phone:'089-876-5432',service:'รั้วบ้าน',    budget:'100k–500k',date:'2026-06-30',status:'contacted'},
@@ -174,12 +162,12 @@ let DB = {
 
 /* ══════════════ NAV ══════════════ */
 const NAV = [
-  {id:'dashboard',icon:'bi-grid-1x2-fill',  label:'Dashboard',   bread:'Overview'},
-  {id:'services', icon:'bi-bricks',          label:'Services',    bread:'Content'},
-  {id:'prices',   icon:'bi-tag-fill',        label:'Service Prices',bread:'Content'},
-  {id:'blog',     icon:'bi-newspaper',       label:'Blog Posts',  bread:'Content'},
-  {id:'images',   icon:'bi-images',          label:'Images',      bread:'Media'},
-  {id:'users',    icon:'bi-people-fill',     label:'Users',       bread:'Settings'},
+  {id:'dashboard', icon:'bi-grid-1x2-fill',  label:'Dashboard',   bread:'Overview'},
+  {id:'categories',icon:'bi-folder-fill',    label:'Categories',  bread:'Content'},
+  {id:'services',  icon:'bi-bricks',          label:'Services',    bread:'Content'},
+  {id:'prices',    icon:'bi-tag-fill',        label:'Service Prices',bread:'Content'},
+  {id:'blog',      icon:'bi-newspaper',       label:'Blog Posts',  bread:'Content'},
+  {id:'users',     icon:'bi-people-fill',     label:'Users',       bread:'Settings'},
 ];
 let currentPage = 'dashboard';
 
@@ -205,10 +193,15 @@ function navigate(page){
   document.getElementById('headerTitle').textContent = n.label;
   document.getElementById('searchInput').value = '';
   renderNav();
+  if(page === 'categories'){
+    loadCategories()
+      .then(() => renderCategories())
+      .catch(err => { toast(err.message); });
+    return;
+  }
   if(page === 'services'){
     loadServices()
-      .then(() => ({dashboard:renderDashboard,services:renderServices,prices:renderPrices,
-        blog:renderBlog,images:renderImages,users:renderUsers})[page]())
+      .then(() => renderServices())
       .catch(err => { toast(err.message); });
     return;
   }
@@ -218,43 +211,130 @@ function navigate(page){
       .catch(err => { toast(err.message); });
     return;
   }
-  ({dashboard:renderDashboard,services:renderServices,prices:renderPrices,
-    blog:renderBlog,images:renderImages,users:renderUsers})[page]();
+  if(page === 'users'){
+    loadUsers()
+      .then(() => renderUsers())
+      .catch(err => { toast(err.message); });
+    return;
+  }
+  ({dashboard:renderDashboard,categories:renderCategories,services:renderServices,prices:renderPrices,
+    blog:renderBlog,users:renderUsers})[page]();
 }
 
 function handleSearch(q){
-  if(currentPage==='services') renderServices(q);
+  if(currentPage==='categories') renderCategories(q);
+  else if(currentPage==='services') renderServices(q);
   else if(currentPage==='prices') loadServicePrices(q).then(() => renderPrices()).catch(err => toast(err.message));
   else if(currentPage==='blog') renderBlog(q);
-  else if(currentPage==='users') renderUsers(q);
+  else if(currentPage==='users') loadUsers(q).then(() => renderUsers()).catch(err => toast(err.message));
 }
 
-/* ══════════════ API ══════════════ */
+/* ══════════════ API (relative paths — same host/port as admin page) ══════════════ */
 const API = {
-  services: @json(route('admin.api.services.index')),
-  service: id => @json(url('/admin/api/services')) + '/' + id,
-  servicePrices: @json(route('admin.api.service-prices.index')),
-  servicePrice: id => @json(url('/admin/api/service-prices')) + '/' + id,
+  categories: '/admin/api/categories',
+  category: id => `/admin/api/categories/${id}`,
+  services: '/admin/api/services',
+  service: id => `/admin/api/services/${id}`,
+  servicePrices: '/admin/api/service-prices',
+  servicePrice: id => `/admin/api/service-prices/${id}`,
+  users: '/admin/api/users',
+  user: id => `/admin/api/users/${id}`,
 };
+const AUTH_USER_ID = {{ (int) auth()->id() }};
 
 function csrfToken(){ return document.querySelector('meta[name="csrf-token"]').content; }
 
 async function apiFetch(url, opts = {}){
   const res = await fetch(url, {
+    credentials: 'same-origin',
     headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
       'X-CSRF-TOKEN': csrfToken(),
+      'X-Requested-With': 'XMLHttpRequest',
       ...(opts.headers || {}),
     },
     ...opts,
   });
-  const data = await res.json().catch(() => ({}));
+  return parseJsonResponse(res);
+}
+
+async function parseJsonResponse(res){
+  const text = await res.text();
+  let data = {};
+  try { data = text ? JSON.parse(text) : {}; } catch (_) {}
   if(!res.ok){
-    const msg = data.message || Object.values(data.errors || {}).flat().join(', ') || 'เกิดข้อผิดพลาด';
+    const msg = data.message || Object.values(data.errors || {}).flat().join(', ') || `เกิดข้อผิดพลาด (${res.status})`;
     throw new Error(msg);
   }
+  if(!text || typeof data !== 'object' || Array.isArray(data)){
+    throw new Error('เซิร์ฟเวอร์ตอบไม่ใช่ JSON — ลอง refresh / login ใหม่');
+  }
   return data;
+}
+
+async function apiForm(url, method, formData){
+  formData.append('_token', csrfToken());
+  if(method === 'PUT'){
+    formData.append('_method', 'PUT');
+    method = 'POST';
+  }
+  const res = await fetch(url, {
+    method,
+    credentials: 'same-origin',
+    headers: {
+      'Accept': 'application/json',
+      'X-CSRF-TOKEN': csrfToken(),
+      'X-Requested-With': 'XMLHttpRequest',
+    },
+    body: formData,
+  });
+  return parseJsonResponse(res);
+}
+
+function fieldValue(form, name){
+  const el = form.elements.namedItem(name);
+  if(!el) return '';
+  return el.value ?? '';
+}
+
+function buildServiceFormData(form){
+  const fd = new FormData();
+  fd.append('service_category_id', fieldValue(form, 'service_category_id'));
+  fd.append('title', fieldValue(form, 'name'));
+  fd.append('slug', fieldValue(form, 'slug'));
+  fd.append('h1', fieldValue(form, 'h1'));
+  fd.append('icon_name', fieldValue(form, 'icon'));
+  fd.append('dur', fieldValue(form, 'dur'));
+  fd.append('description', fieldValue(form, 'desc'));
+  fd.append('content', fieldValue(form, 'content'));
+  fd.append('meta_title', fieldValue(form, 'meta_title'));
+  fd.append('meta_des', fieldValue(form, 'meta_des'));
+  const img1Path = fieldValue(form, 'img_1');
+  const img2Path = fieldValue(form, 'img_2');
+  if(img1Path) fd.append('img_1', img1Path);
+  if(img2Path) fd.append('img_2', img2Path);
+  const img1 = form.querySelector('[name="img_1_file"]');
+  const img2 = form.querySelector('[name="img_2_file"]');
+  const maxBytes = 2 * 1024 * 1024;
+  if(img1?.files?.[0]){
+    if(img1.files[0].size > maxBytes) throw new Error('รูปหลักใหญ่เกิน 2 MB');
+    fd.append('img_1_file', img1.files[0]);
+  }
+  if(img2?.files?.[0]){
+    if(img2.files[0].size > maxBytes) throw new Error('รูปรองใหญ่เกิน 2 MB');
+    fd.append('img_2_file', img2.files[0]);
+  }
+  const status = fieldValue(form, 'status');
+  fd.append('is_active', status === 'inactive' ? '0' : '1');
+  return fd;
+}
+
+async function loadCategories(q = ''){
+  const url = new URL(API.categories, window.location.origin);
+  if(q) url.searchParams.set('q', q);
+  const data = await apiFetch(url);
+  DB.categories = data.categories;
 }
 
 async function loadServices(){
@@ -270,6 +350,13 @@ async function loadServicePrices(q = ''){
   DB.servicePrices = data.prices;
   DB.priceServices = data.services;
   DB.priceTypes = data.price_types;
+}
+
+async function loadUsers(q = ''){
+  const url = new URL(API.users, window.location.origin);
+  if(q) url.searchParams.set('q', q);
+  const data = await apiFetch(url);
+  DB.users = data.users;
 }
 
 function pricePayload(d){
@@ -307,29 +394,12 @@ function priceTypeField(data = {}){
   return `<select name="price_type" required style="width:100%;border-radius:10px;border:1px solid #e3e7ee;padding:9px 12px;font-size:14px;outline:none;font-family:inherit;background:#fff;">${opts}</select>`;
 }
 
-function servicePayload(d, isEdit = false){
-  const payload = {
-    service_category_id: Number(d.service_category_id),
-    title: d.name,
-    slug: d.slug,
-    h1: d.h1 || null,
-    icon_name: d.icon || null,
-    dur: d.dur || null,
-    description: d.desc || null,
-    content: d.content || null,
-    meta_title: d.meta_title || null,
-    meta_des: d.meta_des || null,
-    img_1: d.img_1 || null,
-    img_2: d.img_2 || null,
-    is_active: (d.status || 'active') !== 'inactive',
-  };
-  return payload;
-}
-
 const SERVICE_FORM_FIELDS = [
   {n:'service_category_id', l:'หมวดหมู่', t:'cat', r:true},
   {n:'name', l:'ชื่อบริการ (title)', t:'text', r:true},
   {n:'slug', l:'Slug (EN)', t:'text', r:true, ph:'building-demolish'},
+  {n:'img_1', l:'รูปหลัก (img_1)', t:'image'},
+  {n:'img_2', l:'รูปรอง (img_2)', t:'image'},
   {n:'h1', l:'H1 หน้าเว็บ', t:'text', ph:'หัวข้อแสดงบนหน้าบริการ'},
   {n:'icon', l:'Bootstrap Icon', t:'text', ph:'bi-bricks'},
   {n:'dur', l:'ระยะเวลา', t:'text', ph:'14–30 วัน'},
@@ -337,8 +407,6 @@ const SERVICE_FORM_FIELDS = [
   {n:'content', l:'เนื้อหา (HTML content)', t:'area-lg', ph:'<p>เนื้อหาหน้าบริการ...</p>'},
   {n:'meta_title', l:'Meta Title (SEO)', t:'text'},
   {n:'meta_des', l:'Meta Description (SEO)', t:'area'},
-  {n:'img_1', l:'รูปหลัก (img_1)', t:'text', ph:'images/services/xxx.webp'},
-  {n:'img_2', l:'รูปรอง (img_2)', t:'text'},
 ];
 
 function categoryField(data = {}){
@@ -363,8 +431,8 @@ const STATUS_STYLE = {
   won:       'background:#ecfdf5;color:#065f46',
 };
 const STATUS_LABEL = {active:'Active',published:'Published',draft:'Draft',inactive:'Inactive',new:'New',contacted:'Contacted',quoted:'Quoted',won:'Won'};
-const ROLE_STYLE = {owner:'background:#071a2c;color:#ffc83a',admin:'background:#0a3d62;color:#fff',editor:'background:#e3e7ee;color:#36475a',viewer:'background:#f6f8fb;color:#6a7787;border:1px solid #e3e7ee'};
-const ROLE_LABEL = {owner:'Owner',admin:'Admin',editor:'Editor',viewer:'Viewer'};
+const ROLE_STYLE = {admin:'background:#0a3d62;color:#fff',customer:'background:#f6f8fb;color:#6a7787;border:1px solid #e3e7ee'};
+const ROLE_LABEL = {admin:'Admin',customer:'Customer'};
 
 function pill(status){ return `<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;${STATUS_STYLE[status]||''}">${STATUS_LABEL[status]||status}</span>`; }
 function role(r){ return `<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;${ROLE_STYLE[r]||''}">${ROLE_LABEL[r]||r}</span>`; }
@@ -399,7 +467,7 @@ function renderDashboard(){
   const stats = [
     {icon:'bi-bricks',        val:DB.services.filter(s=>s.status==='active').length, label:'Active Services',    bg:'rgba(10,61,98,.07)', ic:'#0a3d62'},
     {icon:'bi-newspaper',     val:DB.blog.filter(b=>b.status==='published').length,  label:'Published Posts',   bg:'rgba(5,150,105,.07)',ic:'#059669'},
-    {icon:'bi-images',        val:DB.images.length,                                  label:'Images',             bg:'rgba(124,58,237,.07)',ic:'#7c3aed'},
+    {icon:'bi-images',        val:DB.services.filter(s=>s.img_1||s.img_2).length, label:'Services with images', bg:'rgba(124,58,237,.07)',ic:'#7c3aed'},
     {icon:'bi-envelope-open', val:DB.quotes.filter(q=>q.status==='new').length,      label:'New Quote Requests', bg:'rgba(217,119,6,.07)',ic:'#d97706'},
   ];
 
@@ -458,11 +526,99 @@ function renderDashboard(){
     </div>`;
 }
 
+/* ══════════════ CATEGORIES ══════════════ */
+const CATEGORY_FORM_FIELDS = [
+  {n:'name', l:'ชื่อหมวดหมู่', t:'text', r:true, ph:'งานโครงสร้าง'},
+  {n:'slug', l:'Slug (EN)', t:'text', r:true, ph:'structure'},
+];
+
+function renderCategories(q=''){
+  const list = q
+    ? DB.categories.filter(c => (c.name||'').includes(q) || (c.slug||'').includes(q))
+    : DB.categories;
+  const rows = list.map(c=>`
+    <tr>
+      <td style="padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          ${iconBox('bi-folder-fill')}
+          <div>
+            <div style="font-weight:600;font-size:14px;color:#071a2c;">${c.name}</div>
+            <div style="font-size:11px;color:#6a7787;font-family:monospace;">#${c.id}</div>
+          </div>
+        </div>
+      </td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;font-family:monospace;">${c.slug}</td>
+      <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#071a2c;font-family:monospace;">${c.services_count ?? 0}</td>
+      <td style="padding:12px 16px;">
+        <div style="display:flex;gap:6px;">
+          ${actionBtn('bi-pencil','#3b82f6',`editCategory(${c.id})`)}
+          ${actionBtn('bi-trash3','#ef4444',`deleteItem('categories',${c.id},'${escAttr(c.name)}')`)}
+        </div>
+      </td>
+    </tr>`).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div style="padding:24px;">
+      ${pageHdr('Categories',`${DB.categories.length} หมวดหมู่บริการ`,'+ เพิ่มหมวดหมู่','addCategory()')}
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px 16px;font-size:13px;color:#92400e;display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+        <i class="bi bi-info-circle"></i>
+        ไม่สามารถลบหมวดหมู่ที่มีบริการอยู่ได้ — ย้ายหรือลบบริการออกก่อน
+      </div>
+      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:640px;">
+        ${tHead('หมวดหมู่','Slug','จำนวนบริการ','Actions')}
+        <tbody>${rows || `<tr><td colspan="4" style="padding:28px 16px;text-align:center;color:#6a7787;font-size:14px;">ยังไม่มีหมวดหมู่</td></tr>`}</tbody>
+      </table></div>`)}
+    </div>`;
+}
+
+function addCategory(){
+  openModal('Add Category',{},CATEGORY_FORM_FIELDS, async d=>{
+    try{
+      const res = await apiFetch(API.categories, {method:'POST', body:JSON.stringify({name:d.name, slug:d.slug})});
+      DB.categories.push(res.category);
+      renderCategories();
+      toast(res.message);
+    }catch(err){ toast(err.message); }
+  });
+}
+
+function editCategory(id){
+  const c = DB.categories.find(x=>x.id===id);
+  openModal('Edit Category',c,CATEGORY_FORM_FIELDS, async d=>{
+    try{
+      const res = await apiFetch(API.category(id), {method:'PUT', body:JSON.stringify({name:d.name, slug:d.slug})});
+      const idx = DB.categories.findIndex(x=>x.id===id);
+      if(idx >= 0) DB.categories[idx] = res.category;
+      renderCategories();
+      toast(res.message);
+    }catch(err){ toast(err.message); }
+  });
+}
+
 /* ══════════════ SERVICES ══════════════ */
+const CDN_BASE = @json(rtrim((string) config('filesystems.disks.s3.url'), '/'));
+
+function serviceImgUrl(path){
+  if(!path) return '';
+  if(String(path).startsWith('http')) return path;
+  return `${CDN_BASE}/${String(path).replace(/^\/+/, '')}`;
+}
+
+function serviceThumb(path){
+  if(!path) return `<div style="width:44px;height:44px;border-radius:10px;border:1px dashed #e3e7ee;background:#f6f8fb;display:grid;place-items:center;color:#c5cdd6;"><i class="bi bi-image" style="font-size:14px;"></i></div>`;
+  return `<img src="${escAttr(serviceImgUrl(path))}?width=88&format=webp&fit=cover" alt="" style="width:44px;height:44px;object-fit:cover;border-radius:10px;border:1px solid #e3e7ee;background:#f6f8fb;"/>`;
+}
+
 function renderServices(q=''){
   const list = q ? DB.services.filter(s=>s.name.includes(q)||s.slug.includes(q)) : DB.services;
   const rows = list.map(s=>`
     <tr>
+      <td style="padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:8px;">
+          ${serviceThumb(s.img_1)}
+          ${serviceThumb(s.img_2)}
+        </div>
+      </td>
       <td style="padding:12px 16px;">
         <div style="display:flex;align-items:center;gap:10px;">
           ${iconBox(s.icon)}
@@ -495,36 +651,32 @@ function renderServices(q=''){
       ${pageHdr('Services',`${DB.services.length} รายการบริการ`,'+ เพิ่มบริการ','addService()')}
       <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 16px;font-size:13px;color:#1e40af;display:flex;align-items:center;gap:8px;margin-bottom:20px;">
         <i class="bi bi-info-circle"></i>
-        ราคาเริ่มต้นแสดงจากราคาต่ำสุดใน Service Prices — แก้ไขราคาได้ที่เมนู Service Prices
+        อัปโหลดรูป img_1 / img_2 ในฟอร์มบริการ — บันทึกพร้อมฟอร์ม ชื่อไฟล์ slug-uuid-timestamp
       </div>
-      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:920px;">
-        ${tHead('บริการ','คำอธิบาย','Content','หมวดหมู่','ราคาต่ำสุด','ระยะเวลา','สถานะ','Actions')}
+      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:1000px;">
+        ${tHead('รูป (1/2)','บริการ','คำอธิบาย','Content','หมวดหมู่','ราคาต่ำสุด','ระยะเวลา','สถานะ','Actions')}
         <tbody>${rows}</tbody>
       </table></div>`)}
     </div>`;
 }
 
 function addService(){
-  openModal('Add Service',{},SERVICE_FORM_FIELDS, async d=>{
-    try{
-      const res = await apiFetch(API.services, {method:'POST', body:JSON.stringify(servicePayload(d))});
-      DB.services.push(res.service);
-      renderServices();
-      toast(res.message);
-    }catch(err){ toast(err.message); }
-  }, {wide:true});
+  openModal('Add Service',{},SERVICE_FORM_FIELDS, async form=>{
+    const res = await apiForm(API.services, 'POST', buildServiceFormData(form));
+    DB.services.push(res.service);
+    renderServices();
+    toast(res.message);
+  }, {wide:true, multipart:true});
 }
 function editService(id){
   const s=DB.services.find(x=>x.id===id);
-  openModal('Edit Service',s,[...SERVICE_FORM_FIELDS,{n:'status',l:'สถานะ',t:'sel',opts:['active','inactive']}], async d=>{
-    try{
-      const res = await apiFetch(API.service(id), {method:'PUT', body:JSON.stringify(servicePayload(d, true))});
-      const idx = DB.services.findIndex(x=>x.id===id);
-      if(idx >= 0) DB.services[idx] = res.service;
-      renderServices();
-      toast(res.message);
-    }catch(err){ toast(err.message); }
-  }, {wide:true});
+  openModal('Edit Service',s,[...SERVICE_FORM_FIELDS,{n:'status',l:'สถานะ',t:'sel',opts:['active','inactive']}], async form=>{
+    const res = await apiForm(API.service(id), 'PUT', buildServiceFormData(form));
+    const idx = DB.services.findIndex(x=>x.id===id);
+    if(idx >= 0) DB.services[idx] = res.service;
+    renderServices();
+    toast(res.message);
+  }, {wide:true, multipart:true});
 }
 
 /* ══════════════ SERVICE PRICES ══════════════ */
@@ -663,59 +815,78 @@ function editBlog(id){
   ], d=>{ Object.assign(b,d); renderBlog(); toast('บันทึกเรียบร้อย'); });
 }
 
-/* ══════════════ IMAGES ══════════════ */
-function renderImages(){
-  const cards = DB.images.map(img=>`
-    <div class="img-card" style="background:#fff;border-radius:14px;border:1px solid #e3e7ee;overflow:hidden;transition:box-shadow .2s;cursor:default;" onmouseover="this.style.boxShadow='0 8px 28px rgba(7,26,44,.1)'" onmouseout="this.style.boxShadow='none'">
-      <div style="position:relative;aspect-ratio:16/10;overflow:hidden;">
-        <img src="https://images.unsplash.com/photo-${img.src}?w=400&q=70&auto=format&fit=crop" alt="${img.name}" style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
-        <div class="img-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(7,26,44,.7),transparent);display:flex;align-items:flex-end;justify-content:flex-end;padding:10px;">
-          ${actionBtn('bi-trash3','#ef4444',`deleteItem('images',${img.id},'${img.name}')`)}
-        </div>
-      </div>
-      <div style="padding:10px 12px;">
-        <div class="clamp1" style="font-size:12px;font-weight:500;color:#071a2c;">${img.name}</div>
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-top:4px;">
-          <span style="font-size:11px;color:#6a7787;">${img.size} · ${img.date}</span>
-          <span style="background:#f6f8fb;border:1px solid #e3e7ee;color:#6a7787;padding:2px 8px;border-radius:99px;font-size:10px;font-weight:500;">${img.tag}</span>
-        </div>
-      </div>
-    </div>`).join('');
+function imageField(name, value = ''){
+  const v = value || '';
+  const previewSrc = serviceImgUrl(v);
+  const preview = previewSrc
+    ? `<img src="${escAttr(previewSrc)}?width=160&format=webp&fit=cover" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:12px;border:1px solid #e3e7ee;background:#f6f8fb;"/>`
+    : `<div style="width:72px;height:72px;border-radius:12px;border:1px dashed #e3e7ee;background:#f6f8fb;display:grid;place-items:center;color:#9ca3af;"><i class="bi bi-image" style="font-size:20px;"></i></div>`;
 
-  document.getElementById('mainContent').innerHTML = `
-    <div style="padding:24px;">
-      ${pageHdr('Images',`${DB.images.length} ไฟล์ในคลัง`,null,null)}
-      <div style="border:2px dashed #e3e7ee;border-radius:16px;padding:32px 24px;text-align:center;margin-bottom:22px;cursor:pointer;transition:all .2s;" onmouseover="this.style.borderColor='#0a3d62';this.style.background='rgba(10,61,98,.02)'" onmouseout="this.style.borderColor='#e3e7ee';this.style.background='transparent'">
-        <i class="bi bi-cloud-upload" style="font-size:28px;color:#6a7787;display:block;margin-bottom:8px;"></i>
-        <div style="font-size:14px;font-weight:500;color:#36475a;">ลากไฟล์มาวางที่นี่ หรือ <span style="color:#0a3d62;font-weight:600;">คลิกเพื่อเลือกไฟล์</span></div>
-        <div style="font-size:12px;color:#6a7787;margin-top:4px;">รองรับ JPG, PNG, WebP · ขนาดสูงสุด 10 MB</div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px;">${cards}</div>
-    </div>`;
+  return `<div style="display:flex;gap:12px;align-items:center;border:1px dashed #e3e7ee;border-radius:14px;padding:12px;background:#fafbfd;">
+    ${preview}
+    <div style="flex:1;min-width:0;">
+      <input type="hidden" name="${name}" value="${escAttr(v)}"/>
+      <input type="file" name="${name}_file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+        style="width:100%;font-size:13px;font-family:inherit;"/>
+      ${v ? `<div style="font-size:11px;color:#6a7787;margin-top:6px;font-family:monospace;" class="clamp1">${escAttr(v)}</div>` : ''}
+      <div style="font-size:11px;color:#6a7787;margin-top:4px;">อัปโหลดเมื่อกดบันทึก · สูงสุด 2 MB · ชื่อ slug-uuid-timestamp</div>
+    </div>
+  </div>`;
 }
 
 /* ══════════════ USERS ══════════════ */
-function renderUsers(q=''){
-  const list = q ? DB.users.filter(u=>u.name.includes(q)||u.email.includes(q)) : DB.users;
+const USER_FORM_FIELDS_CREATE = [
+  {n:'name', l:'ชื่อ-นามสกุล', t:'text', r:true},
+  {n:'email', l:'Email', t:'email', r:true},
+  {n:'password', l:'รหัสผ่าน', t:'password', r:true},
+  {n:'role', l:'Role', t:'sel', opts:['admin','customer']},
+  {n:'tel', l:'เบอร์โทร', t:'text', ph:'0812345678'},
+  {n:'address', l:'ที่อยู่', t:'area'},
+  {n:'other_contact', l:'ช่องทางติดต่ออื่น', t:'area'},
+];
+const USER_FORM_FIELDS_EDIT = [
+  {n:'name', l:'ชื่อ-นามสกุล', t:'text', r:true},
+  {n:'email', l:'Email', t:'email', r:true},
+  {n:'password', l:'รหัสผ่านใหม่ (เว้นว่างถ้าไม่เปลี่ยน)', t:'password'},
+  {n:'role', l:'Role', t:'sel', opts:['admin','customer']},
+  {n:'tel', l:'เบอร์โทร', t:'text', ph:'0812345678'},
+  {n:'address', l:'ที่อยู่', t:'area'},
+  {n:'other_contact', l:'ช่องทางติดต่ออื่น', t:'area'},
+];
+
+function userPayload(d){
+  const payload = {
+    name: d.name,
+    email: d.email,
+    role: d.role || 'customer',
+    tel: d.tel || null,
+    address: d.address || null,
+    other_contact: d.other_contact || null,
+  };
+  if(d.password) payload.password = d.password;
+  return payload;
+}
+
+function renderUsers(){
+  const list = DB.users;
   const rows = list.map(u=>`
     <tr>
       <td style="padding:12px 16px;">
         <div style="display:flex;align-items:center;gap:10px;">
-          <div style="width:34px;height:34px;border-radius:50%;background:#ffc83a;display:grid;place-items:center;color:#071a2c;font-weight:700;font-size:13px;flex-shrink:0;">${u.name.charAt(0)}</div>
+          <div style="width:34px;height:34px;border-radius:50%;background:#ffc83a;display:grid;place-items:center;color:#071a2c;font-weight:700;font-size:13px;flex-shrink:0;">${escAttr((u.name||'?').charAt(0))}</div>
           <div>
-            <div style="font-weight:600;font-size:14px;color:#071a2c;">${u.name}</div>
-            <div style="font-size:12px;color:#6a7787;">${u.email}</div>
+            <div style="font-weight:600;font-size:14px;color:#071a2c;">${escAttr(u.name)}${u.id===AUTH_USER_ID?' <span style="font-size:11px;color:#6a7787;">(คุณ)</span>':''}</div>
+            <div style="font-size:12px;color:#6a7787;">${escAttr(u.email)}</div>
           </div>
         </div>
       </td>
       <td style="padding:12px 16px;">${role(u.role)}</td>
-      <td style="padding:12px 16px;">${dot(u.status)}${pill(u.status)}</td>
-      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${u.period||'—'}</td>
-      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${u.lastLogin}</td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;font-family:monospace;white-space:nowrap;">${escAttr(u.tel||'—')}</td>
+      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${escAttr(u.created_at||'—')}</td>
       <td style="padding:12px 16px;">
         <div style="display:flex;gap:6px;">
           ${actionBtn('bi-pencil','#3b82f6',`editUser(${u.id})`)}
-          ${u.role!=='owner'?actionBtn('bi-trash3','#ef4444',`deleteItem('users',${u.id},'${u.name}')`):''}
+          ${u.id!==AUTH_USER_ID?actionBtn('bi-trash3','#ef4444',`deleteItem('users',${u.id},'${escAttr(u.name)}')`):''}
         </div>
       </td>
     </tr>`).join('');
@@ -723,30 +894,38 @@ function renderUsers(q=''){
   document.getElementById('mainContent').innerHTML = `
     <div style="padding:24px;">
       ${pageHdr('Users',`${DB.users.length} ผู้ใช้งาน`,'+ เพิ่มผู้ใช้','addUser()')}
-      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:600px;">
-        ${tHead('ชื่อผู้ใช้','Role','สถานะ','Work Period','Last Login','Actions')}
-        <tbody>${rows}</tbody>
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:12px;padding:12px 16px;font-size:13px;color:#92400e;display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+        <i class="bi bi-info-circle"></i>
+        Role <strong>admin</strong> เข้าแอดมินได้ · <strong>customer</strong> สำหรับลูกค้า — ลบบัญชีตัวเองไม่ได้
+      </div>
+      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:640px;">
+        ${tHead('ชื่อผู้ใช้','Role','เบอร์โทร','สร้างเมื่อ','Actions')}
+        <tbody>${rows || `<tr><td colspan="5" style="padding:28px 16px;text-align:center;color:#6a7787;font-size:14px;">ยังไม่มีผู้ใช้</td></tr>`}</tbody>
       </table></div>`)}
     </div>`;
 }
 
 function addUser(){
-  openModal('Add User',{},[
-    {n:'name',  l:'ชื่อ-นามสกุล',t:'text', r:true},
-    {n:'email', l:'Email',        t:'email',r:true},
-    {n:'role',  l:'Role',         t:'sel',  opts:['admin','editor','viewer']},
-    {n:'period',l:'Work Period',   t:'text', ph:'2025-01 – ปัจจุบัน'},
-  ], d=>{ DB.users.push({id:Date.now(),status:'active',lastLogin:'—',...d}); renderUsers(); toast('เพิ่มผู้ใช้เรียบร้อย'); });
+  openModal('Add User',{},USER_FORM_FIELDS_CREATE, async d=>{
+    try{
+      const res = await apiFetch(API.users, {method:'POST', body:JSON.stringify(userPayload(d))});
+      DB.users.push(res.user);
+      renderUsers();
+      toast(res.message);
+    }catch(err){ toast(err.message); }
+  });
 }
 function editUser(id){
   const u=DB.users.find(x=>x.id===id);
-  openModal('Edit User',u,[
-    {n:'name',  l:'ชื่อ-นามสกุล',t:'text', r:true},
-    {n:'email', l:'Email',        t:'email',r:true},
-    {n:'role',  l:'Role',         t:'sel',  opts:['owner','admin','editor','viewer']},
-    {n:'status',l:'สถานะ',         t:'sel',  opts:['active','inactive']},
-    {n:'period',l:'Work Period',   t:'text', ph:'2025-01 – ปัจจุบัน'},
-  ], d=>{ Object.assign(u,d); renderUsers(); toast('บันทึกเรียบร้อย'); });
+  openModal('Edit User',{...u, password:''},USER_FORM_FIELDS_EDIT, async d=>{
+    try{
+      const res = await apiFetch(API.user(id), {method:'PUT', body:JSON.stringify(userPayload(d))});
+      const idx = DB.users.findIndex(x=>x.id===id);
+      if(idx >= 0) DB.users[idx] = res.user;
+      renderUsers();
+      toast(res.message);
+    }catch(err){ toast(err.message); }
+  });
 }
 
 /* ══════════════ MODAL ══════════════ */
@@ -768,6 +947,7 @@ function openModal(title, data, fields, onSave, opts = {}){
     if(f.t==='cat') return categoryField(data);
     if(f.t==='svc') return serviceField(data);
     if(f.t==='ptype') return priceTypeField(data);
+    if(f.t==='image') return imageField(f.n, (data&&data[f.n]!=null)?data[f.n]:'');
     if(f.t==='sel') return `<select ${base} ${sty} style="width:100%;border-radius:10px;border:1px solid #e3e7ee;padding:9px 12px;font-size:14px;outline:none;font-family:inherit;background:#fff;">${(f.opts||[]).map(o=>`<option value="${o}"${v===o?' selected':''}>${o}</option>`).join('')}</select>`;
     return `<input type="${f.t}" ${base} value="${escAttr(v)}" placeholder="${escAttr(f.ph||'')}" ${sty}/>`;
   };
@@ -776,7 +956,7 @@ function openModal(title, data, fields, onSave, opts = {}){
       <h3 style="font-weight:700;font-size:16px;color:#071a2c;">${title}</h3>
       <button onclick="closeModal()" style="width:30px;height:30px;display:grid;place-items:center;border-radius:8px;border:1px solid #e3e7ee;background:#fff;cursor:pointer;color:#6a7787;font-size:16px;" onmouseover="this.style.background='#f6f8fb'" onmouseout="this.style.background='#fff'">✕</button>
     </div>
-    <form id="mForm" style="padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
+    <form id="mForm" enctype="${opts.multipart ? 'multipart/form-data' : 'application/x-www-form-urlencoded'}" style="padding:20px 22px;display:flex;flex-direction:column;gap:14px;">
       ${fields.map(f=>`
         <div>
           <label style="display:block;font-size:12px;font-weight:600;color:#071a2c;margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">${f.l}${f.r?'<span style="color:#ef4444;margin-left:2px;">*</span>':''}</label>
@@ -787,11 +967,20 @@ function openModal(title, data, fields, onSave, opts = {}){
         <button type="submit" style="flex:1;padding:10px;border-radius:12px;border:none;font-size:14px;font-weight:600;color:#fff;background:#0a3d62;cursor:pointer;font-family:inherit;transition:background .15s;" onmouseover="this.style.background='#071a2c'" onmouseout="this.style.background='#0a3d62'">บันทึก</button>
       </div>
     </form>`;
-  document.getElementById('mForm').onsubmit = e=>{
+  document.getElementById('mForm').onsubmit = async e=>{
     e.preventDefault();
-    const d=Object.fromEntries(new FormData(e.target).entries());
-    if(_modalCb) _modalCb(d);
-    closeModal();
+    if(!_modalCb) return;
+    const form = e.target;
+    const submitBtn = form.querySelector('button[type="submit"]');
+    if(submitBtn){ submitBtn.disabled = true; submitBtn.textContent = 'กำลังบันทึก...'; }
+    try{
+      if(opts.multipart) await _modalCb(form);
+      else await _modalCb(Object.fromEntries(new FormData(form).entries()));
+      closeModal();
+    }catch(err){
+      toast(err.message || 'บันทึกไม่สำเร็จ');
+      if(submitBtn){ submitBtn.disabled = false; submitBtn.textContent = 'บันทึก'; }
+    }
   };
   const ov=document.getElementById('modalOverlay');
   ov.style.display='flex'; ov.offsetHeight;
@@ -804,6 +993,19 @@ function deleteItem(type,id,name){
   const ov=document.getElementById('confirmOverlay');
   ov.style.display='flex'; ov.offsetHeight;
   document.getElementById('confirmOkBtn').onclick=async ()=>{
+    if(type === 'categories'){
+      try{
+        await apiFetch(API.category(id), {method:'DELETE'});
+        DB.categories = DB.categories.filter(x=>x.id!==id);
+        closeConfirm();
+        renderCategories();
+        toast('ลบรายการเรียบร้อย','del');
+      }catch(err){
+        closeConfirm();
+        toast(err.message);
+      }
+      return;
+    }
     if(type === 'services'){
       try{
         await apiFetch(API.service(id), {method:'DELETE'});
@@ -823,6 +1025,19 @@ function deleteItem(type,id,name){
         DB.servicePrices = DB.servicePrices.filter(x=>x.id!==id);
         closeConfirm();
         renderPrices();
+        toast('ลบรายการเรียบร้อย','del');
+      }catch(err){
+        closeConfirm();
+        toast(err.message);
+      }
+      return;
+    }
+    if(type === 'users'){
+      try{
+        await apiFetch(API.user(id), {method:'DELETE'});
+        DB.users = DB.users.filter(x=>x.id!==id);
+        closeConfirm();
+        renderUsers();
         toast('ลบรายการเรียบร้อย','del');
       }catch(err){
         closeConfirm();

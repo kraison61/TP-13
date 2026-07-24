@@ -1,6 +1,12 @@
 <?php
 
 use App\Http\Controllers\AboutUsController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\ServiceCategoryController;
+use App\Http\Controllers\Backend\ServiceController as BackendServiceController;
+use App\Http\Controllers\Backend\ServicePriceController;
+use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\GalleryController;
@@ -87,6 +93,41 @@ Route::redirect('/blog/เทพื้นปูน ราคาต่อ ตา�
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [LoginController::class, 'show'])->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
+});
+
+Route::post('/logout', [LoginController::class, 'destroy'])
+    ->middleware('auth')
+    ->name('logout');
+
+Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminController::class, 'index'])->name('index');
+
+    Route::prefix('api')->name('api.')->group(function () {
+        Route::get('/categories', [ServiceCategoryController::class, 'index'])->name('categories.index');
+        Route::post('/categories', [ServiceCategoryController::class, 'store'])->name('categories.store');
+        Route::put('/categories/{serviceCategory}', [ServiceCategoryController::class, 'update'])->name('categories.update');
+        Route::delete('/categories/{serviceCategory}', [ServiceCategoryController::class, 'destroy'])->name('categories.destroy');
+
+        Route::get('/services', [BackendServiceController::class, 'index'])->name('services.index');
+        Route::post('/services', [BackendServiceController::class, 'store'])->name('services.store');
+        Route::put('/services/{service}', [BackendServiceController::class, 'update'])->name('services.update');
+        Route::delete('/services/{service}', [BackendServiceController::class, 'destroy'])->name('services.destroy');
+
+        Route::get('/service-prices', [ServicePriceController::class, 'index'])->name('service-prices.index');
+        Route::post('/service-prices', [ServicePriceController::class, 'store'])->name('service-prices.store');
+        Route::put('/service-prices/{servicePrice}', [ServicePriceController::class, 'update'])->name('service-prices.update');
+        Route::delete('/service-prices/{servicePrice}', [ServicePriceController::class, 'destroy'])->name('service-prices.destroy');
+
+        Route::get('/users', [UserController::class, 'index'])->name('users.index');
+        Route::post('/users', [UserController::class, 'store'])->name('users.store');
+        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+    });
+});
 
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact-us');
 Route::get('/about-us', [AboutUsController::class, 'index'])->name('about-us');

@@ -116,7 +116,17 @@ const lazyWhenAnyPresent = (selectors, importer) => {
     lazyWhenElement(el, importer);
 };
 
-lazyWhenAnyPresent(['#gallery-filters', '#gallery-lb'], () => import('./gallery.js'));
+// Gallery lightbox lives in a closed <dialog> (display:none) so IntersectionObserver
+// never fires — load eagerly when photos/lightbox exist; lazy-load only for the index filters.
+(() => {
+    const galleryLb = document.getElementById('gallery-lb');
+    const galleryPhoto = document.querySelector('[data-gallery-photo]');
+    if (galleryLb || galleryPhoto) {
+        import('./gallery.js');
+        return;
+    }
+    lazyWhenVisible('#gallery-filters', () => import('./gallery.js'));
+})();
 lazyWhenVisible('#contact', () => import('./contact-form.js'));
 lazyWhenVisible('#testiViewport', () => import('./testimonials.js'));
 lazyWhenVisible('#finViewport', () => import('./finance.js'));
