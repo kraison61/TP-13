@@ -46,12 +46,7 @@ class ServicePageSchema
             ],
             'sku' => 'TP-SRV-'.$service->id,
             'provider' => OrganizationSchema::reference(),
-            'areaServed' => collect(config('frontend.schema.area_served'))
-                ->map(fn (string $name) => [
-                    '@type' => 'AdministrativeArea',
-                    'name' => $name,
-                ])
-                ->all(),
+            'areaServed' => OrganizationSchema::areaServed(),
         ];
 
         if ($categoryName = $service->category?->name) {
@@ -104,6 +99,7 @@ class ServicePageSchema
     {
         $lowest = $prices
             ->filter(fn (ServicePrice $price) => $price->price !== null)
+            ->filter(fn (ServicePrice $price) => ! str_contains($price->name, 'ค่าแรง'))
             ->sortBy(fn (ServicePrice $price) => (float) $price->price)
             ->first();
 

@@ -45,12 +45,7 @@ class OrganizationSchema
                 '@type' => 'PostalAddress',
                 ...$schema['address'],
             ],
-            'areaServed' => collect($schema['area_served'])
-                ->map(fn (string $name) => [
-                    '@type' => 'AdministrativeArea',
-                    'name' => $name,
-                ])
-                ->all(),
+            'areaServed' => self::areaServed(),
             ...OrganizationLocationSchema::fields(),
             'sameAs' => array_values(array_filter([
                 $company['line_official'] ?? null,
@@ -92,6 +87,28 @@ class OrganizationSchema
             '@type' => 'GeneralContractor',
             '@id' => self::organizationId(),
         ];
+    }
+
+    /**
+     * @return list<array{@type: string, name: string}>
+     */
+    public static function areaServed(): array
+    {
+        $items = [
+            [
+                '@type' => 'Country',
+                'name' => (string) config('frontend.schema.area_served_country', 'ประเทศไทย'),
+            ],
+        ];
+
+        foreach (config('frontend.schema.area_served', []) as $name) {
+            $items[] = [
+                '@type' => 'AdministrativeArea',
+                'name' => $name,
+            ];
+        }
+
+        return $items;
     }
 
     public static function baseUrl(): string
@@ -142,7 +159,15 @@ class OrganizationSchema
         $digits = preg_replace('/\D+/', '', $phone) ?? $phone;
 
         if (str_starts_with($digits, '0') && strlen($digits) === 10) {
-            return '+66-'.substr($digits, 1, 2).'-'.substr($digits, 3, 3).'-'.substr($digits, 6);
+            return '+66'.substr($digits, 1);
+        }
+
+        if (str_starts_with($digits, '66')) {
+            return '+'.$digits;
+        }
+
+        if (str_starts_with($digits, '+')) {
+            return $digits;
         }
 
         return $phone;

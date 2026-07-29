@@ -25,8 +25,8 @@ const renderPartnerSlide = (partner) => {
                 <div class="pointer-events-none absolute -right-10 -top-10 size-40 rounded-full opacity-10" style="background:${escapeHtml(partner.color)};filter:blur(40px)"></div>
                 <div class="relative px-4 pt-4">
                     <a href="${escapeHtml(partner.link)}" target="_blank" rel="noopener" class="block overflow-hidden rounded-lg transition hover:opacity-90">
-                        <div class="aspect-[3/1] overflow-hidden">
-                            <img src="${escapeHtml(partner.img)}" alt="${escapeHtml(partner.name)}" width="600" height="200" loading="lazy" fetchpriority="low" decoding="async" class="block h-full w-full object-cover" />
+                        <div class="flex aspect-[3/1] items-center justify-center overflow-hidden bg-white">
+                            <img src="${escapeHtml(partner.img)}" alt="${escapeHtml(partner.name)}" width="600" height="200" loading="lazy" fetchpriority="low" decoding="async" class="block h-full w-full object-contain" />
                         </div>
                     </a>
                 </div>

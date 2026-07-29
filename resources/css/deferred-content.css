@@ -1,13 +1,13 @@
 /* Rich HTML content from CMS (Bootstrap / legacy markup in DB) — loaded via async app.css */
 .service-content {
-    @apply max-w-none text-[17px] leading-relaxed text-ink2;
+    @apply w-full min-w-0 max-w-full text-[17px] leading-relaxed text-ink2 break-words;
 
     .service-kicker {
-        @apply mb-2 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
+        @apply mb-2 inline-flex max-w-full flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
     }
 
     .service-kicker-line {
-        @apply inline-block h-px w-7 bg-accent;
+        @apply inline-block h-px w-7 shrink-0 bg-accent;
     }
 
     .service-checklist {
@@ -19,19 +19,23 @@
     }
 
     .service-checklist li {
-        @apply flex items-start gap-2.5 text-[15px];
+        @apply flex min-w-0 items-start gap-2.5 text-[15px];
     }
 
-    .service-checklist i {
+    .service-checklist li > :not(i):not(.icon) {
+        @apply min-w-0 break-words;
+    }
+
+    .service-checklist :is(i, .icon) {
         @apply mt-1 shrink-0 text-accent;
     }
 
     .service-feature-grid {
-        @apply my-6 grid gap-4 md:grid-cols-2;
+        @apply my-6 grid min-w-0 gap-4 md:grid-cols-2;
     }
 
     .service-feature-card {
-        @apply rounded-2xl bg-white p-5 ring-1 ring-line;
+        @apply min-w-0 rounded-2xl bg-white p-4 ring-1 ring-line sm:p-5;
     }
 
     .service-feature-card h3 {
@@ -43,27 +47,27 @@
     }
 
     .blog-content {
-        @apply max-w-none;
+        @apply min-w-0 max-w-full;
     }
 }
 
 .blog-content {
-    @apply max-w-none text-[16px] leading-relaxed text-ink2;
+    @apply w-full min-w-0 max-w-full text-[16px] leading-relaxed text-ink2 break-words;
 }
 
 :is(.service-content, .blog-content) {
     :is(h1, h2, h3, h4, h5, h6) {
-        @apply font-bold text-navy-900 tracking-tight;
+        @apply max-w-full font-bold text-navy-900 tracking-tight break-words;
     }
 
     h2 { @apply mt-10 mb-4 text-2xl lg:text-3xl first:mt-0 border-b border-line pb-3; }
     h3 { @apply mt-8 mb-3 text-xl lg:text-2xl; }
     h4 { @apply mt-6 mb-2 text-lg font-semibold; }
 
-    p { @apply mb-4 leading-relaxed; }
+    p { @apply mb-4 max-w-full leading-relaxed break-words; }
 
     :is(ul, ol) {
-        @apply mb-4 pl-6 space-y-2;
+        @apply mb-4 max-w-full pl-6 space-y-2;
     }
 
     ul:not(.service-checklist) { @apply list-disc; }
@@ -72,7 +76,7 @@
     li > p:last-child { @apply mb-0; }
 
     a {
-        @apply text-accent font-medium hover:underline;
+        @apply text-accent font-medium hover:underline break-words;
     }
 
     :is(strong, b) { @apply font-semibold text-navy-900; }
@@ -85,7 +89,7 @@
     .blog-meta i { @apply text-accent; }
 
     .lead {
-        @apply mb-8 rounded-2xl border-l-4 border-accent bg-surface p-6 leading-relaxed;
+        @apply mb-8 max-w-full rounded-2xl border-l-4 border-accent bg-surface p-4 leading-relaxed sm:p-6;
     }
 
     .lead ul { @apply mb-0 list-none pl-0 space-y-2; }
@@ -186,12 +190,13 @@
     }
 
     .table-responsive {
-        @apply my-6 overflow-x-auto rounded-xl ring-1 ring-line;
+        @apply my-6 max-w-full overflow-x-auto rounded-xl ring-1 ring-line;
+        -webkit-overflow-scrolling: touch;
     }
 
     table,
     :is(.table, table.table-bordered, table.table-hover) {
-        @apply w-full min-w-[480px] border-collapse bg-white text-[15px];
+        @apply w-full min-w-[480px] max-w-none border-collapse bg-white text-[15px];
     }
 
     :is(thead, tbody, tr, th, td) {

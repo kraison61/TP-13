@@ -50,8 +50,12 @@ class Service extends Model
 
     public function activePrice(): HasOne
     {
+        // Featured "starting from" = lowest active turnkey/package price (exclude labor-only rows)
         return $this->hasOne(ServicePrice::class)
             ->where('is_active', true)
+            ->whereNotNull('price')
+            ->where('name', 'not like', '%ค่าแรง%')
+            ->orderBy('price')
             ->orderBy('sort_order');
     }
 
@@ -60,6 +64,7 @@ class Service extends Model
         return $this->hasOne(ServicePrice::class)
             ->where('is_active', true)
             ->whereNotNull('price')
+            ->where('name', 'not like', '%ค่าแรง%')
             ->orderBy('price')
             ->orderBy('sort_order');
     }
@@ -68,6 +73,7 @@ class Service extends Model
     {
         return $this->hasMany(ServicePrice::class)
             ->where('is_active', true)
+            ->orderByRaw("CASE WHEN name LIKE '%ค่าแรง%' THEN 1 ELSE 0 END")
             ->orderBy('price')
             ->orderBy('sort_order');
     }
@@ -126,7 +132,8 @@ class Service extends Model
         }
 
         $decoded = html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $decoded = (string) preg_replace('/<!--[\s\S]*?-->/', '', $decoded);
 
-        return (string) preg_replace('/<!--[\s\S]*?-->/', '', $decoded);
+        return \App\Support\BootstrapIcons::replaceFontTags($decoded);
     }
 }

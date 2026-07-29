@@ -1,12 +1,12 @@
 <?php
 
 return [
-    'alternate_name' => 'ธีรพงษ์เซอร์วิส',
+    'alternate_name' => 'ธีรพงษ์เซอร์วิส จำกัด',
     'logo' => '/logo.png',
     'image' => '/images/services/1720377456635618.webp',
     'description' => 'รับเหมาก่อสร้างกำแพงกันดิน รั้วก่อฉาบ รั้วสำเร็จรูป เทปูน ถมดิน และงานโยธาครบวงจร ให้บริการกรุงเทพมหานครและปริมณฑล',
-    'price_range' => '$$',
-    'opening_hours' => 'Mo-Su 08:00-19:00',
+    'price_range' => '฿฿',
+    'opening_hours' => 'Mo-Su 08:00-18:00',
     'geo' => [
         'latitude' => '13.836991091487384',
         'longitude' => '100.44377996643809',
@@ -14,8 +14,9 @@ return [
     'opening_hours_specification' => [
         'dayOfWeek' => ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
         'opens' => '08:00',
-        'closes' => '19:00',
+        'closes' => '18:00',
     ],
+    'area_served_country' => 'ประเทศไทย',
     'area_served' => [
         'กรุงเทพมหานคร',
         'นนทบุรี',

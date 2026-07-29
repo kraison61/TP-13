@@ -118,7 +118,7 @@ class ServiceContentTransformer
             static function (array $matches): string {
                 $items = preg_replace(
                     '/<li class="flex items-start gap-2\.5">\s*<i class="bi bi-check-circle-fill text-accent mt-1 shrink-0"><\/i>\s*<span>([\s\S]*?)<\/span>\s*<\/li>/',
-                    '<li><i class="bi bi-check-circle-fill"></i><span>$1</span></li>',
+                    '<li>'.\App\Support\BootstrapIcons::useMarkup('check-circle-fill').'<span>$1</span></li>',
                     $matches[1]
                 ) ?? $matches[1];
 
@@ -198,7 +198,7 @@ class ServiceContentTransformer
 
                 $items = preg_replace(
                     '/<li>\s*(?:<p>\s*)?(?:[\x{1F300}-\x{1FAFF}\x{2600}-\x{27BF}✅☑️]\s*)+(.*?(?:<\/p>\s*)?)<\/li>/u',
-                    '<li><i class="bi bi-check-circle-fill"></i><span>$1</span></li>',
+                    '<li>'.\App\Support\BootstrapIcons::useMarkup('check-circle-fill').'<span>$1</span></li>',
                     $matches[1]
                 ) ?? $matches[1];
 

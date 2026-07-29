@@ -4,7 +4,7 @@
  * เมนูนำทางหลัก (Nav)
  * เรียกใช้: config('frontend.nav')
  *
- * dropdown: 'services' → ดึงรายการบริการย่อยจาก DB อัตโนมัติ (+ dropdown_extra ถ้ามี)
+ * dropdown: 'services' → ดึงหมวดหมู่ + บริการย่อยจาก DB เป็น nested dropdown (+ dropdown_extra ถ้ามี)
  */
 return [
     ['label' => 'รับเหมาก่อสร้าง', 'url' => 'home', 'type' => 'route'],

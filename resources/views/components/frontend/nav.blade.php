@@ -23,15 +23,41 @@
                         <div class="absolute left-0 top-full pt-2 hidden group-hover:block group-focus-within:block min-w-[260px] z-50">
                             <ul class="rounded-xl border border-line bg-white py-2 shadow-lg shadow-navy-900/10">
                                 @foreach ($item['children'] as $child)
-                                    <li>
-                                        <a href="{{ $child['href'] }}"
-                                           class="flex items-center gap-2.5 px-4 py-2.5 text-[14px] hover:bg-surface hover:text-navy-900 transition">
-                                            @if ($child['icon'])
-                                                <x-icon :name="$child['icon']" class="text-accent shrink-0" />
-                                            @endif
-                                            {{ $child['label'] }}
-                                        </a>
-                                    </li>
+                                    @if (! empty($child['children']))
+                                        <li class="relative group/sub">
+                                            <button type="button"
+                                                    class="flex w-full items-center justify-between gap-2 px-4 py-2.5 text-[14px] text-left hover:bg-surface hover:text-navy-900 transition"
+                                                    aria-haspopup="true">
+                                                <span class="font-medium">{{ $child['label'] }}</span>
+                                                <x-icon name="chevron-right" class="text-[10px] shrink-0 text-muted" />
+                                            </button>
+                                            <div class="absolute left-full top-0 pl-1.5 hidden group-hover/sub:block group-focus-within/sub:block min-w-[240px] z-50">
+                                                <ul class="rounded-xl border border-line bg-white py-2 shadow-lg shadow-navy-900/10">
+                                                    @foreach ($child['children'] as $grand)
+                                                        <li>
+                                                            <a href="{{ $grand['href'] }}"
+                                                               class="flex items-center gap-2.5 px-4 py-2.5 text-[14px] hover:bg-surface hover:text-navy-900 transition">
+                                                                @if ($grand['icon'] ?? null)
+                                                                    <x-icon :name="$grand['icon']" class="text-accent shrink-0" />
+                                                                @endif
+                                                                {{ $grand['label'] }}
+                                                            </a>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    @else
+                                        <li>
+                                            <a href="{{ $child['href'] }}"
+                                               class="flex items-center gap-2.5 px-4 py-2.5 text-[14px] hover:bg-surface hover:text-navy-900 transition">
+                                                @if ($child['icon'] ?? null)
+                                                    <x-icon :name="$child['icon']" class="text-accent shrink-0" />
+                                                @endif
+                                                {{ $child['label'] }}
+                                            </a>
+                                        </li>
+                                    @endif
                                 @endforeach
                                 <li class="border-t border-line mt-1 pt-1">
                                     <a href="{{ $item['href'] }}"
@@ -77,12 +103,31 @@
                         </summary>
                         <div class="pb-2 pl-1 space-y-0.5">
                             @foreach ($item['children'] as $child)
-                                <a href="{{ $child['href'] }}" class="flex items-center gap-2 py-2 pl-3 text-[14px] hover:text-navy-900 transition">
-                                    @if ($child['icon'])
-                                        <x-icon :name="$child['icon']" class="text-accent shrink-0" />
-                                    @endif
-                                    {{ $child['label'] }}
-                                </a>
+                                @if (! empty($child['children']))
+                                    <details class="group/sub">
+                                        <summary class="py-2 pl-3 cursor-pointer list-none flex items-center justify-between gap-2 marker:content-none text-[14px] font-medium text-navy-900">
+                                            <span>{{ $child['label'] }}</span>
+                                            <x-icon name="chevron-down" class="text-[10px] transition group-open/sub:rotate-180 shrink-0 text-muted" />
+                                        </summary>
+                                        <div class="pb-1 pl-2 space-y-0.5">
+                                            @foreach ($child['children'] as $grand)
+                                                <a href="{{ $grand['href'] }}" class="flex items-center gap-2 py-2 pl-3 text-[14px] hover:text-navy-900 transition">
+                                                    @if ($grand['icon'] ?? null)
+                                                        <x-icon :name="$grand['icon']" class="text-accent shrink-0" />
+                                                    @endif
+                                                    {{ $grand['label'] }}
+                                                </a>
+                                            @endforeach
+                                        </div>
+                                    </details>
+                                @else
+                                    <a href="{{ $child['href'] }}" class="flex items-center gap-2 py-2 pl-3 text-[14px] hover:text-navy-900 transition">
+                                        @if ($child['icon'] ?? null)
+                                            <x-icon :name="$child['icon']" class="text-accent shrink-0" />
+                                        @endif
+                                        {{ $child['label'] }}
+                                    </a>
+                                @endif
                             @endforeach
                             <a href="{{ $item['href'] }}" class="block py-2 pl-3 text-[13px] font-semibold text-accent">
                                 ดูบริการก่อสร้างทั้งหมด →

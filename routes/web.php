@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\ContactMessageController;
 use App\Http\Controllers\Backend\ServiceCategoryController;
 use App\Http\Controllers\Backend\ServiceController as BackendServiceController;
 use App\Http\Controllers\Backend\ServicePriceController;
@@ -126,6 +127,10 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::post('/users', [UserController::class, 'store'])->name('users.store');
         Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+
+        Route::get('/contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
+        Route::put('/contact-messages/{contactMessage}', [ContactMessageController::class, 'update'])->name('contact-messages.update');
+        Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
     });
 });
 

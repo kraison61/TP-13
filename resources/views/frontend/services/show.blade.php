@@ -76,8 +76,8 @@
 
 {{-- ============ OVERVIEW + SCOPE ============ --}}
 <section class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-24">
-    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16">
-        <div class="lg:col-span-7">
+    <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 min-w-0">
+        <div class="lg:col-span-7 min-w-0">
             @if ($service->content)
                 <div class="service-content">
                     {!! $service->rendered_content !!}
@@ -90,24 +90,24 @@
             @endif
 
             @if ($service->scopes->isNotEmpty())
-                <h3 class="mt-10 font-bold text-navy-900">งานนี้รวมอะไรบ้าง</h3>
+                <h3 class="mt-10 text-xl font-bold text-navy-900">งานนี้รวมอะไรบ้าง</h3>
                 <ul class="mt-4 grid sm:grid-cols-2 gap-x-6 gap-y-3 text-[15px] text-ink2">
                     @foreach ($service->scopes as $scope)
-                        <li class="flex items-start gap-2.5">
+                        <li class="flex items-start gap-2.5 min-w-0">
                             <x-icon name="check-circle-fill" class="text-accent mt-1 shrink-0" />
-                            <span>{{ $scope->name }}</span>
+                            <span class="min-w-0 break-words">{{ $scope->name }}</span>
                         </li>
                     @endforeach
                 </ul>
             @endif
         </div>
 
-        <aside class="lg:col-span-5">
-            <div class="lg:sticky lg:top-[76px] rounded-2xl border border-line bg-surface p-7">
-                <div class="flex items-end justify-between gap-4">
-                    <div>
+        <aside class="lg:col-span-5 min-w-0">
+            <div class="lg:sticky lg:top-[76px] rounded-2xl border border-line bg-surface p-5 sm:p-7">
+                <div class="flex items-end justify-between gap-3 min-w-0">
+                    <div class="min-w-0">
                         <div class="text-[13px] text-muted">ราคาเริ่มต้น</div>
-                        <div class="font-mono text-3xl font-bold text-navy-900 tracking-tight tabular-nums">
+                        <div class="font-mono text-3xl font-bold text-navy-900 tracking-tight tabular-nums break-words">
                             @if ($service->activePrice)
                                 {{ number_format((float) $service->activePrice->price, 0) }}
                                 <span class="text-base font-sans font-medium text-ink2">/ {{ $service->activePrice->unit }}</span>
@@ -116,14 +116,14 @@
                             @endif
                         </div>
                     </div>
-                    <span class="rounded-full bg-hivis/20 text-accent text-[13px] font-semibold px-3 py-1.5">ประเมินฟรี</span>
+                    <span class="shrink-0 rounded-full bg-hivis/20 text-accent text-[13px] font-semibold px-3 py-1.5">ประเมินฟรี</span>
                 </div>
                 <p class="mt-2 text-[14px] text-muted">* ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ทีมงานสำรวจและตีราคาให้ฟรี</p>
 
                 @if ($service->dur)
-                    <div class="mt-4 flex items-center gap-2.5 rounded-xl bg-navy-900/5 px-3.5 py-2.5 text-[13px] text-navy-900">
-                        <x-icon name="calendar-check" class="text-accent text-base shrink-0" />
-                        <span>ระยะเวลางานโดยประมาณ <b class="font-semibold">{{ $service->dur }} วันทำการ</b></span>
+                    <div class="mt-4 flex items-start gap-2.5 rounded-xl bg-navy-900/5 px-3.5 py-2.5 text-[13px] text-navy-900 min-w-0">
+                        <x-icon name="calendar-check" class="text-accent text-base shrink-0 mt-0.5" />
+                        <span class="min-w-0 break-words">ระยะเวลางานโดยประมาณ <b class="font-semibold">{{ $service->dur }}</b></span>
                     </div>
                 @endif
 

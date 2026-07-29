@@ -96,10 +96,10 @@ class MainPageSchema
     {
         $price = null;
 
-        if ($service->relationLoaded('activePrice') && $service->activePrice?->price !== null) {
-            $price = $service->activePrice;
-        } elseif ($service->relationLoaded('lowestPrice') && $service->lowestPrice?->price !== null) {
+        if ($service->relationLoaded('lowestPrice') && $service->lowestPrice?->price !== null) {
             $price = $service->lowestPrice;
+        } elseif ($service->relationLoaded('activePrice') && $service->activePrice?->price !== null) {
+            $price = $service->activePrice;
         } elseif ($service->relationLoaded('activePrices') && $service->activePrices->isNotEmpty()) {
             $price = $service->activePrices
                 ->filter(fn ($activePrice) => $activePrice->price !== null)
@@ -138,8 +138,14 @@ class MainPageSchema
     private static function areaServed(): array
     {
         return [
-            '@type' => 'AdministrativeArea',
-            'name' => config('frontend.schema.area_served_label'),
+            [
+                '@type' => 'Country',
+                'name' => config('frontend.schema.area_served_country', 'ประเทศไทย'),
+            ],
+            [
+                '@type' => 'AdministrativeArea',
+                'name' => config('frontend.schema.area_served_label'),
+            ],
         ];
     }
 

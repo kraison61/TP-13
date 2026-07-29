@@ -151,18 +151,13 @@ let DB = {
     {id:6,title:'เตรียมพื้นที่ก่อนสร้างบ้าน: ถมดิน บดอัด ระดับได้มาตรฐาน', cat:'เทคนิคก่อสร้าง',author:'ทีมงาน',  date:'2026-04-10',status:'draft',    views:0},
   ],
   users:[],
-  quotes:[
-    {id:1,name:'คุณมานพ ใจดี',       phone:'081-234-5678',service:'กำแพงกันดิน',budget:'500k–1M',  date:'2026-07-01',status:'new'},
-    {id:2,name:'คุณวีระชัย สุขใจ',   phone:'089-876-5432',service:'รั้วบ้าน',    budget:'100k–500k',date:'2026-06-30',status:'contacted'},
-    {id:3,name:'คุณอุไรวรรณ ทองดี',  phone:'062-345-6789',service:'ลานคอนกรีต', budget:'<100k',    date:'2026-06-29',status:'quoted'},
-    {id:4,name:'คุณสมชาย ภัคดี',     phone:'091-234-5678',service:'ถนน & ทางเข้า',budget:'1M–3M',  date:'2026-06-28',status:'won'},
-    {id:5,name:'คุณกชกร เลิศมงคล',   phone:'083-456-7890',service:'ระบายน้ำ',   budget:'100k–500k',date:'2026-06-27',status:'contacted'},
-  ]
+  quotes:[],
 };
 
 /* ══════════════ NAV ══════════════ */
 const NAV = [
   {id:'dashboard', icon:'bi-grid-1x2-fill',  label:'Dashboard',   bread:'Overview'},
+  {id:'quotes',    icon:'bi-envelope-open',  label:'Quote Requests', bread:'Leads'},
   {id:'categories',icon:'bi-folder-fill',    label:'Categories',  bread:'Content'},
   {id:'services',  icon:'bi-bricks',          label:'Services',    bread:'Content'},
   {id:'prices',    icon:'bi-tag-fill',        label:'Service Prices',bread:'Content'},
@@ -193,6 +188,12 @@ function navigate(page){
   document.getElementById('headerTitle').textContent = n.label;
   document.getElementById('searchInput').value = '';
   renderNav();
+  if(page === 'quotes'){
+    loadQuotes()
+      .then(() => renderQuotes())
+      .catch(err => { toast(err.message); });
+    return;
+  }
   if(page === 'categories'){
     loadCategories()
       .then(() => renderCategories())
@@ -217,12 +218,19 @@ function navigate(page){
       .catch(err => { toast(err.message); });
     return;
   }
+  if(page === 'dashboard'){
+    Promise.all([loadServices(), loadQuotes()])
+      .then(() => renderDashboard())
+      .catch(() => renderDashboard());
+    return;
+  }
   ({dashboard:renderDashboard,categories:renderCategories,services:renderServices,prices:renderPrices,
-    blog:renderBlog,users:renderUsers})[page]();
+    blog:renderBlog,users:renderUsers,quotes:renderQuotes})[page]();
 }
 
 function handleSearch(q){
-  if(currentPage==='categories') renderCategories(q);
+  if(currentPage==='quotes') loadQuotes(q).then(() => renderQuotes()).catch(err => toast(err.message));
+  else if(currentPage==='categories') renderCategories(q);
   else if(currentPage==='services') renderServices(q);
   else if(currentPage==='prices') loadServicePrices(q).then(() => renderPrices()).catch(err => toast(err.message));
   else if(currentPage==='blog') renderBlog(q);
@@ -239,6 +247,8 @@ const API = {
   servicePrice: id => `/admin/api/service-prices/${id}`,
   users: '/admin/api/users',
   user: id => `/admin/api/users/${id}`,
+  contactMessages: '/admin/api/contact-messages',
+  contactMessage: id => `/admin/api/contact-messages/${id}`,
 };
 const AUTH_USER_ID = {{ (int) auth()->id() }};
 
@@ -359,6 +369,13 @@ async function loadUsers(q = ''){
   DB.users = data.users;
 }
 
+async function loadQuotes(q = ''){
+  const url = new URL(API.contactMessages, window.location.origin);
+  if(q) url.searchParams.set('q', q);
+  const data = await apiFetch(url);
+  DB.quotes = data.messages;
+}
+
 function pricePayload(d){
   return {
     service_id: Number(d.service_id),
@@ -425,18 +442,20 @@ const STATUS_STYLE = {
   published: 'background:#ecfdf5;color:#065f46',
   draft:     'background:#fffbeb;color:#92400e',
   inactive:  'background:#f3f4f6;color:#6b7280',
+  pending:   'background:#eff6ff;color:#1e40af',
   new:       'background:#eff6ff;color:#1e40af',
   contacted: 'background:#fffbeb;color:#92400e',
   quoted:    'background:#f5f3ff;color:#5b21b6',
   won:       'background:#ecfdf5;color:#065f46',
+  closed:    'background:#f3f4f6;color:#6b7280',
 };
-const STATUS_LABEL = {active:'Active',published:'Published',draft:'Draft',inactive:'Inactive',new:'New',contacted:'Contacted',quoted:'Quoted',won:'Won'};
+const STATUS_LABEL = {active:'Active',published:'Published',draft:'Draft',inactive:'Inactive',pending:'Pending',new:'New',contacted:'Contacted',quoted:'Quoted',won:'Won',closed:'Closed'};
 const ROLE_STYLE = {admin:'background:#0a3d62;color:#fff',customer:'background:#f6f8fb;color:#6a7787;border:1px solid #e3e7ee'};
 const ROLE_LABEL = {admin:'Admin',customer:'Customer'};
 
 function pill(status){ return `<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;${STATUS_STYLE[status]||''}">${STATUS_LABEL[status]||status}</span>`; }
 function role(r){ return `<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;${ROLE_STYLE[r]||''}">${ROLE_LABEL[r]||r}</span>`; }
-function dot(status){ const c={active:'#10b981',published:'#10b981',inactive:'#9ca3af',new:'#3b82f6',contacted:'#f59e0b',quoted:'#8b5cf6',won:'#10b981',draft:'#f59e0b'}; return `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${c[status]||'#9ca3af'};margin-right:6px;"></span>`; }
+function dot(status){ const c={active:'#10b981',published:'#10b981',inactive:'#9ca3af',pending:'#3b82f6',new:'#3b82f6',contacted:'#f59e0b',quoted:'#8b5cf6',won:'#10b981',closed:'#9ca3af',draft:'#f59e0b'}; return `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;background:${c[status]||'#9ca3af'};margin-right:6px;"></span>`; }
 function iconBox(cls,c='rgba(10,61,98,.08)',ic='#0a3d62'){ return `<span style="display:grid;place-items:center;width:36px;height:36px;border-radius:10px;background:${c};flex-shrink:0;"><i class="bi ${cls}" style="color:${ic};font-size:15px;"></i></span>`; }
 
 function wrap(inner){ return `<div style="background:#fff;border-radius:16px;border:1px solid #e3e7ee;overflow:hidden;">${inner}</div>`; }
@@ -468,7 +487,7 @@ function renderDashboard(){
     {icon:'bi-bricks',        val:DB.services.filter(s=>s.status==='active').length, label:'Active Services',    bg:'rgba(10,61,98,.07)', ic:'#0a3d62'},
     {icon:'bi-newspaper',     val:DB.blog.filter(b=>b.status==='published').length,  label:'Published Posts',   bg:'rgba(5,150,105,.07)',ic:'#059669'},
     {icon:'bi-images',        val:DB.services.filter(s=>s.img_1||s.img_2).length, label:'Services with images', bg:'rgba(124,58,237,.07)',ic:'#7c3aed'},
-    {icon:'bi-envelope-open', val:DB.quotes.filter(q=>q.status==='new').length,      label:'New Quote Requests', bg:'rgba(217,119,6,.07)',ic:'#d97706'},
+    {icon:'bi-envelope-open', val:DB.quotes.filter(q=>q.status==='pending'||q.status==='new').length, label:'New Quote Requests', bg:'rgba(217,119,6,.07)',ic:'#d97706'},
   ];
 
   const statCards = stats.map(s=>`
@@ -480,15 +499,15 @@ function renderDashboard(){
       <div style="font-size:12px;color:#6a7787;margin-top:4px;">${s.label}</div>
     </div>`).join('');
 
-  const quoteRows = DB.quotes.map(q=>`
+  const quoteRows = DB.quotes.slice(0,8).map(q=>`
     <tr>
       <td style="padding:12px 16px;">
-        <div style="font-weight:600;font-size:14px;color:#071a2c;">${q.name}</div>
-        <div style="font-size:12px;color:#6a7787;font-family:monospace;">${q.phone}</div>
+        <div style="font-weight:600;font-size:14px;color:#071a2c;">${escAttr(q.name)}</div>
+        <div style="font-size:12px;color:#6a7787;font-family:monospace;">${escAttr(q.phone)}</div>
       </td>
-      <td style="padding:12px 16px;font-size:13px;color:#36475a;">${q.service}</td>
-      <td style="padding:12px 16px;font-size:13px;color:#36475a;white-space:nowrap;">${q.budget}</td>
-      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${q.date}</td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;">${escAttr(q.service)}</td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;white-space:nowrap;">${escAttr(q.budget)}</td>
+      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${escAttr(q.created_at||q.date)}</td>
       <td style="padding:12px 16px;">${dot(q.status)}${pill(q.status)}</td>
     </tr>`).join('');
 
@@ -509,12 +528,12 @@ function renderDashboard(){
         ${wrap(`
           <div style="padding:14px 16px 12px;border-bottom:1px solid #e3e7ee;display:flex;align-items:center;justify-content:space-between;">
             <span style="font-weight:700;font-size:14px;color:#071a2c;">Recent Quote Requests</span>
-            <span style="font-size:12px;color:#6a7787;">${DB.quotes.length} รายการ</span>
+            <button onclick="navigate('quotes')" style="font-size:12px;color:#0a3d62;background:none;border:none;cursor:pointer;font-weight:600;font-family:inherit;">ดูทั้งหมด (${DB.quotes.length})</button>
           </div>
           <div style="overflow-x:auto;">
             <table style="width:100%;border-collapse:collapse;min-width:560px;">
               ${tHead('ผู้ติดต่อ','บริการ','งบประมาณ','วันที่','สถานะ')}
-              <tbody>${quoteRows}</tbody>
+              <tbody>${quoteRows || `<tr><td colspan="5" style="padding:28px 16px;text-align:center;color:#6a7787;font-size:14px;">ยังไม่มีคำขอ</td></tr>`}</tbody>
             </table>
           </div>`)}
         ${wrap(`
@@ -524,6 +543,101 @@ function renderDashboard(){
           <div style="padding:0 16px 8px;">${recentBlog}</div>`)}
       </div>
     </div>`;
+}
+
+/* ══════════════ QUOTE REQUESTS (contact_messages) ══════════════ */
+const QUOTE_STATUS_OPTS = ['pending','contacted','quoted','won','closed'];
+
+function renderQuotes(){
+  const list = DB.quotes;
+  const pendingCount = list.filter(q=>q.status==='pending').length;
+  const rows = list.map(q=>`
+    <tr>
+      <td style="padding:12px 16px;">
+        <div style="font-weight:600;font-size:14px;color:#071a2c;">${escAttr(q.name)}</div>
+        <div style="font-size:11px;color:#6a7787;font-family:monospace;">${escAttr(q.reference)}</div>
+      </td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;font-family:monospace;white-space:nowrap;">
+        <a href="tel:${escAttr(q.phone)}" style="color:#0a3d62;text-decoration:none;">${escAttr(q.phone)}</a>
+      </td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;">${escAttr(q.service)}</td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;white-space:nowrap;">${escAttr(q.budget)}</td>
+      <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#071a2c;font-family:monospace;white-space:nowrap;">
+        ${q.requested_discount ? Number(q.requested_discount).toLocaleString()+' บาท' : '—'}
+      </td>
+      <td style="padding:12px 16px;max-width:220px;">
+        <div class="clamp2" style="font-size:12px;color:#6a7787;line-height:1.45;">${escAttr(q.detail || '—')}</div>
+      </td>
+      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${escAttr(q.created_at||q.date)}</td>
+      <td style="padding:12px 16px;">${dot(q.status)}${pill(q.status)}</td>
+      <td style="padding:12px 16px;">
+        <div style="display:flex;gap:6px;">
+          ${actionBtn('bi-eye','#0a3d62',`viewQuote(${q.id})`)}
+          ${actionBtn('bi-pencil','#3b82f6',`editQuoteStatus(${q.id})`)}
+          ${actionBtn('bi-trash3','#ef4444',`deleteItem('quotes',${q.id},'${escAttr(q.name)}')`)}
+        </div>
+      </td>
+    </tr>`).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div style="padding:24px;">
+      ${pageHdr('Quote Requests',`${list.length} คำขอ · ${pendingCount} รอติดต่อ`)}
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 16px;font-size:13px;color:#1e40af;display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+        <i class="bi bi-info-circle"></i>
+        ข้อมูลจากตาราง contact_messages — เรียงจากวันที่ล่าสุดก่อน
+      </div>
+      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:980px;">
+        ${tHead('ผู้ติดต่อ','โทร','บริการ','งบประมาณ','E-Voucher','รายละเอียด','วันที่','สถานะ','Actions')}
+        <tbody>${rows || `<tr><td colspan="9" style="padding:28px 16px;text-align:center;color:#6a7787;font-size:14px;">ยังไม่มีคำขอใบเสนอราคา</td></tr>`}</tbody>
+      </table></div>`)}
+    </div>`;
+}
+
+function viewQuote(id){
+  const q = DB.quotes.find(x=>x.id===id);
+  if(!q) return;
+  document.getElementById('modalBox').style.maxWidth = '520px';
+  document.getElementById('modalBox').innerHTML = `
+    <div style="padding:20px 22px 16px;border-bottom:1px solid #e3e7ee;display:flex;align-items:center;justify-content:space-between;">
+      <h3 style="font-weight:700;font-size:16px;color:#071a2c;">รายละเอียดคำขอ</h3>
+      <button onclick="closeModal()" style="width:30px;height:30px;display:grid;place-items:center;border-radius:8px;border:1px solid #e3e7ee;background:#fff;cursor:pointer;color:#6a7787;font-size:16px;">✕</button>
+    </div>
+    <div style="padding:20px 22px;display:flex;flex-direction:column;gap:12px;">
+      ${[
+        ['รหัสอ้างอิง', q.reference],
+        ['ชื่อ', q.name],
+        ['โทร', q.phone],
+        ['บริการ', q.service],
+        ['งบประมาณ', q.budget],
+        ['ส่วนลด E-Voucher', q.requested_discount ? Number(q.requested_discount).toLocaleString()+' บาท' : '—'],
+        ['สถานะ', STATUS_LABEL[q.status]||q.status],
+        ['วันที่', q.created_at||q.date],
+        ['รายละเอียด', q.detail || '—'],
+      ].map(([l,v])=>`
+        <div>
+          <div style="font-size:11px;font-weight:600;color:#6a7787;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px;">${l}</div>
+          <div style="font-size:14px;color:#071a2c;white-space:pre-wrap;">${escAttr(v)}</div>
+        </div>`).join('')}
+      <button type="button" onclick="closeModal()" style="margin-top:8px;padding:10px;border-radius:12px;border:none;font-size:14px;font-weight:600;color:#fff;background:#0a3d62;cursor:pointer;font-family:inherit;">ปิด</button>
+    </div>`;
+  const ov=document.getElementById('modalOverlay');
+  ov.style.display='flex'; ov.offsetHeight;
+}
+
+function editQuoteStatus(id){
+  const q = DB.quotes.find(x=>x.id===id);
+  if(!q) return;
+  openModal('อัปเดตสถานะ', q, [
+    {n:'status', l:'สถานะ', t:'sel', opts:QUOTE_STATUS_OPTS, r:true},
+  ], async d=>{
+    try{
+      const res = await apiFetch(API.contactMessage(id), {method:'PUT', body:JSON.stringify({status:d.status})});
+      const idx = DB.quotes.findIndex(x=>x.id===id);
+      if(idx >= 0) DB.quotes[idx] = res.contact_message;
+      renderQuotes();
+      toast(res.message);
+    }catch(err){ toast(err.message); }
+  });
 }
 
 /* ══════════════ CATEGORIES ══════════════ */
@@ -1045,6 +1159,19 @@ function deleteItem(type,id,name){
       }
       return;
     }
+    if(type === 'quotes'){
+      try{
+        await apiFetch(API.contactMessage(id), {method:'DELETE'});
+        DB.quotes = DB.quotes.filter(x=>x.id!==id);
+        closeConfirm();
+        renderQuotes();
+        toast('ลบรายการเรียบร้อย','del');
+      }catch(err){
+        closeConfirm();
+        toast(err.message);
+      }
+      return;
+    }
     DB[type]=DB[type].filter(x=>x.id!==id);
     closeConfirm();
     navigate(currentPage);
@@ -1069,7 +1196,7 @@ document.getElementById('confirmOverlay').addEventListener('click',e=>{ if(e.tar
 
 /* ══════════════ INIT ══════════════ */
 renderNav();
-loadServices()
+Promise.all([loadServices(), loadQuotes()])
   .then(() => navigate('dashboard'))
   .catch(() => navigate('dashboard'));
 </script>
