@@ -142,14 +142,8 @@ let DB = {
   servicePrices:[],
   priceServices:[],
   priceTypes:{},
-  blog:[
-    {id:1,title:'กำแพงกันดินคืออะไร? เลือกแบบไหนดีสำหรับบ้านคุณ',        cat:'เทคนิคก่อสร้าง',author:'ธีรพงษ์', date:'2026-06-15',status:'published',views:1240},
-    {id:2,title:'5 สัญญาณที่บอกว่ารั้วบ้านถึงเวลาซ่อมแซมแล้ว',              cat:'บำรุงรักษา',     author:'ทีมงาน',  date:'2026-06-01',status:'published',views:890},
-    {id:3,title:'ลานคอนกรีตขัดมัน vs ลานปูอิฐ: เลือกแบบไหนดี?',            cat:'เปรียบเทียบ',   author:'วิศวกร',  date:'2026-05-20',status:'published',views:2100},
-    {id:4,title:'วิธีป้องกันน้ำท่วมขังในที่ดิน ด้วยระบบระบายน้ำที่ถูกต้อง', cat:'เทคนิคก่อสร้าง',author:'วิศวกร',  date:'2026-05-10',status:'published',views:675},
-    {id:5,title:'รีวิว: โครงการกำแพงกันดินบางบัวทอง 64 เมตร',               cat:'กรณีศึกษา',    author:'ธีรพงษ์', date:'2026-04-28',status:'published',views:432},
-    {id:6,title:'เตรียมพื้นที่ก่อนสร้างบ้าน: ถมดิน บดอัด ระดับได้มาตรฐาน', cat:'เทคนิคก่อสร้าง',author:'ทีมงาน',  date:'2026-04-10',status:'draft',    views:0},
-  ],
+  blog:[],
+  blogServices:[],
   users:[],
   quotes:[],
 };
@@ -218,8 +212,14 @@ function navigate(page){
       .catch(err => { toast(err.message); });
     return;
   }
+  if(page === 'blog'){
+    loadBlogs()
+      .then(() => renderBlog())
+      .catch(err => { toast(err.message); });
+    return;
+  }
   if(page === 'dashboard'){
-    Promise.all([loadServices(), loadQuotes()])
+    Promise.all([loadServices(), loadQuotes(), loadBlogs()])
       .then(() => renderDashboard())
       .catch(() => renderDashboard());
     return;
@@ -233,7 +233,7 @@ function handleSearch(q){
   else if(currentPage==='categories') renderCategories(q);
   else if(currentPage==='services') renderServices(q);
   else if(currentPage==='prices') loadServicePrices(q).then(() => renderPrices()).catch(err => toast(err.message));
-  else if(currentPage==='blog') renderBlog(q);
+  else if(currentPage==='blog') loadBlogs(q).then(() => renderBlog(q)).catch(err => toast(err.message));
   else if(currentPage==='users') loadUsers(q).then(() => renderUsers()).catch(err => toast(err.message));
 }
 
@@ -245,6 +245,8 @@ const API = {
   service: id => `/admin/api/services/${id}`,
   servicePrices: '/admin/api/service-prices',
   servicePrice: id => `/admin/api/service-prices/${id}`,
+  blogs: '/admin/api/blogs',
+  blog: id => `/admin/api/blogs/${id}`,
   users: '/admin/api/users',
   user: id => `/admin/api/users/${id}`,
   contactMessages: '/admin/api/contact-messages',
@@ -376,6 +378,14 @@ async function loadQuotes(q = ''){
   DB.quotes = data.messages;
 }
 
+async function loadBlogs(q = ''){
+  const url = new URL(API.blogs, window.location.origin);
+  if(q) url.searchParams.set('q', q);
+  const data = await apiFetch(url);
+  DB.blog = data.blogs;
+  DB.blogServices = data.services;
+}
+
 function pricePayload(d){
   return {
     service_id: Number(d.service_id),
@@ -391,14 +401,17 @@ function pricePayload(d){
   };
 }
 
-function serviceField(data = {}, list = null){
-  const services = list || DB.priceServices || DB.services || [];
+function serviceField(data = {}, list = null, required = true){
+  const services = list || DB.blogServices || DB.priceServices || DB.services || [];
   const opts = services.map(s =>
     `<option value="${s.id}"${String(data.service_id) === String(s.id) ? ' selected' : ''}>${s.title || s.name}</option>`
   ).join('');
   const v = data.service_id || '';
-  return `<select name="service_id" required style="width:100%;border-radius:10px;border:1px solid #e3e7ee;padding:9px 12px;font-size:14px;outline:none;font-family:inherit;background:#fff;">
-    <option value="" disabled${v ? '' : ' selected'}>เลือกบริการ</option>${opts}
+  const emptyOpt = required
+    ? `<option value="" disabled${v ? '' : ' selected'}>เลือกบริการ</option>`
+    : `<option value=""${!v ? ' selected' : ''}>— ไม่ระบุ —</option>`;
+  return `<select name="service_id" ${required ? 'required' : ''} style="width:100%;border-radius:10px;border:1px solid #e3e7ee;padding:9px 12px;font-size:14px;outline:none;font-family:inherit;background:#fff;">
+    ${emptyOpt}${opts}
   </select>`;
 }
 
@@ -485,7 +498,7 @@ function tHead(...cols){
 function renderDashboard(){
   const stats = [
     {icon:'bi-bricks',        val:DB.services.filter(s=>s.status==='active').length, label:'Active Services',    bg:'rgba(10,61,98,.07)', ic:'#0a3d62'},
-    {icon:'bi-newspaper',     val:DB.blog.filter(b=>b.status==='published').length,  label:'Published Posts',   bg:'rgba(5,150,105,.07)',ic:'#059669'},
+    {icon:'bi-newspaper',     val:DB.blog.length,  label:'Blog Posts',   bg:'rgba(5,150,105,.07)',ic:'#059669'},
     {icon:'bi-images',        val:DB.services.filter(s=>s.img_1||s.img_2).length, label:'Services with images', bg:'rgba(124,58,237,.07)',ic:'#7c3aed'},
     {icon:'bi-envelope-open', val:DB.quotes.filter(q=>q.status==='pending'||q.status==='new').length, label:'New Quote Requests', bg:'rgba(217,119,6,.07)',ic:'#d97706'},
   ];
@@ -515,10 +528,9 @@ function renderDashboard(){
     <div style="display:flex;align-items:start;gap:10px;padding:10px 0;border-bottom:1px solid #f0f2f5;">
       ${iconBox('bi-file-earmark-text','#f6f8fb','#6a7787')}
       <div style="flex:1;min-width:0;">
-        <div class="clamp1" style="font-size:13px;font-weight:500;color:#071a2c;line-height:1.4;">${b.title}</div>
-        <div style="font-size:11px;color:#6a7787;margin-top:2px;">${b.cat} · ${b.date}</div>
+        <div class="clamp1" style="font-size:13px;font-weight:500;color:#071a2c;line-height:1.4;">${escAttr(b.title)}</div>
+        <div style="font-size:11px;color:#6a7787;margin-top:2px;">${escAttr(b.service_name || '—')} · ${escAttr(b.date || '')}</div>
       </div>
-      ${pill(b.status)}
     </div>`).join('');
 
   document.getElementById('mainContent').innerHTML = `
@@ -877,24 +889,59 @@ function editServicePrice(id){
 }
 
 /* ══════════════ BLOG ══════════════ */
+const BLOG_FORM_FIELDS = [
+  {n:'title', l:'หัวข้อบทความ', t:'text', r:true},
+  {n:'slug', l:'Slug', t:'text', r:true, ph:'กำแพงกันดิน-คืออะไร'},
+  {n:'service_id', l:'บริการที่เกี่ยวข้อง', t:'svc'},
+  {n:'cover_image', l:'รูปปก (cover_image)', t:'image'},
+  {n:'author', l:'ผู้เขียน', t:'text', ph:'ทีมงาน'},
+  {n:'geo', l:'พิกัด (lat,lng)', t:'text', ph:'13.836991,100.443780'},
+  {n:'description', l:'คำอธิบายสั้น', t:'area'},
+  {n:'content', l:'เนื้อหา (HTML content)', t:'area-lg', ph:'<p>เนื้อหาบทความ...</p>'},
+];
+
+function buildBlogFormData(form){
+  const fd = new FormData();
+  fd.append('title', fieldValue(form, 'title'));
+  fd.append('slug', fieldValue(form, 'slug'));
+  const serviceId = fieldValue(form, 'service_id');
+  if(serviceId) fd.append('service_id', serviceId);
+  fd.append('author', fieldValue(form, 'author') || 'ทีมงาน');
+  fd.append('geo', fieldValue(form, 'geo') || '13.836991,100.443780');
+  fd.append('description', fieldValue(form, 'description'));
+  fd.append('content', fieldValue(form, 'content'));
+  const coverPath = fieldValue(form, 'cover_image');
+  if(coverPath) fd.append('cover_image', coverPath);
+  const cover = form.querySelector('[name="cover_image_file"]');
+  const maxBytes = 2 * 1024 * 1024;
+  if(cover?.files?.[0]){
+    if(cover.files[0].size > maxBytes) throw new Error('รูปปกใหญ่เกิน 2 MB');
+    fd.append('cover_image_file', cover.files[0]);
+  }
+  return fd;
+}
+
 function renderBlog(q=''){
-  const list = q ? DB.blog.filter(b=>b.title.includes(q)||b.cat.includes(q)) : DB.blog;
+  const list = DB.blog;
   const rows = list.map(b=>`
     <tr>
-      <td style="padding:12px 16px;max-width:300px;">
-        <div class="clamp1" style="font-weight:500;font-size:14px;color:#071a2c;">${b.title}</div>
+      <td style="padding:12px 16px;">${serviceThumb(b.cover_image)}</td>
+      <td style="padding:12px 16px;max-width:320px;">
+        <div class="clamp1" style="font-weight:600;font-size:14px;color:#071a2c;">${escAttr(b.title)}</div>
+        <div style="font-size:11px;color:#6a7787;font-family:monospace;">${escAttr(b.slug)}</div>
       </td>
-      <td style="padding:12px 16px;">
-        <span style="background:#f6f8fb;border:1px solid #e3e7ee;color:#36475a;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:500;">${b.cat}</span>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;white-space:nowrap;">${escAttr(b.service_name || '—')}</td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;">${escAttr(b.author)}</td>
+      <td style="padding:12px 16px;text-align:center;">
+        ${b.has_content
+          ? '<span style="display:inline-flex;align-items:center;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:600;background:#ecfdf5;color:#065f46;">มี content</span>'
+          : '<span style="font-size:12px;color:#9ca3af;">—</span>'}
       </td>
-      <td style="padding:12px 16px;font-size:13px;color:#36475a;">${b.author}</td>
-      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${b.date}</td>
-      <td style="padding:12px 16px;font-size:13px;color:#6a7787;font-family:monospace;">${b.views>0?b.views.toLocaleString():'—'}</td>
-      <td style="padding:12px 16px;">${pill(b.status)}</td>
+      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${escAttr(b.date)}</td>
       <td style="padding:12px 16px;">
         <div style="display:flex;gap:6px;">
           ${actionBtn('bi-pencil','#3b82f6',`editBlog(${b.id})`)}
-          ${actionBtn('bi-trash3','#ef4444',`deleteItem('blog',${b.id},'${b.title.substring(0,25).replace(/'/g,'')}...')`)}
+          ${actionBtn('bi-trash3','#ef4444',`deleteItem('blog',${b.id},'${String(b.title).substring(0,25).replace(/'/g, "\\'")}...')`)}
         </div>
       </td>
     </tr>`).join('');
@@ -902,31 +949,34 @@ function renderBlog(q=''){
   document.getElementById('mainContent').innerHTML = `
     <div style="padding:24px;">
       ${pageHdr('Blog Posts',`${DB.blog.length} บทความ`,'+ เพิ่มบทความ','addBlog()')}
-      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:820px;">
-        ${tHead('หัวข้อ','หมวดหมู่','ผู้เขียน','วันที่','Views','สถานะ','Actions')}
-        <tbody>${rows}</tbody>
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 16px;font-size:13px;color:#1e40af;display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+        <i class="bi bi-info-circle"></i>
+        จัดการบทความในตาราง blogs — ผูกบริการ + อัปโหลดรูปปกได้ในฟอร์ม
+      </div>
+      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:900px;">
+        ${tHead('ปก','หัวข้อ','บริการ','ผู้เขียน','Content','วันที่','Actions')}
+        <tbody>${rows || '<tr><td colspan="7" style="padding:24px;text-align:center;color:#6a7787;">ยังไม่มีบทความ</td></tr>'}</tbody>
       </table></div>`)}
     </div>`;
 }
 
 function addBlog(){
-  openModal('Add Blog Post',{},[
-    {n:'title', l:'หัวข้อบทความ', t:'text', r:true},
-    {n:'cat',   l:'หมวดหมู่',     t:'text', r:true, ph:'เทคนิคก่อสร้าง'},
-    {n:'author',l:'ผู้เขียน',      t:'text', r:true},
-    {n:'date',  l:'วันที่',        t:'date', r:true},
-    {n:'status',l:'สถานะ',         t:'sel',  opts:['draft','published']},
-  ], d=>{ DB.blog.unshift({id:Date.now(),views:0,...d}); renderBlog(); toast('เพิ่มบทความเรียบร้อย'); });
+  openModal('Add Blog Post',{author:'ทีมงาน',geo:'13.836991,100.443780'},BLOG_FORM_FIELDS, async form=>{
+    const res = await apiForm(API.blogs, 'POST', buildBlogFormData(form));
+    DB.blog.unshift(res.blog);
+    renderBlog();
+    toast(res.message);
+  }, {wide:true, multipart:true});
 }
 function editBlog(id){
   const b=DB.blog.find(x=>x.id===id);
-  openModal('Edit Blog Post',b,[
-    {n:'title', l:'หัวข้อบทความ', t:'text', r:true},
-    {n:'cat',   l:'หมวดหมู่',     t:'text', r:true},
-    {n:'author',l:'ผู้เขียน',      t:'text', r:true},
-    {n:'date',  l:'วันที่',        t:'date'},
-    {n:'status',l:'สถานะ',         t:'sel',  opts:['draft','published']},
-  ], d=>{ Object.assign(b,d); renderBlog(); toast('บันทึกเรียบร้อย'); });
+  openModal('Edit Blog Post',b,BLOG_FORM_FIELDS, async form=>{
+    const res = await apiForm(API.blog(id), 'PUT', buildBlogFormData(form));
+    const idx = DB.blog.findIndex(x=>x.id===id);
+    if(idx >= 0) DB.blog[idx] = res.blog;
+    renderBlog();
+    toast(res.message);
+  }, {wide:true, multipart:true});
 }
 
 function imageField(name, value = ''){
@@ -1059,7 +1109,7 @@ function openModal(title, data, fields, onSave, opts = {}){
     if(f.t==='area-lg') return `<textarea ${base} rows="12" placeholder="${escAttr(f.ph||'')}" ${sty} style="width:100%;border-radius:10px;border:1px solid #e3e7ee;padding:9px 12px;font-size:13px;line-height:1.5;outline:none;font-family:monospace;transition:border-color .15s;resize:vertical;min-height:180px;"
       onfocus="this.style.borderColor='#0a3d62'" onblur="this.style.borderColor='#e3e7ee'">${escTextarea(v)}</textarea>`;
     if(f.t==='cat') return categoryField(data);
-    if(f.t==='svc') return serviceField(data);
+    if(f.t==='svc') return serviceField(data, null, !!f.r);
     if(f.t==='ptype') return priceTypeField(data);
     if(f.t==='image') return imageField(f.n, (data&&data[f.n]!=null)?data[f.n]:'');
     if(f.t==='sel') return `<select ${base} ${sty} style="width:100%;border-radius:10px;border:1px solid #e3e7ee;padding:9px 12px;font-size:14px;outline:none;font-family:inherit;background:#fff;">${(f.opts||[]).map(o=>`<option value="${o}"${v===o?' selected':''}>${o}</option>`).join('')}</select>`;
@@ -1172,6 +1222,19 @@ function deleteItem(type,id,name){
       }
       return;
     }
+    if(type === 'blog'){
+      try{
+        await apiFetch(API.blog(id), {method:'DELETE'});
+        DB.blog = DB.blog.filter(x=>x.id!==id);
+        closeConfirm();
+        renderBlog();
+        toast('ลบรายการเรียบร้อย','del');
+      }catch(err){
+        closeConfirm();
+        toast(err.message);
+      }
+      return;
+    }
     DB[type]=DB[type].filter(x=>x.id!==id);
     closeConfirm();
     navigate(currentPage);
@@ -1196,7 +1259,7 @@ document.getElementById('confirmOverlay').addEventListener('click',e=>{ if(e.tar
 
 /* ══════════════ INIT ══════════════ */
 renderNav();
-Promise.all([loadServices(), loadQuotes()])
+Promise.all([loadServices(), loadQuotes(), loadBlogs()])
   .then(() => navigate('dashboard'))
   .catch(() => navigate('dashboard'));
 </script>

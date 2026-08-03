@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutUsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\AdminController;
+use App\Http\Controllers\Backend\BlogController as BackendBlogController;
 use App\Http\Controllers\Backend\ContactMessageController;
 use App\Http\Controllers\Backend\ServiceCategoryController;
 use App\Http\Controllers\Backend\ServiceController as BackendServiceController;
@@ -131,6 +132,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::get('/contact-messages', [ContactMessageController::class, 'index'])->name('contact-messages.index');
         Route::put('/contact-messages/{contactMessage}', [ContactMessageController::class, 'update'])->name('contact-messages.update');
         Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
+
+        Route::get('/blogs', [BackendBlogController::class, 'index'])->name('blogs.index');
+        Route::post('/blogs', [BackendBlogController::class, 'store'])->name('blogs.store');
+        Route::put('/blogs/{blog}', [BackendBlogController::class, 'update'])->name('blogs.update');
+        Route::delete('/blogs/{blog}', [BackendBlogController::class, 'destroy'])->name('blogs.destroy');
     });
 });
 

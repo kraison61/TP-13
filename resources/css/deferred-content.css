@@ -228,6 +228,22 @@
         @apply my-6 border-l-4 border-accent/40 pl-5 italic text-muted;
     }
 
+    blockquote p:last-child {
+        @apply mb-0;
+    }
+
+    .blog-video,
+    .embed-responsive {
+        @apply relative my-6 w-full max-w-full overflow-hidden rounded-2xl bg-navy-900 shadow-md ring-1 ring-line;
+        padding-top: 56.25%;
+    }
+
+    .blog-video iframe,
+    .embed-responsive iframe,
+    .embed-responsive-item {
+        @apply absolute inset-0 h-full w-full max-w-full border-0;
+    }
+
     figure {
         @apply my-6;
     }

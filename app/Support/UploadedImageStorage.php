@@ -21,9 +21,17 @@ final class UploadedImageStorage
         );
 
         // R2 does not support per-object ACLs — omit visibility.
-        $path = $file->storeAs($directory, $filename, [
-            'disk' => 's3',
-        ]);
+        try {
+            $path = $file->storeAs($directory, $filename, [
+                'disk' => 's3',
+            ]);
+        } catch (\Throwable $e) {
+            report($e);
+
+            throw ValidationException::withMessages([
+                'file' => 'อัปโหลดไม่สำเร็จ: '.$e->getMessage(),
+            ]);
+        }
 
         if (! is_string($path) || $path === '') {
             throw ValidationException::withMessages([
