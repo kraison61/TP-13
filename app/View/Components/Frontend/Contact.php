@@ -3,6 +3,7 @@
 namespace App\View\Components\Frontend;
 
 use App\Models\Service;
+use App\Support\CompanyPhone;
 use App\Support\FrontendCache;
 use Closure;
 use Illuminate\Contracts\View\View;
@@ -16,6 +17,9 @@ class Contact extends Component
 
     public Collection $services;
 
+    /** @var array{phone: string, phone_formatted: string} */
+    public array $defaultPhone;
+
     public function __construct()
     {
         $reference = session('quote_reference');
@@ -26,13 +30,27 @@ class Contact extends Component
         }
 
         $this->reference = $reference;
+        $this->defaultPhone = CompanyPhone::forCurrentRequest();
 
         $this->services = Service::hydrate(
-            FrontendCache::remember('contact.services', fn () => Service::query()
-                ->where('is_active', true)
-                ->orderBy('title')
-                ->get(['id', 'title'])
-                ->toArray())
+            FrontendCache::remember('contact.services.v3', function () {
+                return Service::query()
+                    ->with('category:id,slug')
+                    ->where('is_active', true)
+                    ->orderBy('title')
+                    ->get(['id', 'title', 'service_category_id'])
+                    ->map(function (Service $service) {
+                        $phone = CompanyPhone::forService($service);
+
+                        return [
+                            'id' => $service->id,
+                            'title' => $service->title,
+                            'contact_phone' => $phone['phone'],
+                            'contact_phone_formatted' => $phone['phone_formatted'],
+                        ];
+                    })
+                    ->all();
+            })
         );
     }
 

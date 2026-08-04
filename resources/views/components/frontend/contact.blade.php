@@ -27,9 +27,12 @@
         <x-icon name="telephone-fill" class="text-hivis text-xl shrink-0" />
         <div>
             <div class="text-[13px] text-white/50">โทรเลย</div>
-            <a href="tel:{{ config('company.phone') }}"
+            <a id="contactPhoneLink"
+               href="tel:{{ $defaultPhone['phone'] }}"
+               data-default-phone="{{ $defaultPhone['phone'] }}"
+               data-default-formatted="{{ $defaultPhone['phone_formatted'] }}"
                class="font-mono tabular-nums text-xl font-semibold hover:text-hivis transition">
-                {{ config('company.phone_formatted') }}
+                <span id="contactPhoneText">{{ $defaultPhone['phone_formatted'] }}</span>
             </a>
         </div>
     </li>
@@ -135,7 +138,11 @@
                             class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition bg-white">
                         <option value="">เลือกประเภทงาน...</option>
                         @foreach ($services as $service)
-                            <option value="{{ $service->title }}">{{ $service->title }}</option>
+                            <option value="{{ $service->title }}"
+                                    data-phone="{{ $service->contact_phone }}"
+                                    data-phone-formatted="{{ $service->contact_phone_formatted }}">
+                                {{ $service->title }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -151,7 +158,7 @@
                 </div>
                 <div class="sm:col-span-2">
                     <label class="block text-sm font-medium text-navy-900 mb-1.5">รายละเอียดงาน</label>
-                    <textarea name="detail" rows="4" placeholder="เช่น ขนาดพื้นที่, ความสูง, ระยะเวลาที่ต้องการ ฯลฯ"
+                    <textarea name="detail" rows="4" placeholder="เช่น ที่อยู่หน้างาน (ตำบล อำเภอ จังหวัด), พิกัด google map, ขนาดพื้นที่, ความสูง, ระยะเวลาที่ต้องการ ฯลฯ"
                               class="w-full rounded-xl border border-line px-4 py-3 outline-none focus:border-accent focus:ring-2 focus:ring-accent/15 transition"></textarea>
                 </div>
                 <label class="sm:col-span-2 flex items-center gap-2.5 text-sm text-ink2">

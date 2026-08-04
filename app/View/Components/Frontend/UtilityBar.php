@@ -2,23 +2,21 @@
 
 namespace App\View\Components\Frontend;
 
+use App\Support\CompanyPhone;
 use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
 class UtilityBar extends Component
 {
-    /**
-     * Create a new component instance.
-     */
+    /** @var array{phone: string, phone_formatted: string} */
+    public array $contactPhone;
+
     public function __construct()
     {
-        //
+        $this->contactPhone = CompanyPhone::forCurrentRequest();
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     */
     public function render(): View|Closure|string
     {
         return view('components.frontend.utility-bar');

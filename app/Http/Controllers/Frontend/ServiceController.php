@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Frontend;
 use App\Models\Service;
 
 use App\Http\Controllers\Controller;
+use App\Support\CompanyPhone;
 use App\Support\ServicePageSchema;
 use Illuminate\Http\Request;
 
@@ -96,6 +97,7 @@ class ServiceController extends Controller
         ];
 
         $serviceSchemaLd = ServicePageSchema::graph($service);
+        $contactPhone = CompanyPhone::forService($service);
 
         $breadcrumbCurrent = $service->title;
         $breadcrumbParents = [
@@ -109,6 +111,7 @@ class ServiceController extends Controller
             'portfolios',
             'steps',
             'serviceSchemaLd',
+            'contactPhone',
             'breadcrumbCurrent',
             'breadcrumbParents',
         ));

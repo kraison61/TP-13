@@ -53,6 +53,9 @@ if (quoteForm) {
     const tierMap = Object.fromEntries(voucherTiers.map((t) => [t.budget, t]));
 
     const budgetSelect = document.getElementById('budgetSelect');
+    const serviceSelect = document.getElementById('serviceSelect');
+    const contactPhoneLink = document.getElementById('contactPhoneLink');
+    const contactPhoneText = document.getElementById('contactPhoneText');
     const voucherAmount = document.getElementById('voucherAmount');
     const voucherMessage = document.getElementById('voucherMessage');
     const voucherTerms = document.getElementById('voucherTerms');
@@ -62,6 +65,21 @@ if (quoteForm) {
     const quoteErrorText = document.getElementById('quoteErrorText');
     const quoteOK = document.getElementById('quoteOK');
     const quoteSubmitBtn = document.getElementById('quoteSubmitBtn');
+
+    const setContactPhone = (phone, formatted) => {
+        if (!contactPhoneLink || !contactPhoneText || !phone || !formatted) return;
+        contactPhoneLink.href = `tel:${phone}`;
+        contactPhoneText.textContent = formatted;
+    };
+
+    const syncContactPhoneFromService = () => {
+        const selected = serviceSelect?.selectedOptions?.[0];
+        const phone = selected?.dataset?.phone || contactPhoneLink?.dataset?.defaultPhone;
+        const formatted = selected?.dataset?.phoneFormatted || contactPhoneLink?.dataset?.defaultFormatted;
+        setContactPhone(phone, formatted);
+    };
+
+    serviceSelect?.addEventListener('change', syncContactPhoneFromService);
 
     const setVoucherDefault = () => {
         voucherAmount.textContent = voucherDefault.amount_label || 'สูงสุด 20,000 บาท';
@@ -91,6 +109,7 @@ if (quoteForm) {
     });
 
     setVoucherDefault();
+    syncContactPhoneFromService();
 
     const termsModal = document.getElementById('voucherTermsModal');
     const openTermsModal = () => {
@@ -152,6 +171,7 @@ if (quoteForm) {
             quoteForm.reset();
             setVoucherDefault();
             budgetSelect.selectedIndex = 0;
+            syncContactPhoneFromService();
 
             setTimeout(() => quoteOK.classList.add('hidden'), 8000);
         } catch {

@@ -40,6 +40,9 @@ class ServicePageSchema
             'serviceType' => $service->schema_type ?: $service->title,
             'description' => $service->plain_description ?: $service->title,
             'url' => $serviceUrl,
+            'telephone' => OrganizationSchema::formatTelephone(
+                CompanyPhone::forService($service)['phone']
+            ),
             'brand' => [
                 '@type' => 'Brand',
                 'name' => config('frontend.schema.alternate_name'),

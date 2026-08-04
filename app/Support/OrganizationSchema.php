@@ -154,7 +154,7 @@ class OrganizationSchema
         return self::baseUrl().'/'.ltrim($path, '/');
     }
 
-    private static function formatTelephone(string $phone): string
+    public static function formatTelephone(string $phone): string
     {
         $digits = preg_replace('/\D+/', '', $phone) ?? $phone;
 

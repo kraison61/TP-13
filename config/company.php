@@ -13,6 +13,21 @@ return [
     'team_size' => '20+',
     'phone' => '0627188847',
     'phone_formatted' => '062-718-8847',
+
+    /*
+    | Phone for CCTV, electrical/cabling, network, and computer services.
+    | Matched by service_categories.slug.
+    */
+    'department_phone' => [
+        'phone' => '0615639228',
+        'phone_formatted' => '061-563-9228',
+        'category_slugs' => [
+            'cabling',
+            'cctv',
+            'computer-network',
+            'computer-system',
+        ],
+    ],
     'email' => 'theeraphong.services@gmail.com',
     'address' => '14 หมู่ 5 ต.บางกร่าง อ.เมืองนนทบุรี จ.นนทบุรี 11000',
     'tax_id' => '0125568011574',

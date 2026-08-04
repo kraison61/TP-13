@@ -34,10 +34,10 @@
             <h3 class="text-white font-semibold mb-3.5 text-[15px]">ติดต่อ</h3>
             <ul class="space-y-2.5 text-[15px]">
                 <li>
-                    <a href="tel:{{ config('company.phone') }}"
+                    <a href="tel:{{ $contactPhone['phone'] }}"
                        class="inline-flex items-center hover:text-white transition">
                         <x-icon name="telephone-fill" class="text-hivis mr-2 inline-block" />
-                        <span class="font-mono tabular-nums">{{ config('company.phone_formatted') }}</span>
+                        <span class="font-mono tabular-nums">{{ $contactPhone['phone_formatted'] }}</span>
                     </a>
                 </li>
                 <li>
