@@ -144,6 +144,8 @@ let DB = {
   priceTypes:{},
   blog:[],
   blogServices:[],
+  images:[],
+  imageServices:[],
   users:[],
   quotes:[],
 };
@@ -156,9 +158,13 @@ const NAV = [
   {id:'services',  icon:'bi-bricks',          label:'Services',    bread:'Content'},
   {id:'prices',    icon:'bi-tag-fill',        label:'Service Prices',bread:'Content'},
   {id:'blog',      icon:'bi-newspaper',       label:'Blog Posts',  bread:'Content'},
+  {id:'images',    icon:'bi-images',          label:'Images',      bread:'Media'},
   {id:'users',     icon:'bi-people-fill',     label:'Users',       bread:'Settings'},
 ];
 let currentPage = 'dashboard';
+let currentImageLocation = null;
+let imageCategoryFilter = 'all';
+let imageSearchQuery = '';
 
 function renderNav(){
   document.getElementById('sideNav').innerHTML = NAV.map(n=>`
@@ -218,6 +224,15 @@ function navigate(page){
       .catch(err => { toast(err.message); });
     return;
   }
+  if(page === 'images'){
+    currentImageLocation = null;
+    imageCategoryFilter = 'all';
+    imageSearchQuery = '';
+    loadImages()
+      .then(() => renderImages())
+      .catch(err => { toast(err.message); });
+    return;
+  }
   if(page === 'dashboard'){
     Promise.all([loadServices(), loadQuotes(), loadBlogs()])
       .then(() => renderDashboard())
@@ -225,7 +240,7 @@ function navigate(page){
     return;
   }
   ({dashboard:renderDashboard,categories:renderCategories,services:renderServices,prices:renderPrices,
-    blog:renderBlog,users:renderUsers,quotes:renderQuotes})[page]();
+    blog:renderBlog,images:renderImages,users:renderUsers,quotes:renderQuotes})[page]();
 }
 
 function handleSearch(q){
@@ -234,6 +249,7 @@ function handleSearch(q){
   else if(currentPage==='services') renderServices(q);
   else if(currentPage==='prices') loadServicePrices(q).then(() => renderPrices()).catch(err => toast(err.message));
   else if(currentPage==='blog') loadBlogs(q).then(() => renderBlog(q)).catch(err => toast(err.message));
+  else if(currentPage==='images'){ imageSearchQuery = q; currentImageLocation = null; renderImages(); }
   else if(currentPage==='users') loadUsers(q).then(() => renderUsers()).catch(err => toast(err.message));
 }
 
@@ -251,6 +267,9 @@ const API = {
   user: id => `/admin/api/users/${id}`,
   contactMessages: '/admin/api/contact-messages',
   contactMessage: id => `/admin/api/contact-messages/${id}`,
+  images: '/admin/api/images',
+  image: id => `/admin/api/images/${id}`,
+  imageLocations: '/admin/api/images/locations',
 };
 const AUTH_USER_ID = {{ (int) auth()->id() }};
 
@@ -386,6 +405,14 @@ async function loadBlogs(q = ''){
   DB.blogServices = data.services;
 }
 
+async function loadImages(q = ''){
+  const url = new URL(API.images, window.location.origin);
+  if(q) url.searchParams.set('q', q);
+  const data = await apiFetch(url);
+  DB.images = data.images;
+  DB.imageServices = data.services;
+}
+
 function pricePayload(d){
   return {
     service_id: Number(d.service_id),
@@ -401,8 +428,16 @@ function pricePayload(d){
   };
 }
 
+function firstFilledList(...lists){
+  return lists.find(list => Array.isArray(list) && list.length > 0) || [];
+}
+
 function serviceField(data = {}, list = null, required = true){
-  const services = list || DB.blogServices || DB.priceServices || DB.services || [];
+  const pageList = currentPage === 'blog' ? DB.blogServices
+    : currentPage === 'images' ? DB.imageServices
+    : currentPage === 'prices' ? DB.priceServices
+    : DB.services;
+  const services = firstFilledList(list, pageList, DB.blogServices, DB.imageServices, DB.priceServices, DB.services);
   const opts = services.map(s =>
     `<option value="${s.id}"${String(data.service_id) === String(s.id) ? ' selected' : ''}>${s.title || s.name}</option>`
   ).join('');
@@ -474,7 +509,7 @@ function iconBox(cls,c='rgba(10,61,98,.08)',ic='#0a3d62'){ return `<span style="
 function wrap(inner){ return `<div style="background:#fff;border-radius:16px;border:1px solid #e3e7ee;overflow:hidden;">${inner}</div>`; }
 
 function actionBtn(icon, color, onclick){
-  return `<button onclick="${onclick}" style="width:30px;height:30px;display:grid;place-items:center;border-radius:8px;border:1px solid #e3e7ee;background:#fff;cursor:pointer;color:#6a7787;transition:all .15s;"
+  return `<button onclick="${escAttr(onclick)}" style="width:30px;height:30px;display:grid;place-items:center;border-radius:8px;border:1px solid #e3e7ee;background:#fff;cursor:pointer;color:#6a7787;transition:all .15s;"
     onmouseover="this.style.borderColor='${color}';this.style.color='${color}';this.style.background='${color}15'"
     onmouseout="this.style.borderColor='#e3e7ee';this.style.color='#6a7787';this.style.background='#fff'">
     <i class="bi ${icon}" style="font-size:12px;"></i></button>`;
@@ -998,6 +1033,304 @@ function imageField(name, value = ''){
   </div>`;
 }
 
+/* ══════════════ IMAGES (grouped by location, same as /galleries) ══════════════ */
+const IMAGE_MAX_BYTES = 4 * 1024 * 1024;
+const IMAGE_MAX_FILES = 20;
+const IMAGE_EMPTY_LOCATION = '(ไม่มีสถานที่)';
+const IMAGE_FORM_FIELDS_CREATE = [
+  {n:'service_id', l:'บริการที่เกี่ยวข้อง', t:'svc', r:true},
+  {n:'location', l:'สถานที่ (ชื่อโครงการในคลังผลงาน)', t:'text', r:true, ph:'กำแพงกันดิน ไทรม้า 19'},
+  {n:'worked_date', l:'วันที่ถ่าย/วันทำงาน', t:'date'},
+  {n:'files', l:'ไฟล์รูป', t:'files', r:true},
+];
+const IMAGE_FORM_FIELDS_EDIT = [
+  {n:'service_id', l:'บริการที่เกี่ยวข้อง', t:'svc', r:true},
+  {n:'location', l:'สถานที่ (ชื่อโครงการในคลังผลงาน)', t:'text', r:true, ph:'กำแพงกันดิน ไทรม้า 19'},
+  {n:'worked_date', l:'วันที่ถ่าย/วันทำงาน', t:'date'},
+  {n:'file', l:'เปลี่ยนรูป (เว้นว่างถ้าไม่เปลี่ยน)', t:'file'},
+];
+
+function galleryFilesField(){
+  return `<div style="border:1px dashed #e3e7ee;border-radius:14px;padding:12px;background:#fafbfd;">
+    <input type="file" name="files[]" multiple required accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+      style="width:100%;font-size:13px;font-family:inherit;"
+      onchange="this.nextElementSibling.textContent = (this.files?.length || 0) + ' ไฟล์ที่เลือก'"/>
+    <div style="font-size:11px;color:#6a7787;margin-top:6px;">ยังไม่ได้เลือกไฟล์</div>
+    <div style="font-size:11px;color:#6a7787;margin-top:4px;">เลือกได้หลายไฟล์ · สูงสุด ${IMAGE_MAX_FILES} ไฟล์ · ไม่เกิน 4 MB ต่อไฟล์ · ชื่อ {service-slug}-uuid-timestamp</div>
+  </div>`;
+}
+
+function galleryFileField(data = {}){
+  const v = data.img_url || '';
+  const previewSrc = serviceImgUrl(v);
+  const preview = previewSrc
+    ? `<img src="${escAttr(previewSrc)}?width=160&format=webp&fit=cover" alt="" style="width:72px;height:72px;object-fit:cover;border-radius:12px;border:1px solid #e3e7ee;background:#f6f8fb;"/>`
+    : `<div style="width:72px;height:72px;border-radius:12px;border:1px dashed #e3e7ee;background:#f6f8fb;display:grid;place-items:center;color:#9ca3af;"><i class="bi bi-image" style="font-size:20px;"></i></div>`;
+
+  return `<div style="display:flex;gap:12px;align-items:center;border:1px dashed #e3e7ee;border-radius:14px;padding:12px;background:#fafbfd;">
+    ${preview}
+    <div style="flex:1;min-width:0;">
+      <input type="file" name="file" accept="image/jpeg,image/png,image/webp,image/gif,image/avif"
+        style="width:100%;font-size:13px;font-family:inherit;"/>
+      ${v ? `<div style="font-size:11px;color:#6a7787;margin-top:6px;font-family:monospace;" class="clamp1">${escAttr(v)}</div>` : ''}
+      <div style="font-size:11px;color:#6a7787;margin-top:4px;">เว้นว่างเพื่อเก็บรูปเดิม · สูงสุด 4 MB</div>
+    </div>
+  </div>`;
+}
+
+function appendImageFiles(fd, form, requireFiles){
+  const input = form.querySelector('[name="files[]"]');
+  const files = [...(input?.files || [])];
+  if(requireFiles && files.length === 0) throw new Error('กรุณาเลือกไฟล์รูปอย่างน้อย 1 ไฟล์');
+  if(files.length > IMAGE_MAX_FILES) throw new Error(`อัปโหลดได้สูงสุด ${IMAGE_MAX_FILES} ไฟล์ต่อครั้ง`);
+  files.forEach(file => {
+    if(file.size > IMAGE_MAX_BYTES) throw new Error(`ไฟล์ "${file.name}" ใหญ่เกิน 4 MB`);
+    fd.append('files[]', file);
+  });
+}
+
+function buildImageFormData(form, {multiple = false, requireFile = false} = {}){
+  const fd = new FormData();
+  fd.append('service_id', fieldValue(form, 'service_id'));
+  fd.append('location', fieldValue(form, 'location'));
+  const date = fieldValue(form, 'worked_date');
+  if(date) fd.append('worked_date', date);
+  if(multiple){
+    appendImageFiles(fd, form, requireFile);
+    return fd;
+  }
+  const file = form.querySelector('[name="file"]')?.files?.[0];
+  if(file){
+    if(file.size > IMAGE_MAX_BYTES) throw new Error('รูปใหญ่เกิน 4 MB');
+    fd.append('file', file);
+  } else if(requireFile){
+    throw new Error('กรุณาเลือกไฟล์รูป');
+  }
+  return fd;
+}
+
+function imageLocationKey(img){
+  const loc = String(img?.location || '').trim();
+  return loc || IMAGE_EMPTY_LOCATION;
+}
+
+function imagesInLocation(locationKey){
+  return (DB.images || []).filter(img => imageLocationKey(img) === locationKey);
+}
+
+function imageGroups(){
+  const map = new Map();
+  (DB.images || []).forEach(img => {
+    const key = imageLocationKey(img);
+    if(!map.has(key)) map.set(key, []);
+    map.get(key).push(img);
+  });
+  let groups = [...map.entries()].map(([location, images]) => ({
+    location,
+    rawLocation: String(images[0]?.location || '').trim(),
+    cover: images[images.length - 1] || images[0],
+    count: images.length,
+    category_name: images[0]?.category_name || 'อื่นๆ',
+    service_name: images[0]?.service_name || '',
+    images,
+  }));
+  const q = (imageSearchQuery || '').trim();
+  if(q){
+    groups = groups.filter(g =>
+      g.location.includes(q) ||
+      (g.service_name || '').includes(q) ||
+      (g.category_name || '').includes(q)
+    );
+  }
+  if(imageCategoryFilter && imageCategoryFilter !== 'all'){
+    groups = groups.filter(g => g.category_name === imageCategoryFilter);
+  }
+  return groups;
+}
+
+function imageCategoryChips(){
+  const cats = [...new Set((DB.images || []).map(img => img.category_name || 'อื่นๆ'))].sort();
+  const options = ['ทั้งหมด', ...cats];
+  return `<div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px;">
+    ${options.map(label => {
+      const value = label === 'ทั้งหมด' ? 'all' : label;
+      const active = imageCategoryFilter === value;
+      return `<button type="button" onclick="setImageCategory(${escAttr(JSON.stringify(value))})"
+        style="cursor:pointer;height:34px;padding:0 14px;border-radius:99px;font-size:13px;font-weight:600;font-family:inherit;border:1.5px solid #071a2c;transition:all .15s;${active ? 'background:#071a2c;color:#fff;' : 'background:#fff;color:#071a2c;'}">${escAttr(label)}</button>`;
+    }).join('')}
+  </div>`;
+}
+
+function setImageCategory(cat){
+  imageCategoryFilter = cat || 'all';
+  currentImageLocation = null;
+  renderImages();
+}
+
+function openImageGroup(locationKey){
+  currentImageLocation = locationKey;
+  renderImages();
+}
+
+function closeImageGroup(){
+  currentImageLocation = null;
+  document.getElementById('headerBread').textContent = 'Media';
+  document.getElementById('headerTitle').textContent = 'Images';
+  renderImages();
+}
+
+function renderImages(){
+  if(currentImageLocation != null){
+    if(imagesInLocation(currentImageLocation).length === 0){
+      currentImageLocation = null;
+    } else {
+      renderImageGroup(currentImageLocation);
+      return;
+    }
+  }
+  renderImageProjects();
+}
+
+function renderImageProjects(){
+  document.getElementById('headerBread').textContent = 'Media';
+  document.getElementById('headerTitle').textContent = 'Images';
+  const groups = imageGroups();
+  const totalFiles = (DB.images || []).length;
+  const cards = groups.map(g => `
+    <article class="img-card" role="button" tabindex="0" onclick="openImageGroup(${escAttr(JSON.stringify(g.location))})"
+      style="background:#fff;border-radius:16px;border:1px solid #e3e7ee;overflow:hidden;cursor:pointer;transition:box-shadow .2s,transform .2s;"
+      onmouseover="this.style.boxShadow='0 8px 28px rgba(7,26,44,.1)';this.style.transform='translateY(-2px)'"
+      onmouseout="this.style.boxShadow='none';this.style.transform='none'">
+      <div style="position:relative;aspect-ratio:4/3;overflow:hidden;">
+        <img src="${escAttr(serviceImgUrl(g.cover.img_url))}?width=600&format=webp&fit=cover" alt="${escAttr(g.location)}"
+          style="width:100%;height:100%;object-fit:cover;"/>
+        <div style="position:absolute;inset:0;background:linear-gradient(to top,rgba(6,44,74,.94),rgba(10,61,98,.5) 40%,transparent 70%);"></div>
+        <div style="position:absolute;bottom:0;left:0;right:0;padding:16px 16px 14px;">
+          <span style="display:inline-block;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:6px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;">${escAttr(g.category_name)}</span>
+          <h3 class="clamp2" style="color:#fff;font-size:15px;font-weight:700;line-height:1.35;margin:0 0 4px;">${escAttr(g.location)}</h3>
+          <p class="clamp1" style="color:rgba(255,255,255,.7);font-size:12px;margin:0;">${escAttr(g.service_name || '—')}</p>
+        </div>
+      </div>
+      <div style="padding:10px 14px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid #f0f2f5;">
+        <span style="font-size:12px;color:#6a7787;"><i class="bi bi-images" style="margin-right:4px;"></i>${g.count} ภาพ</span>
+        <span style="font-size:12px;font-weight:600;color:#0a3d62;">จัดการ →</span>
+      </div>
+    </article>`).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div style="padding:24px;">
+      ${pageHdr('Images', `${groups.length} โครงการ · ${totalFiles} ไฟล์`, '+ อัปโหลดรูป', 'addImage()')}
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 16px;font-size:13px;color:#1e40af;display:flex;align-items:center;gap:8px;margin-bottom:16px;">
+        <i class="bi bi-info-circle"></i>
+        จัดกลุ่มตามสถานที่เหมือนหน้า /galleries — กดการ์ดเพื่อจัดการรูปในโครงการ
+      </div>
+      ${imageCategoryChips()}
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;">
+        ${cards || '<div style="grid-column:1/-1;padding:28px;text-align:center;color:#6a7787;font-size:14px;">ยังไม่มีโครงการในคลังผลงาน</div>'}
+      </div>
+    </div>`;
+}
+
+function renderImageGroup(locationKey){
+  const photos = imagesInLocation(locationKey);
+  const first = photos[0] || {};
+  const rawLocation = String(first.location || '').trim();
+  document.getElementById('headerBread').textContent = 'Images';
+  document.getElementById('headerTitle').textContent = locationKey;
+
+  const cards = photos.map(img => `
+    <div class="img-card" style="background:#fff;border-radius:14px;border:1px solid #e3e7ee;overflow:hidden;transition:box-shadow .2s;">
+      <div style="position:relative;aspect-ratio:16/10;overflow:hidden;">
+        <img src="${escAttr(serviceImgUrl(img.img_url))}?width=400&format=webp&fit=cover" alt="${escAttr(img.location)}"
+          style="width:100%;height:100%;object-fit:cover;transition:transform .4s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'"/>
+        <div class="img-overlay" style="position:absolute;inset:0;background:linear-gradient(to top,rgba(7,26,44,.7),transparent);display:flex;align-items:flex-end;justify-content:flex-end;padding:10px;gap:6px;">
+          ${actionBtn('bi-pencil','#3b82f6',`editImage(${img.id})`)}
+          ${actionBtn('bi-trash3','#ef4444',`deleteItem('images',${img.id},${JSON.stringify(String(img.location||'รูป'))})`)}
+        </div>
+      </div>
+      <div style="padding:10px 12px;">
+        <div class="clamp1" style="font-size:12px;font-weight:500;color:#071a2c;">${escAttr(img.service_name || img.category_name || '—')}</div>
+        <div style="font-size:11px;color:#6a7787;margin-top:4px;">${escAttr(img.worked_date || img.created_at || '')}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div style="padding:24px;">
+      <button type="button" onclick="closeImageGroup()" style="display:inline-flex;align-items:center;gap:6px;margin-bottom:14px;padding:6px 0;border:none;background:none;color:#0a3d62;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">
+        <i class="bi bi-arrow-left"></i> โครงการทั้งหมด
+      </button>
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+        <div>
+          <h2 style="font-size:20px;font-weight:700;color:#071a2c;">${escAttr(locationKey)}</h2>
+          <p style="font-size:13px;color:#6a7787;margin-top:2px;">${photos.length} ภาพ · ${escAttr(first.service_name || first.category_name || '—')}</p>
+        </div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+          <button type="button" onclick="renameImageGroup(${escAttr(JSON.stringify(rawLocation))},${escAttr(JSON.stringify(locationKey))})"
+            style="display:inline-flex;align-items:center;gap:6px;padding:9px 14px;border-radius:12px;border:1px solid #e3e7ee;background:#fff;color:#36475a;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;">
+            <i class="bi bi-pencil"></i> เปลี่ยนชื่อ
+          </button>
+          <button type="button" onclick="addImageToGroup(${escAttr(JSON.stringify(locationKey))})"
+            style="display:inline-flex;align-items:center;gap:6px;padding:9px 16px;border-radius:12px;border:none;background:#0a3d62;color:#fff;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;"
+            onmouseover="this.style.background='#071a2c'" onmouseout="this.style.background='#0a3d62'">
+            <i class="bi bi-plus-lg"></i> เพิ่มรูป
+          </button>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;">
+        ${cards}
+      </div>
+    </div>`;
+}
+
+function addImage(prefill = {}){
+  openModal('Upload Images', prefill, IMAGE_FORM_FIELDS_CREATE, async form => {
+    const res = await apiForm(API.images, 'POST', buildImageFormData(form, {multiple:true, requireFile:true}));
+    const images = res.images || [];
+    DB.images = [...images, ...DB.images];
+    const loc = images[0] ? imageLocationKey(images[0]) : null;
+    if(loc) currentImageLocation = loc;
+    renderImages();
+    toast(res.message);
+  }, {wide:true, multipart:true});
+}
+
+function addImageToGroup(locationKey){
+  const first = imagesInLocation(locationKey)[0] || {};
+  const raw = String(first.location || '').trim();
+  addImage({
+    location: raw || (locationKey === IMAGE_EMPTY_LOCATION ? '' : locationKey),
+    service_id: first.service_id || '',
+  });
+}
+
+function renameImageGroup(rawLocation, displayLocation){
+  openModal('เปลี่ยนชื่อโครงการ', {location: rawLocation || displayLocation || ''}, [
+    {n:'location', l:'ชื่อโครงการ (location)', t:'text', r:true, ph:'กำแพงกันดิน ไทรม้า 19'},
+  ], async d => {
+    const res = await apiFetch(API.imageLocations, {
+      method: 'PUT',
+      body: JSON.stringify({ from: rawLocation || '', to: d.location }),
+    });
+    await loadImages();
+    currentImageLocation = imageLocationKey({location: d.location});
+    renderImages();
+    toast(res.message);
+  });
+}
+
+function editImage(id){
+  const img = DB.images.find(x => x.id === id);
+  if(!img) return;
+  openModal('Edit Image', img, IMAGE_FORM_FIELDS_EDIT, async form => {
+    const res = await apiForm(API.image(id), 'PUT', buildImageFormData(form, {multiple:false, requireFile:false}));
+    const idx = DB.images.findIndex(x => x.id === id);
+    if(idx >= 0) DB.images[idx] = res.image;
+    if(res.image) currentImageLocation = imageLocationKey(res.image);
+    renderImages();
+    toast(res.message);
+  }, {wide:true, multipart:true});
+}
+
 /* ══════════════ USERS ══════════════ */
 const USER_FORM_FIELDS_CREATE = [
   {n:'name', l:'ชื่อ-นามสกุล', t:'text', r:true},
@@ -1112,6 +1445,8 @@ function openModal(title, data, fields, onSave, opts = {}){
     if(f.t==='svc') return serviceField(data, null, !!f.r);
     if(f.t==='ptype') return priceTypeField(data);
     if(f.t==='image') return imageField(f.n, (data&&data[f.n]!=null)?data[f.n]:'');
+    if(f.t==='files') return galleryFilesField();
+    if(f.t==='file') return galleryFileField(data);
     if(f.t==='sel') return `<select ${base} ${sty} style="width:100%;border-radius:10px;border:1px solid #e3e7ee;padding:9px 12px;font-size:14px;outline:none;font-family:inherit;background:#fff;">${(f.opts||[]).map(o=>`<option value="${o}"${v===o?' selected':''}>${o}</option>`).join('')}</select>`;
     return `<input type="${f.t}" ${base} value="${escAttr(v)}" placeholder="${escAttr(f.ph||'')}" ${sty}/>`;
   };
@@ -1228,6 +1563,19 @@ function deleteItem(type,id,name){
         DB.blog = DB.blog.filter(x=>x.id!==id);
         closeConfirm();
         renderBlog();
+        toast('ลบรายการเรียบร้อย','del');
+      }catch(err){
+        closeConfirm();
+        toast(err.message);
+      }
+      return;
+    }
+    if(type === 'images'){
+      try{
+        await apiFetch(API.image(id), {method:'DELETE'});
+        DB.images = DB.images.filter(x=>x.id!==id);
+        closeConfirm();
+        renderImages();
         toast('ลบรายการเรียบร้อย','del');
       }catch(err){
         closeConfirm();

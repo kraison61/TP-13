@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 
@@ -40,5 +41,18 @@ final class UploadedImageStorage
         }
 
         return str_replace('\\', '/', $path);
+    }
+
+    public static function delete(?string $path): void
+    {
+        if (! is_string($path) || $path === '' || str_starts_with($path, 'http')) {
+            return;
+        }
+
+        try {
+            Storage::disk('s3')->delete($path);
+        } catch (\Throwable $e) {
+            report($e);
+        }
     }
 }

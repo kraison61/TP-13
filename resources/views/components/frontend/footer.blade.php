@@ -8,7 +8,7 @@
             <p class="max-w-sm text-[15px] leading-relaxed">รับเหมาก่อสร้างครบวงจร — กำแพงกันดิน รั้ว ถนน ลานคอนกรีต และงานปรับพื้นที่ ในเขตกรุงเทพฯ และปริมณฑล</p>
             <div class="mt-5 flex gap-2.5">
                 <a href="{{ config('company.facebook') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><x-icon name="facebook" /> Facebook</a>
-                <a href="{{ config('company.line') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><x-icon name="line" /> LINE</a>
+                <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-full bg-white/5 ring-1 ring-white/15 px-3.5 py-2 text-[14px] text-white/80 hover:bg-white/10 transition"><x-icon name="line" /> LINE</a>
             </div>
         </div>
         <div class="md:col-span-2">

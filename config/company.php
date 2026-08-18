@@ -31,7 +31,7 @@ return [
     'email' => 'theeraphong.services@gmail.com',
     'address' => '14 หมู่ 5 ต.บางกร่าง อ.เมืองนนทบุรี จ.นนทบุรี 11000',
     'tax_id' => '0125568011574',
-    'facebook' => 'https://www.facebook.com/theerapongservices',
+    'facebook' => 'https://www.facebook.com/TheeraphongRetainingwall',
     'line_official' => 'https://lin.ee/Qq95f1b',
     'line_official_qr' => 'hhttps://qr-official.line.me/gs/M_650qssxw_GW.png?oat_content=qr',
     'line_official_name' => '@theeraphong',

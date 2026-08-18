@@ -5,6 +5,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BlogController as BackendBlogController;
 use App\Http\Controllers\Backend\ContactMessageController;
+use App\Http\Controllers\Backend\ImageUploadController;
 use App\Http\Controllers\Backend\ServiceCategoryController;
 use App\Http\Controllers\Backend\ServiceController as BackendServiceController;
 use App\Http\Controllers\Backend\ServicePriceController;
@@ -137,6 +138,12 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::post('/blogs', [BackendBlogController::class, 'store'])->name('blogs.store');
         Route::put('/blogs/{blog}', [BackendBlogController::class, 'update'])->name('blogs.update');
         Route::delete('/blogs/{blog}', [BackendBlogController::class, 'destroy'])->name('blogs.destroy');
+
+        Route::get('/images', [ImageUploadController::class, 'index'])->name('images.index');
+        Route::post('/images', [ImageUploadController::class, 'store'])->name('images.store');
+        Route::put('/images/locations', [ImageUploadController::class, 'renameLocation'])->name('images.locations.update');
+        Route::put('/images/{imageUpload}', [ImageUploadController::class, 'update'])->name('images.update');
+        Route::delete('/images/{imageUpload}', [ImageUploadController::class, 'destroy'])->name('images.destroy');
     });
 });
 
