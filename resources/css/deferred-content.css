@@ -2,6 +2,16 @@
 .service-content {
     @apply w-full min-w-0 max-w-full text-[17px] leading-relaxed text-ink2 break-words;
 
+    .blog-content {
+        @apply min-w-0 max-w-full;
+    }
+}
+
+.blog-content {
+    @apply w-full min-w-0 max-w-full text-[16px] leading-relaxed text-ink2 break-words;
+}
+
+:is(.service-content, .blog-content) {
     .service-kicker {
         @apply mb-2 inline-flex max-w-full flex-wrap items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
     }
@@ -46,16 +56,6 @@
         @apply mb-0 text-[15px] leading-relaxed text-ink2;
     }
 
-    .blog-content {
-        @apply min-w-0 max-w-full;
-    }
-}
-
-.blog-content {
-    @apply w-full min-w-0 max-w-full text-[16px] leading-relaxed text-ink2 break-words;
-}
-
-:is(.service-content, .blog-content) {
     :is(h1, h2, h3, h4, h5, h6) {
         @apply max-w-full font-bold text-navy-900 tracking-tight break-words;
     }
@@ -86,7 +86,7 @@
         @apply mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted;
     }
 
-    .blog-meta i { @apply text-accent; }
+    .blog-meta :is(i, .icon) { @apply text-accent; }
 
     .lead {
         @apply mb-8 max-w-full rounded-2xl border-l-4 border-accent bg-surface p-4 leading-relaxed sm:p-6;
@@ -114,6 +114,7 @@
         @apply my-6 grid gap-6 md:grid-cols-2;
     }
 
+    .blog-grid-col,
     .blog-grid-col--half {
         @apply min-w-0;
     }

@@ -30,4 +30,17 @@ class Blog extends Model
     {
         return $this->morphMany(ImageUpload::class, 'imageable');
     }
+
+    public function getRenderedContentAttribute(): string
+    {
+        $html = (string) $this->content;
+        if ($html === '') {
+            return '';
+        }
+
+        $decoded = html_entity_decode($html, ENT_QUOTES | ENT_HTML5, 'UTF-8');
+        $decoded = (string) preg_replace('/<!--[\s\S]*?-->/', '', $decoded);
+
+        return \App\Support\BootstrapIcons::replaceFontTags($decoded);
+    }
 }

@@ -25,7 +25,7 @@
     @endif
 
     <div class="mt-10">
-        {!! $blog->content !!}
+        {!! $blog->rendered_content !!}
     </div>
 </article>
 
