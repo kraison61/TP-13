@@ -17,6 +17,7 @@
                 @foreach ($footerServices as $service)
                 <li><a href="{{ route('frontend.services.show', $service->slug) }}" class="hover:text-white transition">{{ $service->title }}</a></li>
                 @endforeach
+                <li><a href="https://siriphong-vacuum.com" class="hover:text-white transition">บริการซ่อมเครื่องดูดฝุ่น</a></li>
                 <li><a href="{{ route('frontend.services.index') }}" class="inline-flex items-center gap-1.5 text-hivis font-medium hover:text-white transition">บริการทั้งหมด <x-icon name="arrow-right" class="text-xs" /></a></li>
             </ul>
         </div>

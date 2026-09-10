@@ -67,6 +67,7 @@ class ServiceController extends Controller
                 'activePrice',
                 'activePrices',
                 'scopes',
+                'products',
                 'category',
                 'faqs' => fn ($q) => $q->where('is_active', true)->orderBy('sort_order'),
             ])

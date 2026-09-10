@@ -74,6 +74,10 @@
 
 <x-frontend.trust />
 
+@if ($service->products->isNotEmpty())
+    <x-frontend.service.products :service="$service" />
+@endif
+
 {{-- ============ OVERVIEW + SCOPE ============ --}}
 <section class="mx-auto max-w-7xl px-4 sm:px-6 py-20 lg:py-24">
     <div class="grid lg:grid-cols-12 gap-12 lg:gap-16 min-w-0">

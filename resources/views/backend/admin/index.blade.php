@@ -142,6 +142,8 @@ let DB = {
   servicePrices:[],
   priceServices:[],
   priceTypes:{},
+  serviceProducts:[],
+  productServices:[],
   blog:[],
   blogServices:[],
   images:[],
@@ -157,6 +159,7 @@ const NAV = [
   {id:'categories',icon:'bi-folder-fill',    label:'Categories',  bread:'Content'},
   {id:'services',  icon:'bi-bricks',          label:'Services',    bread:'Content'},
   {id:'prices',    icon:'bi-tag-fill',        label:'Service Prices',bread:'Content'},
+  {id:'products',  icon:'bi-box-seam-fill',   label:'Service Products',bread:'Content'},
   {id:'blog',      icon:'bi-newspaper',       label:'Blog Posts',  bread:'Content'},
   {id:'images',    icon:'bi-images',          label:'Images',      bread:'Media'},
   {id:'users',     icon:'bi-people-fill',     label:'Users',       bread:'Settings'},
@@ -212,6 +215,12 @@ function navigate(page){
       .catch(err => { toast(err.message); });
     return;
   }
+  if(page === 'products'){
+    loadServiceProducts()
+      .then(() => renderProducts())
+      .catch(err => { toast(err.message); });
+    return;
+  }
   if(page === 'users'){
     loadUsers()
       .then(() => renderUsers())
@@ -239,7 +248,7 @@ function navigate(page){
       .catch(() => renderDashboard());
     return;
   }
-  ({dashboard:renderDashboard,categories:renderCategories,services:renderServices,prices:renderPrices,
+  ({dashboard:renderDashboard,categories:renderCategories,services:renderServices,prices:renderPrices,products:renderProducts,
     blog:renderBlog,images:renderImages,users:renderUsers,quotes:renderQuotes})[page]();
 }
 
@@ -248,6 +257,7 @@ function handleSearch(q){
   else if(currentPage==='categories') renderCategories(q);
   else if(currentPage==='services') renderServices(q);
   else if(currentPage==='prices') loadServicePrices(q).then(() => renderPrices()).catch(err => toast(err.message));
+  else if(currentPage==='products') loadServiceProducts(q).then(() => renderProducts()).catch(err => toast(err.message));
   else if(currentPage==='blog') loadBlogs(q).then(() => renderBlog(q)).catch(err => toast(err.message));
   else if(currentPage==='images'){ imageSearchQuery = q; currentImageLocation = null; renderImages(); }
   else if(currentPage==='users') loadUsers(q).then(() => renderUsers()).catch(err => toast(err.message));
@@ -261,6 +271,8 @@ const API = {
   service: id => `/admin/api/services/${id}`,
   servicePrices: '/admin/api/service-prices',
   servicePrice: id => `/admin/api/service-prices/${id}`,
+  serviceProducts: '/admin/api/service-products',
+  serviceProduct: id => `/admin/api/service-products/${id}`,
   blogs: '/admin/api/blogs',
   blog: id => `/admin/api/blogs/${id}`,
   users: '/admin/api/users',
@@ -383,6 +395,14 @@ async function loadServicePrices(q = ''){
   DB.priceTypes = data.price_types;
 }
 
+async function loadServiceProducts(q = ''){
+  const url = new URL(API.serviceProducts, window.location.origin);
+  if(q) url.searchParams.set('q', q);
+  const data = await apiFetch(url);
+  DB.serviceProducts = data.products;
+  DB.productServices = data.services;
+}
+
 async function loadUsers(q = ''){
   const url = new URL(API.users, window.location.origin);
   if(q) url.searchParams.set('q', q);
@@ -413,6 +433,18 @@ async function loadImages(q = ''){
   DB.imageServices = data.services;
 }
 
+function productPayload(d){
+  return {
+    service_id: Number(d.service_id),
+    name: d.name,
+    description: d.description || null,
+    image: d.image || null,
+    affiliate_link: d.affiliate_link,
+    sort_order: d.sort_order !== '' && d.sort_order != null ? Number(d.sort_order) : 0,
+    is_active: (d.status || 'active') !== 'inactive',
+  };
+}
+
 function pricePayload(d){
   return {
     service_id: Number(d.service_id),
@@ -436,8 +468,9 @@ function serviceField(data = {}, list = null, required = true){
   const pageList = currentPage === 'blog' ? DB.blogServices
     : currentPage === 'images' ? DB.imageServices
     : currentPage === 'prices' ? DB.priceServices
+    : currentPage === 'products' ? DB.productServices
     : DB.services;
-  const services = firstFilledList(list, pageList, DB.blogServices, DB.imageServices, DB.priceServices, DB.services);
+  const services = firstFilledList(list, pageList, DB.blogServices, DB.imageServices, DB.priceServices, DB.productServices, DB.services);
   const opts = services.map(s =>
     `<option value="${s.id}"${String(data.service_id) === String(s.id) ? ' selected' : ''}>${s.title || s.name}</option>`
   ).join('');
@@ -918,6 +951,87 @@ function editServicePrice(id){
       const idx = DB.servicePrices.findIndex(x=>x.id===id);
       if(idx >= 0) DB.servicePrices[idx] = res.price;
       renderPrices();
+      toast(res.message);
+    }catch(err){ toast(err.message); }
+  });
+}
+
+/* ══════════════ SERVICE PRODUCTS (AFFILIATE) ══════════════ */
+function renderProducts(){
+  const rows = (DB.serviceProducts || []).map(p=>`
+    <tr>
+      <td style="padding:12px 16px;">
+        <div style="display:flex;align-items:center;gap:10px;">
+          ${iconBox(p.service_icon)}
+          <div>
+            <div style="font-weight:600;font-size:14px;color:#071a2c;">${p.service_name}</div>
+            <div style="font-size:11px;color:#6a7787;font-family:monospace;">${p.service_slug}</div>
+          </div>
+        </div>
+      </td>
+      <td style="padding:12px 16px;max-width:200px;">
+        <div class="clamp1" style="font-weight:500;font-size:14px;color:#071a2c;">${p.name}</div>
+        ${p.description ? `<div class="clamp1" style="font-size:12px;color:#6a7787;margin-top:2px;">${p.description}</div>` : ''}
+      </td>
+      <td style="padding:12px 16px;">
+        ${p.image ? `<img src="${escAttr(p.image)}" alt="" style="width:48px;height:48px;border-radius:8px;object-fit:cover;border:1px solid #e3e7ee;">` : '<span style="color:#6a7787;font-size:12px;">—</span>'}
+      </td>
+      <td style="padding:12px 16px;max-width:220px;">
+        <a href="${escAttr(p.affiliate_link)}" target="_blank" rel="noopener" class="clamp1" style="font-size:12px;color:#0a3d62;text-decoration:underline;font-family:monospace;">${p.affiliate_link}</a>
+      </td>
+      <td style="padding:12px 16px;font-size:13px;color:#6a7787;font-family:monospace;text-align:center;">${p.sort_order}</td>
+      <td style="padding:12px 16px;">${pill(p.status)}</td>
+      <td style="padding:12px 16px;">
+        <div style="display:flex;gap:6px;">
+          ${actionBtn('bi-pencil','#3b82f6',`editServiceProduct(${p.id})`)}
+          ${actionBtn('bi-trash3','#ef4444',`deleteItem('serviceProducts',${p.id},'${String(p.name).replace(/'/g, "\\'")}')`)}
+        </div>
+      </td>
+    </tr>`).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div style="padding:24px;">
+      ${pageHdr('Service Products',`${(DB.serviceProducts || []).length} สินค้า Affiliate`,'+ เพิ่มสินค้า','addServiceProduct()')}
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 16px;font-size:13px;color:#1e40af;display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+        <i class="bi bi-link-45deg"></i>
+        จัดการสินค้า Affiliate ที่แสดงบนหน้ารายละเอียดบริการ — ผูกกับบริการย่อย (1 บริการมีได้หลายสินค้า)
+      </div>
+      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:960px;">
+        ${tHead('บริการ','สินค้า','รูป','Affiliate Link','ลำดับ','สถานะ','Actions')}
+        <tbody>${rows || '<tr><td colspan="7" style="padding:24px;text-align:center;color:#6a7787;">ยังไม่มีสินค้า Affiliate</td></tr>'}</tbody>
+      </table></div>`)}
+    </div>`;
+}
+
+const PRODUCT_FORM_FIELDS = [
+  {n:'service_id', l:'บริการ', t:'svc', r:true},
+  {n:'name', l:'ชื่อสินค้า', t:'text', r:true, ph:'ปูนซีเมนต์ตราเสือ'},
+  {n:'affiliate_link', l:'Affiliate Link', t:'text', r:true, ph:'https://shope.ee/...'},
+  {n:'image', l:'รูปสินค้า (URL)', t:'text', ph:'https://...'},
+  {n:'sort_order', l:'ลำดับ', t:'number', ph:'0'},
+  {n:'status', l:'สถานะ', t:'sel', opts:['active','inactive']},
+  {n:'description', l:'คำอธิบายสั้น', t:'area'},
+];
+
+function addServiceProduct(){
+  openModal('Add Service Product',{},PRODUCT_FORM_FIELDS, async d=>{
+    try{
+      const res = await apiFetch(API.serviceProducts, {method:'POST', body:JSON.stringify(productPayload(d))});
+      DB.serviceProducts.push(res.product);
+      renderProducts();
+      toast(res.message);
+    }catch(err){ toast(err.message); }
+  });
+}
+
+function editServiceProduct(id){
+  const p = DB.serviceProducts.find(x=>x.id===id);
+  openModal(`Edit Product — ${p.name}`, p, PRODUCT_FORM_FIELDS, async d=>{
+    try{
+      const res = await apiFetch(API.serviceProduct(id), {method:'PUT', body:JSON.stringify(productPayload(d))});
+      const idx = DB.serviceProducts.findIndex(x=>x.id===id);
+      if(idx >= 0) DB.serviceProducts[idx] = res.product;
+      renderProducts();
       toast(res.message);
     }catch(err){ toast(err.message); }
   });
@@ -1524,6 +1638,19 @@ function deleteItem(type,id,name){
         DB.servicePrices = DB.servicePrices.filter(x=>x.id!==id);
         closeConfirm();
         renderPrices();
+        toast('ลบรายการเรียบร้อย','del');
+      }catch(err){
+        closeConfirm();
+        toast(err.message);
+      }
+      return;
+    }
+    if(type === 'serviceProducts'){
+      try{
+        await apiFetch(API.serviceProduct(id), {method:'DELETE'});
+        DB.serviceProducts = DB.serviceProducts.filter(x=>x.id!==id);
+        closeConfirm();
+        renderProducts();
         toast('ลบรายการเรียบร้อย','del');
       }catch(err){
         closeConfirm();

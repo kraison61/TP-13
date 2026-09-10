@@ -100,6 +100,13 @@ class Service extends Model
             ->orderBy('sort_order');
     }
 
+    public function products(): HasMany
+    {
+        return $this->hasMany(ServiceProduct::class)
+            ->where('is_active', true)
+            ->orderBy('sort_order');
+    }
+
     public function blogs(): HasMany
     {
         return $this->hasMany(Blog::class);

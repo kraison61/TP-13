@@ -9,6 +9,7 @@ use App\Http\Controllers\Backend\ImageUploadController;
 use App\Http\Controllers\Backend\ServiceCategoryController;
 use App\Http\Controllers\Backend\ServiceController as BackendServiceController;
 use App\Http\Controllers\Backend\ServicePriceController;
+use App\Http\Controllers\Backend\ServiceProductController;
 use App\Http\Controllers\Backend\UserController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ContactController;
@@ -124,6 +125,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::post('/service-prices', [ServicePriceController::class, 'store'])->name('service-prices.store');
         Route::put('/service-prices/{servicePrice}', [ServicePriceController::class, 'update'])->name('service-prices.update');
         Route::delete('/service-prices/{servicePrice}', [ServicePriceController::class, 'destroy'])->name('service-prices.destroy');
+
+        Route::get('/service-products', [ServiceProductController::class, 'index'])->name('service-products.index');
+        Route::post('/service-products', [ServiceProductController::class, 'store'])->name('service-products.store');
+        Route::put('/service-products/{serviceProduct}', [ServiceProductController::class, 'update'])->name('service-products.update');
+        Route::delete('/service-products/{serviceProduct}', [ServiceProductController::class, 'destroy'])->name('service-products.destroy');
 
         Route::get('/users', [UserController::class, 'index'])->name('users.index');
         Route::post('/users', [UserController::class, 'store'])->name('users.store');

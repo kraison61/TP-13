@@ -130,5 +130,6 @@ const lazyWhenAnyPresent = (selectors, importer) => {
 lazyWhenVisible('#contact', () => import('./contact-form.js'));
 lazyWhenVisible('#testiViewport', () => import('./testimonials.js'));
 lazyWhenVisible('#finViewport', () => import('./finance.js'));
+lazyWhenVisible('#svcProdViewport', () => import('./service-products.js'));
 lazyWhenElement(document.getElementById('soil-calc'), () => import('./soil-calc.js'));
 lazyWhenAnyPresent(['#faqItems', '#faqListCalc'], () => import('./faq.js'));
