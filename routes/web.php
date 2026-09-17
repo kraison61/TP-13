@@ -30,6 +30,9 @@ use Illuminate\Support\Str;
 |--------------------------------------------------------------------------
 */
 Route::redirect('/blog', '/blogs', 301);
+Route::redirect('/solar-cell-installation-price', '/blogs/solar-cell-installation-price', 301);
+Route::redirect('/solar-cell-10kw-production-price', '/blogs/solar-cell-10kw-production-price', 301);
+Route::redirect('/home-solar-cell-price-guide', '/blogs/home-solar-cell-price-guide', 301);
 Route::redirect('/about', '/about-us', 301);
 Route::redirect('/portfolio', '/galleries', 301);
 Route::redirect('/gallery', '/galleries', 301);

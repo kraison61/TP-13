@@ -27,7 +27,7 @@
         @endforeach
     </div>
 
-    <div class="mt-12">
+    <div class="mt-14 flex justify-center">
         {{ $blogs->links() }}
     </div>
 </div>
