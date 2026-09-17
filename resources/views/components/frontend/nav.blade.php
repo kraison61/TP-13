@@ -77,7 +77,8 @@
         </ul>
 
         <div class="flex items-center gap-2">
-            <a href="{{ $ctaHref }}"
+            <a href="{{ $ctaMobileHref }}"
+               target="_blank" rel="noopener noreferrer"
                class="inline-flex lg:hidden items-center rounded-xl bg-accent px-2.5 min-[380px]:px-3 py-2 text-xs min-[380px]:text-sm font-semibold text-white shadow-md shadow-navy-900/15 hover:bg-navy-900 transition shrink-0">
                 {{ $ctaMobileLabel }}
             </a>
@@ -140,7 +141,8 @@
                     </a>
                 @endif
             @endforeach
-            <a href="{{ $ctaHref }}"
+            <a href="{{ $ctaMobileHref }}"
+               target="_blank" rel="noopener noreferrer"
                class="mt-3 inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-white hover:bg-navy-900 transition">
                 {{ $ctaLabel }} <x-icon name="arrow-right" />
             </a>

@@ -30,7 +30,9 @@ class Nav extends Component
         public string $ctaLabel = 'ขอใบเสนอราคา',
         public string $ctaMobileLabel = 'ขอราคา',
         public string $ctaHref = '#contact',
+        public ?string $ctaMobileHref = null,
     ) {
+        $this->ctaMobileHref ??= (string) config('company.line_official');
         $categories = ServiceCategory::query()
             ->whereHas('services', fn ($q) => $q->where('is_active', true))
             ->with(['services' => fn ($q) => $q
