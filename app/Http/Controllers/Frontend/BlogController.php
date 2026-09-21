@@ -86,6 +86,15 @@ class BlogController extends Controller
             $view->with('seo', $seo);
         }
 
+        if ($blog->slug === 'micro-pile-for-large-project') {
+            $seo = SeoMeta::forBlog($blog);
+            $seo['title'] = 'เสาเข็มไมโครไพล์สำหรับต่อเติมโรงงานและโกดัง | I18 I22 ราคา และการเลือกใช้งาน';
+            $seo['og']['title'] = $seo['title'];
+            $seo['twitter']['title'] = $seo['title'];
+            $seo['keywords'] = 'เสาเข็มไมโครไพล์, เสาเข็มไมโครไพล์ I18, เสาเข็มไมโครไพล์ I22, เสาเข็มไมโครไพล์ ราคา, กดเสาเข็มโรงงาน, ต่อเติมโรงงาน';
+            $view->with('seo', $seo);
+        }
+
         return $view;
     }
 }

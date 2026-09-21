@@ -145,6 +145,25 @@ class BlogPageSchema
             $node['keywords'] = 'บ้านโซล่าเซลล์, ราคาติดตั้งโซล่าเซลล์บ้าน, ติดโซล่าเซลล์ 5kw ราคา, โซล่าเซลล์สำหรับบ้าน 1 หลัง, ติดโซล่าเซลล์ 3kw ราคา, ติดโซล่าเซลล์บ้านแบบไหนดี, ติดโซล่าเซลล์ 5000w ราคาถูก, โซล่าเซลล์พร้อมแบตเตอรี่ ราคา';
         }
 
+        if ($blog->slug === 'micro-pile-for-large-project') {
+            $node['about'] = [
+                ['@type' => 'Thing', 'name' => 'เสาเข็มไมโครไพล์'],
+                ['@type' => 'Thing', 'name' => 'งานต่อเติมโรงงาน'],
+                ['@type' => 'Thing', 'name' => 'เสาเข็มไมโครไพล์ I18'],
+                ['@type' => 'Thing', 'name' => 'เสาเข็มไมโครไพล์ I22'],
+            ];
+            $node['citation'] = [
+                '@type' => 'WebPage',
+                'name' => 'ราคาเสาเข็มไอและเสาเข็มสี่เหลี่ยมตัน อัปเดต ก.ย. 2569',
+                'url' => 'https://www.boabuildtech.com/services/civil/piles-foundation',
+                'publisher' => [
+                    '@type' => 'Organization',
+                    'name' => 'BOA-Buildtech',
+                ],
+            ];
+            $node['keywords'] = 'เสาเข็มไมโครไพล์, เสาเข็มไมโครไพล์ I18, เสาเข็มไมโครไพล์ I22, เสาเข็มไมโครไพล์ ราคา, กดเสาเข็มโรงงาน, ต่อเติมโรงงาน';
+        }
+
         return $node;
     }
 
