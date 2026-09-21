@@ -187,7 +187,7 @@
                 <p class="text-[11px] text-muted mt-3">* ราคาจริงขึ้นอยู่กับระยะทาง ประเภทดิน และสภาพหน้างาน</p>
             </div>
 
-            <a href="/#contact" class="flex items-center justify-center gap-2 rounded-2xl bg-accent text-white font-semibold py-4 px-6 hover:bg-navy-900 transition text-[15px] shadow-lg shadow-navy-900/20">
+            <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 rounded-2xl bg-accent text-white font-semibold py-4 px-6 hover:bg-navy-900 transition text-[15px] shadow-lg shadow-navy-900/20">
                 ขอใบเสนอราคาฟรี — ไม่มีค่าใช้จ่าย <x-icon name="arrow-right" />
             </a>
         </div>
@@ -333,7 +333,7 @@
             </div>
         </div>
         <div class="flex flex-col sm:flex-row gap-3 shrink-0">
-            <a href="/#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-4 font-semibold text-white hover:bg-navy-900 transition shadow-lg shadow-navy-900/20 whitespace-nowrap">
+            <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-4 font-semibold text-white hover:bg-navy-900 transition shadow-lg shadow-navy-900/20 whitespace-nowrap">
                 ขอใบเสนอราคาฟรี <x-icon name="arrow-right" />
             </a>
             <a href="tel:{{ config('company.phone') }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-7 py-4 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition whitespace-nowrap">

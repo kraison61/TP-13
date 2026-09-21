@@ -26,7 +26,7 @@
                         ควบคุมงานทุกโปรเจกต์โดยวิศวกรวิชาชีพ
                     </p>
                     <div class="mt-8 flex flex-wrap gap-3">
-                        <a href="#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">ขอใบเสนอราคาฟรี <x-icon name="arrow-right" /></a>
+                        <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">ขอใบเสนอราคาฟรี <x-icon name="arrow-right" /></a>
                         <a href="{{ route('blog.index') }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">ดูผลงานก่อสร้าง</a>
                     </div>
                     <div class="mt-9 flex flex-wrap gap-x-6 sm:gap-x-8 gap-y-3 text-[14px] sm:text-[15px] text-ink2">
