@@ -6,11 +6,13 @@ use App\Http\Controllers\Backend\AdminController;
 use App\Http\Controllers\Backend\BlogController as BackendBlogController;
 use App\Http\Controllers\Backend\ContactMessageController;
 use App\Http\Controllers\Backend\ImageUploadController;
+use App\Http\Controllers\Backend\PhoneClickController as BackendPhoneClickController;
 use App\Http\Controllers\Backend\ServiceCategoryController;
 use App\Http\Controllers\Backend\ServiceController as BackendServiceController;
 use App\Http\Controllers\Backend\ServicePriceController;
 use App\Http\Controllers\Backend\ServiceProductController;
 use App\Http\Controllers\Backend\UserController;
+use App\Http\Controllers\PhoneClickController;
 use App\Http\Controllers\Frontend\BlogController;
 use App\Http\Controllers\Frontend\ContactController;
 use App\Http\Controllers\Frontend\GalleryController;
@@ -144,6 +146,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         Route::put('/contact-messages/{contactMessage}', [ContactMessageController::class, 'update'])->name('contact-messages.update');
         Route::delete('/contact-messages/{contactMessage}', [ContactMessageController::class, 'destroy'])->name('contact-messages.destroy');
 
+        Route::get('/phone-clicks', [BackendPhoneClickController::class, 'index'])->name('phone-clicks.index');
+        Route::delete('/phone-clicks/{phoneClickLog}', [BackendPhoneClickController::class, 'destroy'])->name('phone-clicks.destroy');
+
         Route::get('/blogs', [BackendBlogController::class, 'index'])->name('blogs.index');
         Route::post('/blogs', [BackendBlogController::class, 'store'])->name('blogs.store');
         Route::put('/blogs/{blog}', [BackendBlogController::class, 'update'])->name('blogs.update');
@@ -173,6 +178,9 @@ Route::get('/portal', [PortalController::class, 'index'])->name('portal');
 
 Route::post('/quote', [QuoteController::class, 'store'])->name('quote.store');
 Route::post('/voucher/copy', [VoucherController::class, 'storeCopy'])->name('voucher.copy');
+Route::post('/phone-clicks', [PhoneClickController::class, 'store'])
+    ->middleware('throttle:60,1')
+    ->name('phone-clicks.store');
 
 Route::get('/privacy', [PrivacyController::class, 'index'])->name('privacy');
 

@@ -42,7 +42,7 @@
                 <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white shadow-lg shadow-navy-900/20 hover:bg-navy-900 transition">
                     ขอใบเสนอราคาฟรี <x-icon name="arrow-right" />
                 </a>
-                <a href="tel:{{ $contactPhone['phone'] }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">
+                <a href="tel:{{ $contactPhone['phone'] }}" data-placement="service-hero" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">
                     <x-icon name="telephone-fill" /> โทรปรึกษาช่าง
                 </a>
             </div>
@@ -134,7 +134,7 @@
                 <a href="/#contact" class="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">
                     ขอใบเสนอราคางานนี้ <x-icon name="arrow-right" />
                 </a>
-                <a href="tel:{{ $contactPhone['phone'] }}" class="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-white px-6 py-3 font-semibold text-navy-900 hover:border-navy-900 transition">
+                <a href="tel:{{ $contactPhone['phone'] }}" data-placement="service-sidebar" class="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-white px-6 py-3 font-semibold text-navy-900 hover:border-navy-900 transition">
                     <x-icon name="telephone-fill" class="text-accent" /> {{ $contactPhone['phone_formatted'] }}
                 </a>
                 <a href="{{ route('frontend.services.index') }}#{{ $service->slug }}" class="mt-2.5 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-line bg-white px-6 py-3 font-semibold text-navy-900 hover:border-navy-900 transition">
@@ -205,7 +205,7 @@
                     <h2 class="mt-4 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900 leading-tight">เรื่องที่ลูกค้ามักถามก่อนเริ่มงาน</h2>
                     <p class="mt-4 text-lg text-ink2 leading-relaxed">
                         ไม่พบคำตอบที่ต้องการ? โทร
-                        <a href="tel:{{ $contactPhone['phone'] }}" class="font-mono tabular-nums text-accent font-semibold">{{ $contactPhone['phone_formatted'] }}</a>
+                        <a href="tel:{{ $contactPhone['phone'] }}" data-placement="service-faq" class="font-mono tabular-nums text-accent font-semibold">{{ $contactPhone['phone_formatted'] }}</a>
                         ทีมงานพร้อมตอบทุกวัน {{ config('company.open_hours') }}
                     </p>
                 </div>

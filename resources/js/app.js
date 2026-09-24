@@ -44,6 +44,43 @@ toTopBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
+// ── Track tel: link clicks ────────────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+    const link = e.target.closest?.('a[href^="tel:"]');
+    if (!link) return;
+
+    const phone = (link.getAttribute('href') || '').replace(/^tel:/i, '').trim();
+    if (!phone) return;
+
+    const token = document.querySelector('meta[name="csrf-token"]')?.content;
+    if (!token) return;
+
+    const body = new FormData();
+    body.append('_token', token);
+    body.append('phone', phone);
+    body.append('page_url', `${location.pathname}${location.search}`);
+    if (link.dataset.placement) {
+        body.append('placement', link.dataset.placement);
+    }
+
+    try {
+        if (navigator.sendBeacon) {
+            navigator.sendBeacon('/phone-clicks', body);
+            return;
+        }
+    } catch {
+        // fall through to fetch
+    }
+
+    fetch('/phone-clicks', {
+        method: 'POST',
+        body,
+        credentials: 'same-origin',
+        keepalive: true,
+        headers: { Accept: 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
+    }).catch(() => {});
+});
+
 const menuBtn = document.getElementById('menuBtn');
 const mobileMenu = document.getElementById('mobileMenu');
 const mobileMenuBackdrop = document.getElementById('mobileMenuBackdrop');

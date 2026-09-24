@@ -150,12 +150,15 @@ let DB = {
   imageServices:[],
   users:[],
   quotes:[],
+  phoneClicks:[],
+  phoneClicksTotal:0,
 };
 
 /* ══════════════ NAV ══════════════ */
 const NAV = [
   {id:'dashboard', icon:'bi-grid-1x2-fill',  label:'Dashboard',   bread:'Overview'},
   {id:'quotes',    icon:'bi-envelope-open',  label:'Quote Requests', bread:'Leads'},
+  {id:'phoneClicks', icon:'bi-telephone-outbound', label:'Phone Clicks', bread:'Leads'},
   {id:'categories',icon:'bi-folder-fill',    label:'Categories',  bread:'Content'},
   {id:'services',  icon:'bi-bricks',          label:'Services',    bread:'Content'},
   {id:'prices',    icon:'bi-tag-fill',        label:'Service Prices',bread:'Content'},
@@ -194,6 +197,12 @@ function navigate(page){
   if(page === 'quotes'){
     loadQuotes()
       .then(() => renderQuotes())
+      .catch(err => { toast(err.message); });
+    return;
+  }
+  if(page === 'phoneClicks'){
+    loadPhoneClicks()
+      .then(() => renderPhoneClicks())
       .catch(err => { toast(err.message); });
     return;
   }
@@ -243,17 +252,18 @@ function navigate(page){
     return;
   }
   if(page === 'dashboard'){
-    Promise.all([loadServices(), loadQuotes(), loadBlogs()])
+    Promise.all([loadServices(), loadQuotes(), loadBlogs(), loadPhoneClicks()])
       .then(() => renderDashboard())
       .catch(() => renderDashboard());
     return;
   }
   ({dashboard:renderDashboard,categories:renderCategories,services:renderServices,prices:renderPrices,products:renderProducts,
-    blog:renderBlog,images:renderImages,users:renderUsers,quotes:renderQuotes})[page]();
+    blog:renderBlog,images:renderImages,users:renderUsers,quotes:renderQuotes,phoneClicks:renderPhoneClicks})[page]();
 }
 
 function handleSearch(q){
   if(currentPage==='quotes') loadQuotes(q).then(() => renderQuotes()).catch(err => toast(err.message));
+  else if(currentPage==='phoneClicks') loadPhoneClicks(q).then(() => renderPhoneClicks()).catch(err => toast(err.message));
   else if(currentPage==='categories') renderCategories(q);
   else if(currentPage==='services') renderServices(q);
   else if(currentPage==='prices') loadServicePrices(q).then(() => renderPrices()).catch(err => toast(err.message));
@@ -279,6 +289,8 @@ const API = {
   user: id => `/admin/api/users/${id}`,
   contactMessages: '/admin/api/contact-messages',
   contactMessage: id => `/admin/api/contact-messages/${id}`,
+  phoneClicks: '/admin/api/phone-clicks',
+  phoneClick: id => `/admin/api/phone-clicks/${id}`,
   images: '/admin/api/images',
   image: id => `/admin/api/images/${id}`,
   imageLocations: '/admin/api/images/locations',
@@ -415,6 +427,14 @@ async function loadQuotes(q = ''){
   if(q) url.searchParams.set('q', q);
   const data = await apiFetch(url);
   DB.quotes = data.messages;
+}
+
+async function loadPhoneClicks(q = ''){
+  const url = new URL(API.phoneClicks, window.location.origin);
+  if(q) url.searchParams.set('q', q);
+  const data = await apiFetch(url);
+  DB.phoneClicks = data.logs;
+  DB.phoneClicksTotal = data.total ?? data.logs.length;
 }
 
 async function loadBlogs(q = ''){
@@ -567,7 +587,7 @@ function renderDashboard(){
   const stats = [
     {icon:'bi-bricks',        val:DB.services.filter(s=>s.status==='active').length, label:'Active Services',    bg:'rgba(10,61,98,.07)', ic:'#0a3d62'},
     {icon:'bi-newspaper',     val:DB.blog.length,  label:'Blog Posts',   bg:'rgba(5,150,105,.07)',ic:'#059669'},
-    {icon:'bi-images',        val:DB.services.filter(s=>s.img_1||s.img_2).length, label:'Services with images', bg:'rgba(124,58,237,.07)',ic:'#7c3aed'},
+    {icon:'bi-telephone-outbound', val:DB.phoneClicksTotal || DB.phoneClicks.length, label:'Phone Clicks', bg:'rgba(37,99,235,.07)',ic:'#2563eb'},
     {icon:'bi-envelope-open', val:DB.quotes.filter(q=>q.status==='pending'||q.status==='new').length, label:'New Quote Requests', bg:'rgba(217,119,6,.07)',ic:'#d97706'},
   ];
 
@@ -627,6 +647,40 @@ function renderDashboard(){
 
 /* ══════════════ QUOTE REQUESTS (contact_messages) ══════════════ */
 const QUOTE_STATUS_OPTS = ['pending','contacted','quoted','won','closed'];
+
+function renderPhoneClicks(){
+  const list = DB.phoneClicks;
+  const rows = list.map(l=>`
+    <tr>
+      <td style="padding:12px 16px;font-size:14px;font-weight:600;color:#071a2c;font-family:monospace;white-space:nowrap;">
+        <a href="tel:${escAttr(l.phone)}" style="color:#0a3d62;text-decoration:none;">${escAttr(l.phone)}</a>
+      </td>
+      <td style="padding:12px 16px;font-size:13px;color:#36475a;">${escAttr(l.placement || '—')}</td>
+      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;max-width:280px;">
+        <div class="clamp1">${escAttr(l.page_url || '—')}</div>
+      </td>
+      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${escAttr(l.ip_address || '—')}</td>
+      <td style="padding:12px 16px;font-size:12px;color:#6a7787;font-family:monospace;white-space:nowrap;">${escAttr(l.created_at || '—')}</td>
+      <td style="padding:12px 16px;">
+        <div style="display:flex;gap:6px;">
+          ${actionBtn('bi-trash3','#ef4444',`deleteItem('phoneClicks',${l.id},'${escAttr(l.phone)}')`)}
+        </div>
+      </td>
+    </tr>`).join('');
+
+  document.getElementById('mainContent').innerHTML = `
+    <div style="padding:24px;">
+      ${pageHdr('Phone Clicks',`${DB.phoneClicksTotal || list.length} ครั้ง · แสดงล่าสุด ${list.length} รายการ`)}
+      <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:12px;padding:12px 16px;font-size:13px;color:#1e40af;display:flex;align-items:center;gap:8px;margin-bottom:20px;">
+        <i class="bi bi-info-circle"></i>
+        บันทึกเมื่อผู้เยี่ยมชมกดลิงก์ tel: บนหน้าเว็บ — ไม่ยืนยันว่าโทรออกสำเร็จ
+      </div>
+      ${wrap(`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;min-width:720px;">
+        ${tHead('เบอร์','ตำแหน่ง','หน้า','IP','เวลา','Actions')}
+        <tbody>${rows || `<tr><td colspan="6" style="padding:28px 16px;text-align:center;color:#6a7787;font-size:14px;">ยังไม่มี log การกดโทร</td></tr>`}</tbody>
+      </table></div>`)}
+    </div>`;
+}
 
 function renderQuotes(){
   const list = DB.quotes;
@@ -1677,6 +1731,20 @@ function deleteItem(type,id,name){
         DB.quotes = DB.quotes.filter(x=>x.id!==id);
         closeConfirm();
         renderQuotes();
+        toast('ลบรายการเรียบร้อย','del');
+      }catch(err){
+        closeConfirm();
+        toast(err.message);
+      }
+      return;
+    }
+    if(type === 'phoneClicks'){
+      try{
+        await apiFetch(API.phoneClick(id), {method:'DELETE'});
+        DB.phoneClicks = DB.phoneClicks.filter(x=>x.id!==id);
+        DB.phoneClicksTotal = Math.max(0, (DB.phoneClicksTotal || 0) - 1);
+        closeConfirm();
+        renderPhoneClicks();
         toast('ลบรายการเรียบร้อย','del');
       }catch(err){
         closeConfirm();

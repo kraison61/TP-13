@@ -29,6 +29,7 @@
             <div class="text-[13px] text-white/50">โทรเลย</div>
             <a id="contactPhoneLink"
                href="tel:{{ $defaultPhone['phone'] }}"
+               data-placement="contact"
                data-default-phone="{{ $defaultPhone['phone'] }}"
                data-default-formatted="{{ $defaultPhone['phone_formatted'] }}"
                class="font-mono tabular-nums text-xl font-semibold hover:text-hivis transition">

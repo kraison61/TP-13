@@ -30,7 +30,7 @@
       <span class="grid place-items-center w-11 h-11 rounded-xl bg-accent/8 text-accent text-xl shrink-0"><x-icon name="telephone-fill" /></span>
       <div class="min-w-0">
         <div class="text-[13px] font-medium text-muted uppercase tracking-wide">โทรศัพท์</div>
-        <a href="tel:{{ config('company.phone') }}" class="mt-0.5 block font-mono font-semibold text-navy-900 tabular-nums text-lg hover:text-accent transition">{{ config('company.phone_formatted') }}</a>
+        <a href="tel:{{ config('company.phone') }}" data-placement="contact-us-card" class="mt-0.5 block font-mono font-semibold text-navy-900 tabular-nums text-lg hover:text-accent transition">{{ config('company.phone_formatted') }}</a>
       </div>
     </div>
     <div class="flex items-start gap-4 min-w-0">
@@ -105,7 +105,7 @@
             <span class="grid place-items-center w-11 h-11 rounded-xl bg-white border border-line text-accent text-xl shrink-0"><x-icon name="telephone-fill" /></span>
             <div class="min-w-0">
               <div class="font-semibold text-navy-900">โทรศัพท์</div>
-              <a href="tel:{{ config('company.phone') }}" class="mt-0.5 block font-mono tabular-nums text-lg font-semibold text-navy-900 hover:text-accent transition">{{ config('company.phone_formatted') }}</a>
+              <a href="tel:{{ config('company.phone') }}" data-placement="contact-us-office" class="mt-0.5 block font-mono tabular-nums text-lg font-semibold text-navy-900 hover:text-accent transition">{{ config('company.phone_formatted') }}</a>
             </div>
           </li>
           <li class="flex gap-4 items-start min-w-0">
@@ -140,7 +140,7 @@
       <p class="mt-2 text-white/60 text-lg">ทีมงานพร้อมให้คำปรึกษาโดยไม่มีค่าใช้จ่าย {{ config('company.open_hours') }}</p>
     </div>
     <div class="flex flex-wrap gap-3 w-full sm:w-auto">
-      <a href="tel:{{ config('company.phone') }}" class="inline-flex items-center gap-2 rounded-xl bg-hivis px-7 py-3.5 font-semibold text-navy-900 hover:bg-white transition">
+      <a href="tel:{{ config('company.phone') }}" data-placement="contact-us-cta" class="inline-flex items-center gap-2 rounded-xl bg-hivis px-7 py-3.5 font-semibold text-navy-900 hover:bg-white transition">
         <x-icon name="telephone-fill" /> {{ config('company.phone_formatted') }}
       </a>
       <a href="#contact" class="inline-flex items-center gap-2 rounded-xl border border-white/25 px-7 py-3.5 font-semibold text-white hover:bg-white/10 transition">

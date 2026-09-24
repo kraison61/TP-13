@@ -273,7 +273,7 @@
             <h2 class="mt-4 text-3xl lg:text-4xl font-bold tracking-tight text-navy-900 leading-tight">คำถามที่พบบ่อยเรื่องถมดิน</h2>
             <p class="mt-4 text-[15px] text-ink2 leading-relaxed">
                 มีคำถามเพิ่มเติม? โทร
-                <a href="tel:{{ config('company.phone') }}" class="font-mono tabular-nums text-accent font-semibold">{{ config('company.phone_formatted') }}</a>
+                <a href="tel:{{ config('company.phone') }}" data-placement="soil-calc-faq" class="font-mono tabular-nums text-accent font-semibold">{{ config('company.phone_formatted') }}</a>
                 ทีมงานยินดีให้คำปรึกษาฟรี
             </p>
             <a href="/#contact" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-3 font-semibold text-white hover:bg-navy-900 transition text-[15px]">
@@ -336,7 +336,7 @@
             <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-4 font-semibold text-white hover:bg-navy-900 transition shadow-lg shadow-navy-900/20 whitespace-nowrap">
                 ขอใบเสนอราคาฟรี <x-icon name="arrow-right" />
             </a>
-            <a href="tel:{{ config('company.phone') }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-7 py-4 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition whitespace-nowrap">
+            <a href="tel:{{ config('company.phone') }}" data-placement="soil-calc-cta" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-7 py-4 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition whitespace-nowrap">
                 <x-icon name="telephone-fill" class="shrink-0" /> {{ config('company.phone_formatted') }}
             </a>
         </div>

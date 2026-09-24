@@ -293,7 +293,7 @@
     <div class="shrink-0">
       <div class="flex flex-wrap gap-3">
         <a href="{{ config('company.line_official') }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 rounded-xl bg-hivis px-7 py-3.5 font-semibold text-navy-900 hover:bg-white transition"><x-icon name="line" /> ทัก LINE Official ส่งรูปหน้างาน</a>
-        <a href="tel:{{ config('company.phone') }}" class="inline-flex items-center gap-2 rounded-xl border border-white/25 px-7 py-3.5 font-semibold text-white hover:bg-white/10 transition"><x-icon name="telephone-fill" /> โทร {{ config('company.phone_formatted') }}</a>
+        <a href="tel:{{ config('company.phone') }}" data-placement="about-us-cta" class="inline-flex items-center gap-2 rounded-xl border border-white/25 px-7 py-3.5 font-semibold text-white hover:bg-white/10 transition"><x-icon name="telephone-fill" /> โทร {{ config('company.phone_formatted') }}</a>
       </div>
       <p class="mt-2.5 text-sm text-white/45 text-center lg:text-right"><x-icon name="shield-check" class="text-hivis mr-1 inline-block" />ประเมินฟรี · ไม่มีค่าใช้จ่าย · ไม่ผูกมัด</p>
     </div>

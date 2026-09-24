@@ -36,6 +36,7 @@
             <ul class="space-y-2.5 text-[15px]">
                 <li>
                     <a href="tel:{{ $contactPhone['phone'] }}"
+                       data-placement="footer"
                        class="inline-flex items-center hover:text-white transition">
                         <x-icon name="telephone-fill" class="text-hivis mr-2 inline-block" />
                         <span class="font-mono tabular-nums">{{ $contactPhone['phone_formatted'] }}</span>
