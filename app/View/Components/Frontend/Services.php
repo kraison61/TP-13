@@ -14,6 +14,7 @@ class Services extends Component
     public function __construct(
         public $services,
         public $totalServices = null,
+        public ?string $description = null,
     ) {}
 
     /**

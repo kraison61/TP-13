@@ -70,7 +70,8 @@
                     <div class="mt-8 flex flex-wrap gap-3">
                         <a href="/#contact" class="inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอใบเสนอราคา <x-icon name="arrow-right" /></a>
                         <a href="{{ route('frontend.services.show', $service->slug) }}" class="inline-flex items-center gap-2 rounded-xl border border-navy-900 px-6 py-3.5 font-semibold text-navy-900 hover:bg-navy-900 hover:text-white transition">ดูรายละเอียดงานบริการ <x-icon name="arrow-right" /></a>
-                        <a href="tel:0812345678" data-placement="services-index" class="inline-flex items-center gap-2 rounded-xl border border-line px-6 py-3.5 font-semibold text-navy-900 hover:border-navy-900 transition"><x-icon name="telephone" /> โทรปรึกษาฟรี</a>
+                        @php($indexPhone = \App\Support\CompanyPhone::forService($service))
+                        <a href="tel:{{ $indexPhone['phone'] }}" data-placement="services-index" class="inline-flex items-center gap-2 rounded-xl border border-line px-6 py-3.5 font-semibold text-navy-900 hover:border-navy-900 transition"><x-icon name="telephone" /> โทร {{ $indexPhone['phone_formatted'] }}</a>
                     </div>
                 </div>
             </section>

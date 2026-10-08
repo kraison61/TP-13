@@ -90,12 +90,19 @@ class ServiceController extends Controller
             ->limit(3)
             ->get();
 
-        $steps = [
-            ['icon' => 'bi-chat-left-text', 'label' => 'STEP 01', 'title' => 'ปรึกษา & สำรวจหน้างาน', 'desc' => 'นัดเข้าวัดหน้างานฟรีภายใน 3 วัน พร้อมคำแนะนำจากวิศวกร'],
-            ['icon' => 'bi-rulers', 'label' => 'STEP 02', 'title' => 'ออกแบบ & เสนอราคา', 'desc' => 'ส่งแบบโครงสร้างพร้อม BOQ ละเอียดทุกรายการใน 5–7 วันทำการ'],
-            ['icon' => 'bi-cone-striped', 'label' => 'STEP 03', 'title' => 'ก่อสร้างจริง', 'desc' => 'เริ่มงานพร้อมรายงานความคืบหน้ารายสัปดาห์ + รูปถ่ายในพอร์ทัล'],
-            ['icon' => 'bi-shield-check', 'label' => 'STEP 04', 'title' => 'ส่งมอบ & รับประกัน', 'desc' => 'ตรวจรับงานพร้อมเจ้าของบ้าน รับประกันงานก่อสร้าง 2 ปีเต็ม'],
-        ];
+        $steps = $service->slug === 'electrical-wiring'
+            ? [
+                ['icon' => 'bi-chat-left-text', 'label' => 'STEP 01', 'title' => 'ปรึกษา & ประเมินราคา', 'desc' => 'ประเมินเบื้องต้นผ่าน LINE ฟรี หรือนัดช่างดูหน้างานภายใน 1–3 วัน (ค่าบริการเริ่มต้น 1,500 บาท หักคืนเมื่อจ้างงาน)'],
+                ['icon' => 'bi-rulers', 'label' => 'STEP 02', 'title' => 'เสนอราคา', 'desc' => 'ส่งรายการจุดพร้อม BOQ ละเอียดทุกรายการภายใน 1–3 วันทำการ'],
+                ['icon' => 'bi-cone-striped', 'label' => 'STEP 03', 'title' => 'ลงมือติดตั้ง', 'desc' => 'เริ่มงานพร้อมรายงานความคืบหน้าและรูปถ่ายในพอร์ทัล'],
+                ['icon' => 'bi-shield-check', 'label' => 'STEP 04', 'title' => 'ส่งมอบ & รับประกัน', 'desc' => 'ทดสอบระบบและตรวจรับงานพร้อมเจ้าของบ้าน รับประกันงาน 1 ปี'],
+            ]
+            : [
+                ['icon' => 'bi-chat-left-text', 'label' => 'STEP 01', 'title' => 'ปรึกษา & สำรวจหน้างาน', 'desc' => 'นัดเข้าวัดหน้างานฟรีภายใน 3 วัน พร้อมคำแนะนำจากวิศวกร'],
+                ['icon' => 'bi-rulers', 'label' => 'STEP 02', 'title' => 'ออกแบบ & เสนอราคา', 'desc' => 'ส่งแบบโครงสร้างพร้อม BOQ ละเอียดทุกรายการใน 5–7 วันทำการ'],
+                ['icon' => 'bi-cone-striped', 'label' => 'STEP 03', 'title' => 'ก่อสร้างจริง', 'desc' => 'เริ่มงานพร้อมรายงานความคืบหน้ารายสัปดาห์ + รูปถ่ายในพอร์ทัล'],
+                ['icon' => 'bi-shield-check', 'label' => 'STEP 04', 'title' => 'ส่งมอบ & รับประกัน', 'desc' => 'ตรวจรับงานพร้อมเจ้าของบ้าน รับประกันงานก่อสร้าง 2 ปีเต็ม'],
+            ];
 
         $serviceSchemaLd = ServicePageSchema::graph($service);
         $contactPhone = CompanyPhone::forService($service);

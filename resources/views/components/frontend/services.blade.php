@@ -7,7 +7,7 @@
         <div class="max-w-2xl">
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> บริการของเรา</span>
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">งานก่อสร้างที่บ้านคุณต้องการ ครบจบในที่เดียว</h2>
-            <p class="mt-4 text-lg text-ink2 leading-relaxed">ทีมงานเฉพาะทางสำหรับงานก่อสร้างนอกตัวบ้าน รับงานตั้งแต่ 5 ตร.ม. ถึงโครงการขนาดใหญ่ ในกรุงเทพฯ และปริมณฑล</p>
+            <p class="mt-4 text-lg text-ink2 leading-relaxed">{{ $description ?: 'ทีมงานเฉพาะทางสำหรับงานก่อสร้างนอกตัวบ้าน รับงานตั้งแต่ 5 ตร.ม. ถึงโครงการขนาดใหญ่ ในกรุงเทพฯ และปริมณฑล' }}</p>
         </div>
 
         <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">

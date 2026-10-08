@@ -33,7 +33,7 @@ class Contact extends Component
         $this->defaultPhone = CompanyPhone::forCurrentRequest();
 
         $this->services = Service::hydrate(
-            FrontendCache::remember('contact.services.v3', function () {
+            FrontendCache::remember('contact.services.v4', function () {
                 return Service::query()
                     ->with('category:id,slug')
                     ->where('is_active', true)

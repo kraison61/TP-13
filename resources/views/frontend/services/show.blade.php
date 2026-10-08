@@ -2,6 +2,11 @@
 
 @section('content')
 
+@php
+    $isElectricalWiring = $service->slug === 'electrical-wiring';
+    $warrantyLabel = $isElectricalWiring ? 'รับประกัน 1 ปี' : 'รับประกัน 2 ปี';
+@endphp
+
 {{-- ============ SERVICE HERO ============ --}}
 <section class="relative overflow-hidden bg-gradient-to-b from-surface to-white">
     <div class="pointer-events-none absolute -top-24 right-0 h-[480px] w-[480px] rounded-full bg-accent/10 blur-3xl"></div>
@@ -32,10 +37,10 @@
                 @if ($service->dur)
                     <span>
                         <x-icon name="calendar-check" class="text-accent mr-1.5 inline-block" />
-                        ระยะงาน {{ $service->dur }} วัน
+                        ระยะงาน {{ $service->dur }}
                     </span>
                 @endif
-                <span><x-icon name="patch-check-fill" class="text-accent mr-1.5 inline-block" /> รับประกัน 2 ปี</span>
+                <span><x-icon name="patch-check-fill" class="text-accent mr-1.5 inline-block" /> {{ $warrantyLabel }}</span>
             </div>
 
             <div class="mt-8 flex flex-wrap gap-3">
@@ -63,8 +68,13 @@
                     <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><x-icon name="patch-check-fill" />
                     </span>
                     <div>
-                        <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 2 ปีเต็ม</div>
-                        <div class="text-[13px] text-muted">คำนวณโครงสร้างโดยวิศวกร · ใบ กว. ถูกต้อง</div>
+                        @if ($isElectricalWiring)
+                            <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 1 ปี</div>
+                            <div class="text-[13px] text-muted">สายไฟและอุปกรณ์มาตรฐาน มอก.</div>
+                        @else
+                            <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 2 ปีเต็ม</div>
+                            <div class="text-[13px] text-muted">คำนวณโครงสร้างโดยวิศวกร · ใบ กว. ถูกต้อง</div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -72,7 +82,9 @@
     </div>
 </section>
 
-<x-frontend.trust />
+@unless ($isElectricalWiring)
+    <x-frontend.trust />
+@endunless
 
 @if ($service->products->isNotEmpty())
     <x-frontend.service.products :service="$service" />
@@ -122,7 +134,13 @@
                     </div>
                     <span class="shrink-0 rounded-full bg-hivis/20 text-accent text-[13px] font-semibold px-3 py-1.5">ประเมินฟรี</span>
                 </div>
-                <p class="mt-2 text-[14px] text-muted">* ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ทีมงานสำรวจและตีราคาให้ฟรี</p>
+                <p class="mt-2 text-[14px] text-muted">
+                    @if ($isElectricalWiring)
+                        *ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ส่งรูปประเมินผ่าน LINE ได้ฟรี หากต้องการให้ช่างดูหน้างาน ค่าบริการเริ่มต้น 1,500 บาท ขึ้นกับระยะทาง และหักคืนเมื่อตกลงจ้างงาน
+                    @else
+                        * ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ทีมงานสำรวจและตีราคาให้ฟรี
+                    @endif
+                </p>
 
                 @if ($service->dur)
                     <div class="mt-4 flex items-start gap-2.5 rounded-xl bg-navy-900/5 px-3.5 py-2.5 text-[13px] text-navy-900 min-w-0">
@@ -229,7 +247,13 @@
 
 {{-- ============ OTHER SERVICES ============ --}}
 @if ($otherServices->isNotEmpty())
-    <x-frontend.services :services="$otherServices" :total-services="$totalOtherServices" />
+    <x-frontend.services
+        :services="$otherServices"
+        :total-services="$totalOtherServices"
+        :description="$isElectricalWiring
+            ? 'ทีมงานรับเหมาระบบไฟฟ้า สายสัญญาณ และงานก่อสร้างนอกตัวบ้าน ในกรุงเทพฯ และปริมณฑล'
+            : null"
+    />
 @endif
 
 @if (! empty($serviceSchemaLd['@graph']))

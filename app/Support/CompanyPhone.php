@@ -3,11 +3,12 @@
 namespace App\Support;
 
 use App\Models\Service;
-use App\Models\ServiceCategory;
 
 final class CompanyPhone
 {
     /**
+     * Site-wide default phone (061-563-9228).
+     *
      * @return array{phone: string, phone_formatted: string}
      */
     public static function default(): array
@@ -19,13 +20,17 @@ final class CompanyPhone
     }
 
     /**
-     * Resolve phone from the current frontend request (service page aware).
+     * Resolve phone from the current frontend request (home + service page aware).
      *
      * @return array{phone: string, phone_formatted: string}
      */
     public static function forCurrentRequest(): array
     {
         return once(function () {
+            if (request()->routeIs('home')) {
+                return self::legacy();
+            }
+
             if (! request()->routeIs('frontend.services.show')) {
                 return self::default();
             }
@@ -35,13 +40,7 @@ final class CompanyPhone
                 return self::default();
             }
 
-            $service = Service::query()
-                ->with('category:id,slug')
-                ->where('slug', $slug)
-                ->where('is_active', true)
-                ->first(['id', 'service_category_id']);
-
-            return self::forService($service);
+            return self::forServiceSlug($slug);
         });
     }
 
@@ -54,59 +53,43 @@ final class CompanyPhone
             return self::default();
         }
 
-        $category = $service->relationLoaded('category')
-            ? $service->category
-            : $service->category()->first();
-
-        return self::forCategory($category);
+        return self::forServiceSlug($service->slug);
     }
 
     /**
      * @return array{phone: string, phone_formatted: string}
      */
-    public static function forCategory(?ServiceCategory $category): array
+    public static function forServiceSlug(?string $slug): array
     {
-        if (! $category) {
-            return self::default();
-        }
-
-        return self::forCategorySlug($category->slug);
-    }
-
-    /**
-     * @return array{phone: string, phone_formatted: string}
-     */
-    public static function forCategorySlug(?string $slug): array
-    {
-        if ($slug && self::isDepartmentCategorySlug($slug)) {
-            return self::department();
+        if ($slug && self::isLegacyServiceSlug($slug)) {
+            return self::legacy();
         }
 
         return self::default();
     }
 
     /**
-     * Phone for CCTV / electrical cabling / network / computer services.
+     * Previous number kept on home and selected civil service pages.
      *
      * @return array{phone: string, phone_formatted: string}
      */
-    public static function department(): array
+    public static function legacy(): array
     {
-        $dept = config('company.department_phone', []);
+        $legacy = config('company.legacy_phone', []);
 
         return [
-            'phone' => (string) ($dept['phone'] ?? config('company.phone')),
-            'phone_formatted' => (string) ($dept['phone_formatted'] ?? config('company.phone_formatted')),
+            'phone' => (string) ($legacy['phone'] ?? config('company.phone')),
+            'phone_formatted' => (string) ($legacy['phone_formatted'] ?? config('company.phone_formatted')),
         ];
     }
 
-    public static function isDepartmentCategorySlug(?string $slug): bool
+    public static function isLegacyServiceSlug(?string $slug): bool
     {
         if (! $slug) {
             return false;
         }
 
-        $slugs = config('company.department_phone.category_slugs', []);
+        $slugs = config('company.legacy_phone.service_slugs', []);
 
         return in_array($slug, $slugs, true);
     }

@@ -11,21 +11,20 @@ return [
     'experience_years' => '20+',
     'experience_label' => 'ประสบการณ์การทำงานรวม',
     'team_size' => '20+',
-    'phone' => '0627188847',
-    'phone_formatted' => '062-718-8847',
+    'phone' => '0615639228',
+    'phone_formatted' => '061-563-9228',
 
     /*
-    | Phone for CCTV, electrical/cabling, network, and computer services.
-    | Matched by service_categories.slug.
+    | Keep the previous number on home and selected civil service pages.
     */
-    'department_phone' => [
-        'phone' => '0615639228',
-        'phone_formatted' => '061-563-9228',
-        'category_slugs' => [
-            'cabling',
-            'cctv',
-            'computer-network',
-            'computer-system',
+    'legacy_phone' => [
+        'phone' => '0627188847',
+        'phone_formatted' => '062-718-8847',
+        'service_slugs' => [
+            'retaining-wall',
+            'fence',
+            'pour-concrete',
+            'dam',
         ],
     ],
     'email' => 'theeraphong.services@gmail.com',

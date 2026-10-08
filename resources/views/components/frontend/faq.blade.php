@@ -6,7 +6,7 @@
         <div class="lg:col-span-5">
             <span class="inline-flex items-center gap-2 text-accent font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-accent"></span> คำถามที่พบบ่อย</span>
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight text-navy-900 leading-tight">ก่อนตัดสินใจ คุณอาจอยากรู้</h2>
-            <p class="mt-4 text-lg text-ink2 leading-relaxed">หากไม่พบคำตอบที่ต้องการ โทร <a href="tel:{{ config('company.phone') }}" data-placement="faq" class="font-mono tabular-nums text-accent font-semibold">{{ config('company.phone_formatted') }}</a> ทีมงานพร้อมตอบ {{ config('company.open_hours') }}</p>
+            <p class="mt-4 text-lg text-ink2 leading-relaxed">หากไม่พบคำตอบที่ต้องการ โทร <a href="tel:{{ $contactPhone['phone'] }}" data-placement="faq" class="font-mono tabular-nums text-accent font-semibold">{{ $contactPhone['phone_formatted'] }}</a> ทีมงานพร้อมตอบ {{ config('company.open_hours') }}</p>
             <a href="#contact" class="mt-6 inline-flex items-center gap-2 rounded-xl bg-accent px-6 py-3.5 font-semibold text-white hover:bg-navy-900 transition">ขอคำปรึกษาฟรี <x-icon name="arrow-right" /></a>
         </div>
 
