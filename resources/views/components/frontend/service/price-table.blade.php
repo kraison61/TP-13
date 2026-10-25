@@ -23,8 +23,10 @@
             <p class="mt-4 text-lg text-ink2 leading-relaxed">
                 @if ($service->slug === 'electrical-wiring')
                     รายการราคาตามประเภทงาน — ประเมินราคาเบื้องต้นผ่าน LINE ฟรี
+                @elseif ($service->slug === 'solar-cell-installation')
+                    ราคาเริ่มต้นของระบบทั้งชุดบนหลังคาทั่วไป — ส่งรูปหลังคากับบิลค่าไฟประเมินขนาดผ่าน LINE ได้ฟรี
                 @else
-                    รายการราคาตามประเภทงาน — ราคาจริงประเมินตามหน้างานฟรี ไม่มีค่าใช้จ่าย
+                    รายการราคาตามประเภทงาน — ประเมินเบื้องต้นฟรีผ่าน LINE เมื่อส่งรูปและรายละเอียดครบ
                 @endif
             </p>
         </div>
@@ -52,14 +54,7 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4 font-mono font-semibold text-navy-900 tabular-nums whitespace-nowrap">
-                                @if ($price->price !== null)
-                                    {{ number_format((float) $price->price, 0) }}
-                                    @if ($price->max_price)
-                                        – {{ number_format((float) $price->max_price, 0) }}
-                                    @endif
-                                @else
-                                    สอบถาม
-                                @endif
+                                {{ \App\Support\ServicePriceRenderer::format($price) }}
                             </td>
                             <td class="px-6 py-4 text-ink2 whitespace-nowrap">
                                 {{ $price->unit ? 'บาท/'.$price->unit : '—' }}
@@ -79,6 +74,8 @@
         <p class="mt-4 text-[13px] text-muted">
             @if ($service->slug === 'electrical-wiring')
                 *ราคายังไม่รวมงานพิเศษเฉพาะหน้างาน เช่น การรื้อถอน หรือวัสดุเกรดสูงตามที่ลูกค้าเลือก
+            @elseif ($service->slug === 'solar-cell-installation')
+                *ราคายังไม่รวมงานเสริมโครงสร้างหลังคา เปลี่ยนตู้ไฟ หรือแบตเตอรี่เพิ่ม นอกเหนือจากรายการที่ระบุ
             @else
                 * ราคายังไม่รวมงานพิเศษเฉพาะหน้างาน เช่น ระบบฐานรากพิเศษ การรื้อถอน หรือวัสดุเกรดสูงตามที่ลูกค้าเลือก
             @endif

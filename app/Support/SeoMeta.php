@@ -24,6 +24,7 @@ class SeoMeta
             ! empty($viewData['service'])
             && $viewData['service'] instanceof Service
             && filled($viewData['service']->slug)
+            && Route::currentRouteName() === 'frontend.services.show'
         ) {
             return self::forService($viewData['service']);
         }

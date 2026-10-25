@@ -4,7 +4,12 @@
 
 @php
     $isElectricalWiring = $service->slug === 'electrical-wiring';
-    $warrantyLabel = $isElectricalWiring ? 'รับประกัน 1 ปี' : 'รับประกัน 2 ปี';
+    $isSolar = $service->slug === 'solar-cell-installation';
+    $warrantyLabel = match (true) {
+        $isElectricalWiring => 'รับประกัน 1 ปี',
+        $isSolar => 'รับประกันงานติดตั้ง 2 ปี',
+        default => 'รับประกัน 2 ปี',
+    };
 @endphp
 
 {{-- ============ SERVICE HERO ============ --}}
@@ -71,6 +76,9 @@
                         @if ($isElectricalWiring)
                             <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 1 ปี</div>
                             <div class="text-[13px] text-muted">สายไฟและอุปกรณ์มาตรฐาน มอก.</div>
+                        @elseif ($isSolar)
+                            <div class="font-bold text-navy-900 text-[15px]">รับประกันงานติดตั้ง 2 ปี</div>
+                            <div class="text-[13px] text-muted">แผงและอินเวอร์เตอร์ตามเงื่อนไขผู้ผลิต</div>
                         @else
                             <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 2 ปีเต็ม</div>
                             <div class="text-[13px] text-muted">คำนวณโครงสร้างโดยวิศวกร · ใบ กว. ถูกต้อง</div>
@@ -134,11 +142,18 @@
                     </div>
                     <span class="shrink-0 rounded-full bg-hivis/20 text-accent text-[13px] font-semibold px-3 py-1.5">ประเมินฟรี</span>
                 </div>
+                @php
+                    $surveyPrice = $service->activePrices->first(
+                        fn ($price) => str_contains((string) $price->name, 'สำรวจ')
+                    );
+                @endphp
                 <p class="mt-2 text-[14px] text-muted">
                     @if ($isElectricalWiring)
                         *ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ส่งรูปประเมินผ่าน LINE ได้ฟรี หากต้องการให้ช่างดูหน้างาน ค่าบริการเริ่มต้น 1,500 บาท ขึ้นกับระยะทาง และหักคืนเมื่อตกลงจ้างงาน
+                    @elseif ($isSolar)
+                        *ราคาเริ่มต้นสำหรับระบบบนหลังคาที่โครงสร้างรับน้ำหนักได้ ราคาจริงขึ้นกับชนิดหลังคา ระยะเดินสาย และสเปกอุปกรณ์ ส่งรูปหลังคากับบิลค่าไฟประเมินผ่าน LINE ได้ฟรี หากลงสำรวจหน้างาน เริ่มต้น 1,500 บาท และหักลดเมื่อว่าจ้าง
                     @else
-                        * ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ทีมงานสำรวจและตีราคาให้ฟรี
+                        * ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก — ประเมินเบื้องต้นฟรีผ่าน LINE เมื่อส่งรูปและรายละเอียดครบ หากลงสำรวจหน้างานจริง {{ $surveyPrice ? \App\Support\ServicePriceRenderer::format($surveyPrice).' บาท' : 'เริ่มต้น 1,500 บาท' }} (หักลดเมื่อว่าจ้าง)
                     @endif
                 </p>
 
@@ -252,7 +267,9 @@
         :total-services="$totalOtherServices"
         :description="$isElectricalWiring
             ? 'ทีมงานรับเหมาระบบไฟฟ้า สายสัญญาณ และงานก่อสร้างนอกตัวบ้าน ในกรุงเทพฯ และปริมณฑล'
-            : null"
+            : ($isSolar
+                ? 'ติดตั้งโซล่าเซลล์ไปด้วยกันได้กับงานเดินสายไฟ ตู้ไฟ และงานก่อสร้างนอกตัวบ้าน ในกรุงเทพฯ และปริมณฑล'
+                : null)"
     />
 @endif
 

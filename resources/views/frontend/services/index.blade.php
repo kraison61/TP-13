@@ -53,7 +53,10 @@
                         <div class="rounded-xl bg-surface p-5">
                             <div class="text-[12px] font-semibold uppercase tracking-[0.15em] text-muted mb-1">ระยะเวลางาน</div>
                             <div class="font-mono font-bold text-navy-900">
-                                {{ $service->dur }} <span class="text-base font-sans font-medium text-ink2">วันทำการ</span>
+                                {{ $service->dur }}
+                                @unless (str_contains((string) $service->dur, 'วัน'))
+                                    <span class="text-base font-sans font-medium text-ink2">วันทำการ</span>
+                                @endunless
                             </div>
                         </div>
                     </div>

@@ -29,7 +29,7 @@ class ServiceController extends Controller
             'title' => 'งานก่อสร้างนอกตัวบ้าน<br/>ครบจบในที่เดียว',
             'description' => 'ทีมช่างเฉพาะทาง ' . config('company.team_size') . ' คน รับงานตั้งแต่โปรเจกต์เล็ก 5 ตร.ม. ถึงโครงการขนาดใหญ่ — ในเขตกรุงเทพฯ และปริมณฑล พร้อมรับประกันงาน 2 ปี',
             'badges' => [
-                ['icon' => 'bi-clock', 'text' => 'สำรวจหน้างานฟรี ภายใน 3 วัน'],
+                ['icon' => 'bi-clock', 'text' => 'ประเมินเบื้องต้นฟรีผ่าน LINE'],
                 ['icon' => 'bi-shield-check', 'text' => 'รับประกันงาน 2 ปีเต็ม'],
                 ['icon' => 'bi-file-earmark-text', 'text' => 'BOQ ละเอียดทุกรายการ'],
                 ['icon' => 'bi-award', 'text' => 'ใบอนุญาตก่อสร้าง ระดับ ค'],
@@ -90,19 +90,26 @@ class ServiceController extends Controller
             ->limit(3)
             ->get();
 
-        $steps = $service->slug === 'electrical-wiring'
-            ? [
+        $steps = match ($service->slug) {
+            'electrical-wiring' => [
                 ['icon' => 'bi-chat-left-text', 'label' => 'STEP 01', 'title' => 'ปรึกษา & ประเมินราคา', 'desc' => 'ประเมินเบื้องต้นผ่าน LINE ฟรี หรือนัดช่างดูหน้างานภายใน 1–3 วัน (ค่าบริการเริ่มต้น 1,500 บาท หักคืนเมื่อจ้างงาน)'],
                 ['icon' => 'bi-rulers', 'label' => 'STEP 02', 'title' => 'เสนอราคา', 'desc' => 'ส่งรายการจุดพร้อม BOQ ละเอียดทุกรายการภายใน 1–3 วันทำการ'],
                 ['icon' => 'bi-cone-striped', 'label' => 'STEP 03', 'title' => 'ลงมือติดตั้ง', 'desc' => 'เริ่มงานพร้อมรายงานความคืบหน้าและรูปถ่ายในพอร์ทัล'],
                 ['icon' => 'bi-shield-check', 'label' => 'STEP 04', 'title' => 'ส่งมอบ & รับประกัน', 'desc' => 'ทดสอบระบบและตรวจรับงานพร้อมเจ้าของบ้าน รับประกันงาน 1 ปี'],
-            ]
-            : [
-                ['icon' => 'bi-chat-left-text', 'label' => 'STEP 01', 'title' => 'ปรึกษา & สำรวจหน้างาน', 'desc' => 'นัดเข้าวัดหน้างานฟรีภายใน 3 วัน พร้อมคำแนะนำจากวิศวกร'],
+            ],
+            'solar-cell-installation' => [
+                ['icon' => 'bi-chat-left-text', 'label' => 'STEP 01', 'title' => 'ส่งรูปหลังคาและบิลค่าไฟ', 'desc' => 'ประเมินขนาดระบบเบื้องต้นผ่าน LINE ฟรี หรือนัดช่างดูหลังคา (ค่าสำรวจเริ่มต้น 1,500 บาท หักลดเมื่อว่าจ้าง)'],
+                ['icon' => 'bi-rulers', 'label' => 'STEP 02', 'title' => 'ออกแบบและเสนอราคา', 'desc' => 'ตรวจโครงสร้างหลังคา ทิศแดด และตู้ไฟ แล้วส่งรายการอุปกรณ์พร้อมราคาภายใน 1–3 วันทำการ'],
+                ['icon' => 'bi-sun-fill', 'label' => 'STEP 03', 'title' => 'ติดตั้งบนหลังคา', 'desc' => 'ยึดโครง วางแผง ติดตั้งอินเวอร์เตอร์ เดินสาย และเชื่อมเข้าตู้ไฟ พร้อมรูปความคืบหน้า'],
+                ['icon' => 'bi-shield-check', 'label' => 'STEP 04', 'title' => 'ทดสอบและส่งมอบ', 'desc' => 'ตรวจการผลิตไฟ ส่งผลทดสอบและเอกสาร รับประกันงานติดตั้ง 2 ปี'],
+            ],
+            default => [
+                ['icon' => 'bi-chat-left-text', 'label' => 'STEP 01', 'title' => 'ปรึกษา & ประเมินหน้างาน', 'desc' => 'ส่งรายละเอียดและรูปหน้างานทาง LINE ประเมินเบื้องต้นฟรี — หรือนัดลงสำรวจจริง (เริ่มต้น 1,500 บาท หักลดเมื่อว่าจ้าง)'],
                 ['icon' => 'bi-rulers', 'label' => 'STEP 02', 'title' => 'ออกแบบ & เสนอราคา', 'desc' => 'ส่งแบบโครงสร้างพร้อม BOQ ละเอียดทุกรายการใน 5–7 วันทำการ'],
                 ['icon' => 'bi-cone-striped', 'label' => 'STEP 03', 'title' => 'ก่อสร้างจริง', 'desc' => 'เริ่มงานพร้อมรายงานความคืบหน้ารายสัปดาห์ + รูปถ่ายในพอร์ทัล'],
                 ['icon' => 'bi-shield-check', 'label' => 'STEP 04', 'title' => 'ส่งมอบ & รับประกัน', 'desc' => 'ตรวจรับงานพร้อมเจ้าของบ้าน รับประกันงานก่อสร้าง 2 ปีเต็ม'],
-            ];
+            ],
+        };
 
         $serviceSchemaLd = ServicePageSchema::graph($service);
         $contactPhone = CompanyPhone::forService($service);

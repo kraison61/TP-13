@@ -128,17 +128,7 @@ class ServicePriceController extends Controller
 
     private function formatPriceLabel(ServicePrice $price): string
     {
-        if ($price->price_type === 'call_to_ask' || $price->price === null) {
-            return 'สอบถาม';
-        }
-
-        $formatted = number_format((float) $price->price, 0);
-
-        if ($price->max_price) {
-            $formatted .= ' – '.number_format((float) $price->max_price, 0);
-        }
-
-        return $formatted;
+        return \App\Support\ServicePriceRenderer::format($price, false);
     }
 
     private function priceTypeOptions(): array

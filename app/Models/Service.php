@@ -119,7 +119,9 @@ class Service extends Model
 
     public function getRenderedContentAttribute(): string
     {
-        return $this->renderHtmlField($this->content);
+        $html = $this->renderHtmlField($this->content);
+
+        return \App\Support\ServicePriceRenderer::inject($html, $this);
     }
 
     public function getRenderedDescriptionAttribute(): string

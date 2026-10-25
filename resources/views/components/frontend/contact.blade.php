@@ -8,7 +8,7 @@
         <div class="lg:col-span-5 min-w-0">
             <span class="inline-flex items-center gap-2 text-hivis font-semibold tracking-[0.18em] text-xs uppercase"><span class="w-7 h-px bg-hivis"></span> ขอใบเสนอราคา</span>
             <h2 class="mt-4 text-4xl lg:text-5xl font-bold tracking-tight leading-tight">จบปัญหาทิ้งงาน คุมงบได้เป๊ะ ไม่บานปลาย</h2>
-            <p class="mt-4 text-lg text-white/60 leading-relaxed">วิศวกรคุมงานเอง พร้อมแจกแจงราคาทุกรายการโปร่งใส กรอกข้อมูลเพื่อรับการประเมินหน้างานฟรีภายใน 24 ชม. พร้อมสิทธิ์ E-Voucher สำหรับลูกค้าเว็บไซต์</p>
+            <p class="mt-4 text-lg text-white/60 leading-relaxed">วิศวกรคุมงานเอง พร้อมแจกแจงราคาทุกรายการโปร่งใส กรอกข้อมูลเพื่อรับการประเมินเบื้องต้นภายใน 24 ชม. พร้อมสิทธิ์ E-Voucher สำหรับลูกค้าเว็บไซต์</p>
 
             <div class="mt-8 rounded-2xl border border-hivis/40 bg-gradient-to-br from-hivis/15 to-transparent p-6">
                 <p class="inline-flex items-center gap-1.5 text-xs font-semibold tracking-widest uppercase text-hivis">
@@ -168,9 +168,9 @@
                 </label>
                 <div class="sm:col-span-2 flex flex-wrap items-center gap-4">
                     <button type="submit" id="quoteSubmitBtn" class="inline-flex items-center gap-2 rounded-xl bg-accent px-7 py-3.5 font-semibold text-white hover:bg-navy-900 transition disabled:opacity-60 disabled:cursor-not-allowed">
-                    เช็คสิทธิ์และนัดประเมินหน้างานฟรี <x-icon name="arrow-right" />
+                    เช็คสิทธิ์และขอประเมินราคา <x-icon name="arrow-right" />
                     </button>
-                    <span class="text-sm text-muted">บริการสำรวจหน้างานฟรีสำหรับ กทม. และปริมณฑล (ต่างจังหวัดสามารถส่งรูปประเมินเบื้องต้นได้ฟรีผ่าน LINE)</span>
+                    <span class="text-sm text-muted">ประเมินเบื้องต้นฟรีผ่าน LINE เมื่อส่งรายละเอียดและรูปหน้างานครบ — ลงสำรวจหน้างานจริงเริ่มต้น 1,500 บาท (หักลดจากราคางานหากว่าจ้าง)</span>
                 </div>
                 <div id="quoteError" class="sm:col-span-2 hidden flex items-start gap-2 rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-[15px]">
                     <x-icon name="exclamation-triangle-fill" class="mt-0.5 shrink-0" />

@@ -325,9 +325,9 @@
     <div class="mx-auto max-w-7xl px-4 sm:px-6 py-16 lg:py-20 flex flex-col lg:flex-row items-center justify-between gap-8">
         <div>
             <h2 class="text-2xl lg:text-3xl font-bold tracking-tight text-navy-900">ได้ตัวเลขแล้ว — ขอราคาจริงจากทีมช่างได้เลย</h2>
-            <p class="mt-3 text-[15px] text-ink2 leading-relaxed max-w-xl">เราสำรวจหน้างานฟรี ไม่มีค่าใช้จ่าย และเสนอราคาจริงพร้อมรายละเอียดวัสดุทุกชิ้น ภายใน 5–7 วันทำการ</p>
+            <p class="mt-3 text-[15px] text-ink2 leading-relaxed max-w-xl">ประเมินเบื้องต้นฟรีผ่าน LINE เมื่อส่งรายละเอียดและรูปหน้างานครบ — หรือนัดลงสำรวจจริง (เริ่มต้น 1,500 บาท หักลดเมื่อว่าจ้าง) พร้อมเสนอราคาจริงและรายละเอียดวัสดุทุกชิ้น ภายใน 5–7 วันทำการ</p>
             <div class="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-[14px] text-ink2">
-                <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> สำรวจหน้างานฟรี</span>
+                <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ประเมินเบื้องต้นฟรีผ่าน LINE</span>
                 <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ไม่มีค่าแอบแฝง</span>
                 <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> รับประกันงาน 2 ปี</span>
             </div>

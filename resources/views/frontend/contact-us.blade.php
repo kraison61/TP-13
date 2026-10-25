@@ -12,11 +12,11 @@
         พร้อมช่วยคุณ<span class="bg-gradient-to-t from-hivis/60 from-[28%] to-transparent to-[28%]">เริ่มต้นทุกโครงการ</span>
       </h1>
       <p class="mt-5 text-lg leading-relaxed text-ink2 max-w-xl">
-        ทีมงานพร้อมตอบทุกคำถาม ให้คำปรึกษา และสำรวจหน้างานฟรีภายใน 3 วันทำการ — ไม่มีค่าใช้จ่ายใดๆ
+        ทีมงานพร้อมตอบทุกคำถาม ให้คำปรึกษา และประเมินราคาเบื้องต้นฟรีผ่าน LINE เมื่อส่งรายละเอียดและรูปหน้างานครบถ้วน
       </p>
       <div class="mt-7 flex flex-wrap gap-x-8 gap-y-3 text-[15px] text-ink2">
         <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ตอบกลับภายใน 24 ชั่วโมง</span>
-        <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> สำรวจหน้างานฟรี</span>
+        <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ประเมินเบื้องต้นฟรีผ่าน LINE</span>
         <span><x-icon name="check-circle-fill" class="text-accent mr-1.5 inline-block" /> ใบเสนอราคาไม่มีข้อผูกมัด</span>
       </div>
     </div>

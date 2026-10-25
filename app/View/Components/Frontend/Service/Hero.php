@@ -19,7 +19,7 @@ class Hero extends Component
     ) {
         $this->description = $description ?? 'ทีมช่างเฉพาะทาง ' . config('company.team_size') . ' คน รับงานตั้งแต่โปรเจกต์เล็ก 5 ตร.ม. ถึงโครงการขนาดใหญ่ — ในเขตกรุงเทพฯ และปริมณฑล พร้อมรับประกันงาน 2 ปี';
         $this->badges = $badges ?? [
-            ['icon' => 'bi-clock', 'text' => 'สำรวจหน้างานฟรี ภายใน 3 วัน'],
+            ['icon' => 'bi-clock', 'text' => 'ประเมินเบื้องต้นฟรีผ่าน LINE'],
             ['icon' => 'bi-shield-check', 'text' => 'รับประกันงาน 2 ปีเต็ม'],
             ['icon' => 'bi-file-earmark-text', 'text' => 'BOQ ละเอียดทุกรายการ'],
             ['icon' => 'bi-award', 'text' => 'ใบอนุญาตก่อสร้าง ระดับ ค'],
