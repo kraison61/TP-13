@@ -6,9 +6,12 @@
     $isElectricalWiring = $service->slug === 'electrical-wiring';
     $isElectrician = $service->slug === 'electrician-near-me';
     $isSolar = $service->slug === 'solar-cell-installation';
+    $isTreeRemoval = $service->slug === 'tree-removal';
+    $isTreeTrim = $service->slug === 'tree-trim';
     $warrantyLabel = match (true) {
         $isElectricalWiring, $isElectrician => 'รับประกัน 1 ปี',
         $isSolar => 'รับประกันงานติดตั้ง 2 ปี',
+        $isTreeRemoval, $isTreeTrim => 'รับประกันงาน 2 ปี',
         default => 'รับประกัน 2 ปี',
     };
 @endphp
@@ -80,6 +83,12 @@
                         @elseif ($isSolar)
                             <div class="font-bold text-navy-900 text-[15px]">รับประกันงานติดตั้ง 2 ปี</div>
                             <div class="text-[13px] text-muted">แผงและอินเวอร์เตอร์ตามเงื่อนไขผู้ผลิต</div>
+                        @elseif ($isTreeRemoval)
+                            <div class="font-bold text-navy-900 text-[15px]">รวมค่าขนทิ้งในใบเสนอราคา</div>
+                            <div class="text-[13px] text-muted">ตัด · ขุดตอ · ขนทิ้ง จบในงานเดียว</div>
+                        @elseif ($isTreeTrim)
+                            <div class="font-bold text-navy-900 text-[15px]">รับประกันงานตัดแต่ง 2 ปี</div>
+                            <div class="text-[13px] text-muted">เก็บกิ่งใบและทำความสะอาดหลังงาน</div>
                         @else
                             <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 2 ปีเต็ม</div>
                             <div class="text-[13px] text-muted">คำนวณโครงสร้างโดยวิศวกร · ใบ กว. ถูกต้อง</div>
@@ -153,6 +162,8 @@
                         *ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ส่งรูปประเมินผ่าน LINE ได้ฟรี หากต้องการให้ช่างดูหน้างาน ค่าบริการเริ่มต้น 1,500 บาท ขึ้นกับระยะทาง และหักคืนเมื่อตกลงจ้างงาน
                     @elseif ($isSolar)
                         *ราคาเริ่มต้นสำหรับระบบบนหลังคาที่โครงสร้างรับน้ำหนักได้ ราคาจริงขึ้นกับชนิดหลังคา ระยะเดินสาย และสเปกอุปกรณ์ ส่งรูปหลังคากับบิลค่าไฟประเมินผ่าน LINE ได้ฟรี หากลงสำรวจหน้างาน เริ่มต้น 1,500 บาท และหักลดเมื่อว่าจ้าง
+                    @elseif ($isTreeRemoval)
+                        *ราคาเริ่มต้นสำหรับโค่นต้นสูง 6–10 เมตร พื้นที่โล่ง รวมค่าเก็บกิ่งและขนทิ้งแล้ว ราคาจริงขึ้นกับความสูง ตำแหน่ง และทางเข้ารถ ส่งรูปประเมินผ่าน LINE ได้ฟรี หากลงสำรวจหน้างานจริง 1,500 บาท (หักคืนเมื่อจ้างงาน)
                     @else
                         * ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก — ประเมินเบื้องต้นฟรีผ่าน LINE เมื่อส่งรูปและรายละเอียดครบ หากลงสำรวจหน้างานจริง {{ $surveyPrice ? \App\Support\ServicePriceRenderer::format($surveyPrice).' บาท' : 'เริ่มต้น 1,500 บาท' }} (หักลดเมื่อว่าจ้าง)
                     @endif
