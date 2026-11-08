@@ -4,9 +4,10 @@
 
 @php
     $isElectricalWiring = $service->slug === 'electrical-wiring';
+    $isElectrician = $service->slug === 'electrician-near-me';
     $isSolar = $service->slug === 'solar-cell-installation';
     $warrantyLabel = match (true) {
-        $isElectricalWiring => 'รับประกัน 1 ปี',
+        $isElectricalWiring, $isElectrician => 'รับประกัน 1 ปี',
         $isSolar => 'รับประกันงานติดตั้ง 2 ปี',
         default => 'รับประกัน 2 ปี',
     };
@@ -73,7 +74,7 @@
                     <span class="grid place-items-center w-11 h-11 rounded-lg bg-navy-900 text-white text-xl"><x-icon name="patch-check-fill" />
                     </span>
                     <div>
-                        @if ($isElectricalWiring)
+                        @if ($isElectricalWiring || $isElectrician)
                             <div class="font-bold text-navy-900 text-[15px]">รับประกันงาน 1 ปี</div>
                             <div class="text-[13px] text-muted">สายไฟและอุปกรณ์มาตรฐาน มอก.</div>
                         @elseif ($isSolar)
@@ -90,7 +91,7 @@
     </div>
 </section>
 
-@unless ($isElectricalWiring)
+@unless ($isElectricalWiring || $isElectrician)
     <x-frontend.trust />
 @endunless
 
@@ -148,7 +149,7 @@
                     );
                 @endphp
                 <p class="mt-2 text-[14px] text-muted">
-                    @if ($isElectricalWiring)
+                    @if ($isElectricalWiring || $isElectrician)
                         *ราคาจริงขึ้นกับหน้างาน ขนาด และวัสดุที่เลือก ส่งรูปประเมินผ่าน LINE ได้ฟรี หากต้องการให้ช่างดูหน้างาน ค่าบริการเริ่มต้น 1,500 บาท ขึ้นกับระยะทาง และหักคืนเมื่อตกลงจ้างงาน
                     @elseif ($isSolar)
                         *ราคาเริ่มต้นสำหรับระบบบนหลังคาที่โครงสร้างรับน้ำหนักได้ ราคาจริงขึ้นกับชนิดหลังคา ระยะเดินสาย และสเปกอุปกรณ์ ส่งรูปหลังคากับบิลค่าไฟประเมินผ่าน LINE ได้ฟรี หากลงสำรวจหน้างาน เริ่มต้น 1,500 บาท และหักลดเมื่อว่าจ้าง
@@ -265,7 +266,7 @@
     <x-frontend.services
         :services="$otherServices"
         :total-services="$totalOtherServices"
-        :description="$isElectricalWiring
+        :description="$isElectricalWiring || $isElectrician
             ? 'ทีมงานรับเหมาระบบไฟฟ้า สายสัญญาณ และงานก่อสร้างนอกตัวบ้าน ในกรุงเทพฯ และปริมณฑล'
             : ($isSolar
                 ? 'ติดตั้งโซล่าเซลล์ไปด้วยกันได้กับงานเดินสายไฟ ตู้ไฟ และงานก่อสร้างนอกตัวบ้าน ในกรุงเทพฯ และปริมณฑล'

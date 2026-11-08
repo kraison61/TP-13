@@ -79,12 +79,13 @@
         <div class="flex items-center gap-2">
             <a href="{{ $ctaMobileHref }}"
                target="_blank" rel="noopener noreferrer"
-               class="inline-flex lg:hidden items-center rounded-xl bg-accent px-2.5 min-[380px]:px-3 py-2 text-xs min-[380px]:text-sm font-semibold text-white shadow-md shadow-navy-900/15 hover:bg-navy-900 transition shrink-0">
-                {{ $ctaMobileLabel }}
+               class="inline-flex lg:hidden items-center gap-1.5 rounded-xl bg-line-green px-2.5 min-[380px]:px-3 py-2 text-xs min-[380px]:text-sm font-semibold text-white shadow-md shadow-line-green/30 hover:brightness-95 transition shrink-0">
+                <x-icon name="line" class="shrink-0" /> {{ $ctaMobileLabel }}
             </a>
             <a href="{{ $ctaHref }}"
-               class="hidden lg:inline-flex items-center gap-2 rounded-xl bg-accent px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-navy-900/15 hover:bg-navy-900 transition">
-                {{ $ctaLabel }} <x-icon name="arrow-right" />
+               target="_blank" rel="noopener noreferrer"
+               class="hidden lg:inline-flex items-center gap-2 rounded-xl bg-line-green px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-line-green/30 hover:brightness-95 transition">
+                <x-icon name="line" class="shrink-0" /> {{ $ctaLabel }}
             </a>
             <button id="menuBtn" type="button" class="lg:hidden grid place-items-center w-10 h-10 rounded-lg border border-line text-navy-900 text-2xl" aria-label="เปิดเมนู" aria-expanded="false" aria-controls="mobileMenu">
                 <x-icon name="list" />
@@ -143,8 +144,8 @@
             @endforeach
             <a href="{{ $ctaMobileHref }}"
                target="_blank" rel="noopener noreferrer"
-               class="mt-3 inline-flex items-center justify-center gap-2 rounded-xl bg-accent px-4 py-3 text-sm font-semibold text-white hover:bg-navy-900 transition">
-                {{ $ctaLabel }} <x-icon name="arrow-right" />
+               class="mt-3 inline-flex items-center justify-center gap-2 rounded-xl bg-line-green px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-line-green/30 hover:brightness-95 transition">
+                <x-icon name="line" class="shrink-0" /> {{ $ctaLabel }}
             </a>
         </div>
     </div>

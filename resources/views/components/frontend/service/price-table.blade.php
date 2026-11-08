@@ -23,6 +23,8 @@
             <p class="mt-4 text-lg text-ink2 leading-relaxed">
                 @if ($service->slug === 'electrical-wiring')
                     รายการราคาตามประเภทงาน — ประเมินราคาเบื้องต้นผ่าน LINE ฟรี
+                @elseif ($service->slug === 'electrician-near-me')
+                    ราคาชุดเดียวกับหน้าเดินสายไฟ — ส่งรูปปัญหาไฟประเมินผ่าน LINE ได้ฟรี
                 @elseif ($service->slug === 'solar-cell-installation')
                     ราคาเริ่มต้นของระบบทั้งชุดบนหลังคาทั่วไป — ส่งรูปหลังคากับบิลค่าไฟประเมินขนาดผ่าน LINE ได้ฟรี
                 @else
@@ -72,7 +74,7 @@
             </table>
         </div>
         <p class="mt-4 text-[13px] text-muted">
-            @if ($service->slug === 'electrical-wiring')
+            @if ($service->slug === 'electrical-wiring' || $service->slug === 'electrician-near-me')
                 *ราคายังไม่รวมงานพิเศษเฉพาะหน้างาน เช่น การรื้อถอน หรือวัสดุเกรดสูงตามที่ลูกค้าเลือก
             @elseif ($service->slug === 'solar-cell-installation')
                 *ราคายังไม่รวมงานเสริมโครงสร้างหลังคา เปลี่ยนตู้ไฟ หรือแบตเตอรี่เพิ่ม นอกเหนือจากรายการที่ระบุ

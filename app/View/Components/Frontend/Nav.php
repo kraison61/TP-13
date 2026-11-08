@@ -27,12 +27,14 @@ class Nav extends Component
 
     public function __construct(
         ?array $items = null,
-        public string $ctaLabel = 'ขอใบเสนอราคา',
-        public string $ctaMobileLabel = 'ขอราคา',
-        public string $ctaHref = '#contact',
+        public string $ctaLabel = 'แอดไลน์',
+        public string $ctaMobileLabel = 'แอดไลน์',
+        public ?string $ctaHref = null,
         public ?string $ctaMobileHref = null,
     ) {
-        $this->ctaMobileHref ??= (string) config('company.line_official');
+        $lineOfficial = (string) config('company.line_official');
+        $this->ctaHref ??= $lineOfficial;
+        $this->ctaMobileHref ??= $lineOfficial;
         $categories = ServiceCategory::query()
             ->whereHas('services', fn ($q) => $q->where('is_active', true))
             ->with(['services' => fn ($q) => $q
