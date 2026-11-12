@@ -39,6 +39,11 @@ class BlogPageSchema
             $graph[] = self::bigTreeCuttingPriceHowTo();
         }
 
+        if ($blog->slug === 'tree-cutting-service-root-removal') {
+            $graph[] = self::treeCuttingServiceRootRemovalFaqPage();
+            $graph[] = self::treeCuttingServiceRootRemovalService($blogUrl);
+        }
+
         return [
             '@context' => 'https://schema.org',
             '@graph' => $graph,
@@ -69,7 +74,7 @@ class BlogPageSchema
             '@id' => "{$blogUrl}#webpage",
             'url' => $blogUrl,
             'name' => $blog->title,
-            'inLanguage' => 'th',
+            'inLanguage' => self::language($blog),
         ];
     }
 
@@ -95,7 +100,7 @@ class BlogPageSchema
             'dateModified' => $blog->updated_at
                 ->setTimezone('Asia/Bangkok')
                 ->toIso8601String(),
-            'inLanguage' => 'th',
+            'inLanguage' => self::language($blog),
             'wordCount' => self::wordCount($blog),
             'keywords' => self::keywords($blog),
         ];
@@ -201,6 +206,14 @@ class BlogPageSchema
                 ['@type' => 'Thing', 'name' => 'ขุดตอต้นไม้'],
             ];
             $node['keywords'] = 'ตัดต้นไม้ใหญ่ ราคา, รับจ้างตัดต้นไม้ใหญ่ ราคา, รับตัดต้นไม้ใหญ่ ราคา, ราคาค่าตัดต้นไม้ใหญ่, ราคาตัดต้นไม้ใหญ่';
+        }
+
+        if ($blog->slug === 'tree-cutting-service-root-removal') {
+            $node['about'] = [
+                ['@type' => 'Thing', 'name' => 'Tree felling'],
+                ['@type' => 'Thing', 'name' => 'Stump and root removal'],
+            ];
+            $node['keywords'] = 'tree cutting service, tree felling, tree trimming, root removal';
         }
 
         return $node;
@@ -497,8 +510,91 @@ class BlogPageSchema
         ];
     }
 
+    /**
+     * FAQ answers must match on-page FAQ text exactly (SEO package).
+     *
+     * @return array<string, mixed>
+     */
+    private static function treeCuttingServiceRootRemovalFaqPage(): array
+    {
+        $faqs = [
+            [
+                'q' => 'How much does a tree cutting service cost in Bangkok?',
+                'a' => 'Tree trimming starts from 1,500 THB per tree. Tree felling starts from 5,000 THB for a 6–10 m tree in an open area, and from 10,000 THB for sectional felling of a 10–15 m tree next to a house. Stump and root removal starts from 2,500 THB per stump. The final price is confirmed after a site survey.',
+            ],
+            [
+                'q' => 'What is the difference between tree trimming and tree felling?',
+                'a' => 'Tree trimming removes branches to reduce the canopy and keeps the tree alive. Tree felling removes the whole tree down to a stump. Trimming is cheaper and suits healthy trees that are only too dense. Felling is the right choice when roots damage a structure or the tree has outgrown its space.',
+            ],
+            [
+                'q' => 'Do I need to remove the roots after felling a tree?',
+                'a' => 'Yes, if the roots are near a floor, paving, wall or brick border. Felling leaves a stump about 30–50 cm high, and the roots below can keep spreading or rot and leave voids. Root removal usually takes one extra day and starts from 2,500 THB per stump.',
+            ],
+            [
+                'q' => 'How long does tree felling with root removal take?',
+                'a' => 'A typical job with one or two large trees takes about 2 days: one day for cutting and one day for root removal and hauling. Our Soi Nawamin 30 job, with two 10–14 m trees next to a house, was finished in 2 days by a 6-person crew.',
+            ],
+            [
+                'q' => 'Can you cut a tree that is touching power lines?',
+                'a' => 'Yes. We plan the cut order, remove the branches touching or overhanging the wires first, and lower every piece by rope so nothing drops onto the line. For high-voltage lines, the work may need coordination with the electricity authority before cutting starts.',
+            ],
+            [
+                'q' => 'Can I get a quote without a site visit?',
+                'a' => 'Yes. Send 2–3 photos of the tree, its trunk and anything nearby, such as the house or wires, to LINE @theeraphong for a free preliminary price. A site survey costs 1,500 THB and is deducted from the job if you hire us.',
+            ],
+        ];
+
+        return [
+            '@type' => 'FAQPage',
+            '@id' => route('blog.show', 'tree-cutting-service-root-removal').'#faq',
+            'mainEntity' => array_map(static fn (array $item): array => [
+                '@type' => 'Question',
+                'name' => $item['q'],
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => $item['a'],
+                ],
+            ], $faqs),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function treeCuttingServiceRootRemovalService(string $blogUrl): array
+    {
+        return [
+            '@type' => 'Service',
+            '@id' => "{$blogUrl}#service",
+            'serviceType' => 'Tree cutting service',
+            'name' => 'Tree cutting, tree trimming, tree felling and root removal',
+            'provider' => OrganizationSchema::reference(),
+            'areaServed' => [
+                'Bangkok',
+                'Nonthaburi',
+                'Pathum Thani',
+                'Samut Prakan',
+                'Samut Sakhon',
+                'Nakhon Pathom',
+            ],
+            'offers' => [
+                '@type' => 'Offer',
+                'priceCurrency' => 'THB',
+                'priceSpecification' => [
+                    '@type' => 'PriceSpecification',
+                    'minPrice' => 1500,
+                    'priceCurrency' => 'THB',
+                ],
+            ],
+        ];
+    }
+
     private static function breadcrumbList(Blog $blog, string $blogUrl, string $base): array
     {
+        $crumbName = $blog->slug === 'tree-cutting-service-root-removal'
+            ? 'Tree Cutting Service Case Study'
+            : $blog->title;
+
         return [
             '@type' => 'BreadcrumbList',
             '@id' => "{$blogUrl}#breadcrumb",
@@ -512,17 +608,22 @@ class BlogPageSchema
                 [
                     '@type' => 'ListItem',
                     'position' => 2,
-                    'name' => 'Blogs',
+                    'name' => $blog->slug === 'tree-cutting-service-root-removal' ? 'Blog' : 'Blogs',
                     'item' => route('blog.index'),
                 ],
                 [
                     '@type' => 'ListItem',
                     'position' => 3,
-                    'name' => $blog->title,
+                    'name' => $crumbName,
                     'item' => $blogUrl,
                 ],
             ],
         ];
+    }
+
+    private static function language(Blog $blog): string
+    {
+        return $blog->slug === 'tree-cutting-service-root-removal' ? 'en' : 'th';
     }
 
     /**

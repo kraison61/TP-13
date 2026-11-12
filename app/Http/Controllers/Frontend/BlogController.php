@@ -95,6 +95,15 @@ class BlogController extends Controller
             $view->with('seo', $seo);
         }
 
+        if ($blog->slug === 'tree-cutting-service-root-removal') {
+            $seo = SeoMeta::forBlog($blog);
+            $seo['title'] = 'Tree Cutting Service: Cork & Cassia Tree Felling + Root Removal';
+            $seo['og']['title'] = $seo['title'];
+            $seo['twitter']['title'] = $seo['title'];
+            $seo['keywords'] = 'tree cutting service, tree felling, tree trimming, tree removal, stump and root removal, tree cutting near power lines';
+            $view->with('seo', $seo);
+        }
+
         return $view;
     }
 }
