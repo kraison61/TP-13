@@ -44,6 +44,11 @@ class BlogPageSchema
             $graph[] = self::treeCuttingServiceRootRemovalService($blogUrl);
         }
 
+        if ($blog->slug === 'junk-removal-nonthaburi') {
+            $graph[] = self::junkRemovalNonthaburiFaqPage();
+            $graph[] = self::junkRemovalNonthaburiService($blogUrl);
+        }
+
         return [
             '@context' => 'https://schema.org',
             '@graph' => $graph,
@@ -214,6 +219,15 @@ class BlogPageSchema
                 ['@type' => 'Thing', 'name' => 'Stump and root removal'],
             ];
             $node['keywords'] = 'tree cutting service, tree felling, tree trimming, root removal';
+        }
+
+        if ($blog->slug === 'junk-removal-nonthaburi') {
+            $node['about'] = [
+                ['@type' => 'Thing', 'name' => 'รับจ้างขนขยะไปทิ้ง'],
+                ['@type' => 'Thing', 'name' => 'เคลียร์ของเก่าเก็บ'],
+                ['@type' => 'Thing', 'name' => 'ขนขยะ นนทบุรี'],
+            ];
+            $node['keywords'] = 'รับจ้างขนขยะไปทิ้ง, รับขนขยะ, รับจ้างขนขยะ, ขนขยะไปทิ้ง, รถรับจ้างขนขยะ, ขนของเก่าไปทิ้ง, ขนขยะ นนทบุรี';
         }
 
         return $node;
@@ -589,11 +603,86 @@ class BlogPageSchema
         ];
     }
 
+    /**
+     * FAQ answers must match on-page FAQ text exactly (SEO package).
+     *
+     * @return array<string, mixed>
+     */
+    private static function junkRemovalNonthaburiFaqPage(): array
+    {
+        $faqs = [
+            [
+                'q' => 'รับจ้างขนขยะไปทิ้งราคาเท่าไหร่?',
+                'a' => 'ราคาคิดตามจำนวนเที่ยวรถเป็นหลัก แล้วปรับตามน้ำหนักของ ระยะเดินขนจากจุดกองถึงรถ และงานรื้อที่ต้องทำเพิ่ม งานของเก่าเก็บขนาดลานบ้านแบบงานนี้อยู่ที่ 1,500 บาท ส่งรูปกองของมาทาง LINE แล้วทีมงานแจ้งราคาเหมาก่อนเริ่มงาน ไม่มีค่าใช้จ่ายเพิ่มภายหลังถ้าปริมาณของไม่เปลี่ยน',
+            ],
+            [
+                'q' => 'รับขนขยะชิ้นใหญ่ เช่น อ่างอาบน้ำ ตู้ โต๊ะเหล็ก ไหม?',
+                'a' => 'รับครับ งานที่ถนนเลี่ยงเมืองนนทบุรีมีทั้งอ่างอาบน้ำ ตู้เหล็กเก่า โต๊ะและเก้าอี้เหล็ก ตอไม้ และบานประตูไม้ ทีมงานยกและขนขึ้นรถเองทั้งหมด ของที่ใหญ่เกินช่องประตูจะรื้อหรือตัดแยกชิ้นที่หน้างานก่อนขน เจ้าของบ้านไม่ต้องช่วยยก',
+            ],
+            [
+                'q' => 'ต้องคัดแยกขยะเองก่อนไหม?',
+                'a' => 'ไม่ต้องครับ ทีมงานคัดแยกให้ที่หน้างาน โดยแยกเหล็ก ขวดแก้ว ยางรถ ไม้ และขยะทั่วไปออกจากกัน การคัดแยกช่วยให้จัดของขึ้นรถได้แน่นขึ้น ใช้เที่ยวรถน้อยลง และแยกของที่ส่งรีไซเคิลได้ออกจากของที่ต้องทิ้ง สิ่งที่เจ้าของบ้านควรทำคือแยกของที่ยังจะเก็บไว้ออกมาก่อนวันนัด',
+            ],
+            [
+                'q' => 'ขยะที่ขนออกไปเอาไปทิ้งที่ไหน?',
+                'a' => 'ขยะทั่วไปนำไปทิ้งที่บ่อขยะที่ได้รับอนุญาต ส่วนเหล็ก ขวดแก้ว และของที่รีไซเคิลได้ส่งร้านรับซื้อของเก่า เราไม่ทิ้งตามที่รกร้าง ริมถนน หรือริมคลอง เพราะเจ้าของบ้านอาจถูกตามตัวและมีความผิดตามกฎหมายรักษาความสะอาด ขอดูรูปจุดทิ้งได้ทุกงาน',
+            ],
+            [
+                'q' => 'มีคนรับจ้างขนขยะไปทิ้งใกล้ฉันในนนทบุรีไหม?',
+                'a' => 'มีครับ บริษัท ธีรพงษ์ เซอร์วิส จำกัด รับงานขนขยะและเคลียร์ของเก่าในจังหวัดนนทบุรี เช่น ถนนเลี่ยงเมืองนนทบุรี งามวงศ์วาน แคราย ติวานนท์ และรัตนาธิเบศร์ รวมถึง กรุงเทพฯ และปริมณฑล ส่งพิกัดหน้างานทาง LINE 0627188847 เพื่อเช็กวันว่างและประเมินราคา',
+            ],
+        ];
+
+        return [
+            '@type' => 'FAQPage',
+            '@id' => route('blog.show', 'junk-removal-nonthaburi').'#faq',
+            'mainEntity' => array_map(static fn (array $item): array => [
+                '@type' => 'Question',
+                'name' => $item['q'],
+                'acceptedAnswer' => [
+                    '@type' => 'Answer',
+                    'text' => $item['a'],
+                ],
+            ], $faqs),
+        ];
+    }
+
+    /**
+     * @return array<string, mixed>
+     */
+    private static function junkRemovalNonthaburiService(string $blogUrl): array
+    {
+        return [
+            '@type' => 'Service',
+            '@id' => "{$blogUrl}#service",
+            'serviceType' => 'รับจ้างขนขยะไปทิ้ง',
+            'name' => 'รับจ้างขนขยะและเคลียร์ของเก่าเก็บ นนทบุรี',
+            'provider' => OrganizationSchema::reference(),
+            'areaServed' => [
+                ['@type' => 'AdministrativeArea', 'name' => 'นนทบุรี'],
+                ['@type' => 'AdministrativeArea', 'name' => 'กรุงเทพมหานคร'],
+            ],
+            'image' => [
+                'https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/blogs/blogscontent/junk-removal-nonthaburi-2026-11-24/before-01.webp',
+                'https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/blogs/blogscontent/junk-removal-nonthaburi-2026-11-24/in-progress-01.webp',
+                'https://pub-68154224aa0d447b83de9bf218e76277.r2.dev/images/blogs/blogscontent/junk-removal-nonthaburi-2026-11-24/After-01.webp',
+            ],
+        ];
+    }
+
     private static function breadcrumbList(Blog $blog, string $blogUrl, string $base): array
     {
-        $crumbName = $blog->slug === 'tree-cutting-service-root-removal'
-            ? 'Tree Cutting Service Case Study'
-            : $blog->title;
+        $crumbName = match ($blog->slug) {
+            'tree-cutting-service-root-removal' => 'Tree Cutting Service Case Study',
+            'junk-removal-nonthaburi' => 'ขนขยะ ถ.เลี่ยงเมืองนนทบุรี',
+            default => $blog->title,
+        };
+
+        $blogsCrumb = $blog->slug === 'tree-cutting-service-root-removal' ? 'Blog' : 'Blogs';
+        $homeCrumb = $blog->slug === 'junk-removal-nonthaburi' ? 'หน้าแรก' : 'Home';
+        if ($blog->slug === 'junk-removal-nonthaburi') {
+            $blogsCrumb = 'บทความ';
+        }
 
         return [
             '@type' => 'BreadcrumbList',
@@ -602,13 +691,13 @@ class BlogPageSchema
                 [
                     '@type' => 'ListItem',
                     'position' => 1,
-                    'name' => 'Home',
+                    'name' => $homeCrumb,
                     'item' => $base,
                 ],
                 [
                     '@type' => 'ListItem',
                     'position' => 2,
-                    'name' => $blog->slug === 'tree-cutting-service-root-removal' ? 'Blog' : 'Blogs',
+                    'name' => $blogsCrumb,
                     'item' => route('blog.index'),
                 ],
                 [
