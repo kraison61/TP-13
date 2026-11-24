@@ -252,20 +252,14 @@ ImageUpload::query()
     ->where('imageable_id', $blog->id)
     ->delete();
 
-$imageUrls = [
-    $img['hero'] => 'Indian cork and cassia trees 10–14 m tall, Soi Nawamin 30, before felling',
-    $img['before'] => 'Tree close to house with roots pushing brick border',
-    $img['processing1'] => 'Climber cutting tall tree in sections from the top down',
-    $img['processing2'] => 'Crew lowering cut log by rope clear of roof and power lines',
-    $img['after'] => 'Cleared ground after root removal and debris hauling',
-];
-
-foreach ($imageUrls as $url => $location) {
+// Blog embeds images in HTML; keep ImageUpload rows without location so they
+// do not appear as separate /galleries projects (group key = location).
+foreach ([$img['hero'], $img['before'], $img['processing1'], $img['processing2'], $img['after']] as $url) {
     ImageUpload::query()->create([
         'imageable_type' => Blog::class,
         'imageable_id' => $blog->id,
         'img_url' => $url,
-        'location' => $location,
+        'location' => null,
         'worked_date' => '2026-11-12 10:00:00',
     ]);
 }
@@ -305,20 +299,23 @@ ImageUpload::query()
     ->where('imageable_id', $portfolio->id)
     ->delete();
 
+// One gallery project: all photos share the same location name.
+// Include "Nawamin 30" so Str::slug() yields a stable URL segment.
+$galleryLocation = 'ตัดต้นปีบและต้นคูณ Nawamin 30';
 $portfolioImages = [
-    $img['hero'] => 'ก่อนตัด: ต้นปีบและต้นคูณในตัวบ้าน ซ.นวมินทร์ 30',
-    $img['before'] => 'ต้นไม้ชิดบ้าน รากดันแนวอิฐตัวหนอน',
-    $img['processing1'] => 'ระหว่างตัด: ปีนตัดจากยอดลงมาทีละท่อน',
-    $img['processing2'] => 'ระหว่างตัด: หย่อนท่อนไม้ด้วยเชือก หลบสายไฟและหลังคา',
-    $img['after'] => 'หลังขุดรากและขนทิ้ง พื้นที่พร้อมใช้งานต่อ',
+    $img['hero'],
+    $img['before'],
+    $img['processing1'],
+    $img['processing2'],
+    $img['after'],
 ];
 
-foreach ($portfolioImages as $url => $location) {
+foreach ($portfolioImages as $url) {
     ImageUpload::query()->create([
         'imageable_type' => Portfolio::class,
         'imageable_id' => $portfolio->id,
         'img_url' => $url,
-        'location' => $location,
+        'location' => $galleryLocation,
         'worked_date' => '2026-11-07 10:00:00',
     ]);
 }

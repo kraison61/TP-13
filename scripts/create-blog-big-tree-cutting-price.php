@@ -301,20 +301,14 @@ ImageUpload::query()
     ->where('imageable_id', $blog->id)
     ->delete();
 
-$imageUrls = [
-    $coverImage => 'ต้นไม้ใหญ่สูง 10–14 เมตรในตัวบ้าน ซ.นวมินทร์ 30 ก่อนตัดและขุดราก',
-    $imgBeforeAlt => 'ต้นไม้ใหญ่ชิดตัวบ้านก่อนตัด รากเริ่มดันแนวอิฐตัวหนอน',
-    $imgProcessing1 => 'ช่างปีนตัดต้นไม้ใหญ่จากยอดลงมาทีละท่อน',
-    $imgProcessing2 => 'หย่อนท่อนไม้ด้วยเชือก หลบสายไฟและหลังคา',
-    $imgAfter => 'หลังขุดรากออกหมด ขนเศษทิ้ง พื้นที่พร้อมใช้งานต่อ',
-];
-
-foreach ($imageUrls as $url => $location) {
+// Blog embeds images in HTML; keep ImageUpload rows without location so they
+// do not appear as separate /galleries projects (group key = location).
+foreach ([$coverImage, $imgBeforeAlt, $imgProcessing1, $imgProcessing2, $imgAfter] as $url) {
     ImageUpload::query()->create([
         'imageable_type' => Blog::class,
         'imageable_id' => $blog->id,
         'img_url' => $url,
-        'location' => $location,
+        'location' => null,
         'worked_date' => '2026-11-07 10:00:00',
     ]);
 }
