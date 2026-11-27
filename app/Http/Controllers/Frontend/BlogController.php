@@ -104,6 +104,15 @@ class BlogController extends Controller
             $view->with('seo', $seo);
         }
 
+        if ($blog->slug === 'ground-rod-installation-home') {
+            $seo = SeoMeta::forBlog($blog);
+            $seo['title'] = 'ตอกแท่งกราวด์ในบ้าน ทำยังไง ราคาเท่าไหร่ คู่มือปี 2569 | ธีรพงษ์';
+            $seo['og']['title'] = $seo['title'];
+            $seo['twitter']['title'] = $seo['title'];
+            $seo['keywords'] = 'ตอกแท่งกราวด์ในบ้าน, วิธีต่อสายกราวด์ไฟบ้าน, วิธีการตอกกราวด์แบบเดลต้า, วิธีต่อสายกราวด์ตู้คอนซูมเมอร์, ติดตั้งสายดินราคา';
+            $view->with('seo', $seo);
+        }
+
         return $view;
     }
 }
